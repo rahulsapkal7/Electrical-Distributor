@@ -5,7 +5,7 @@
  * @format
  * @flow
  * @lint-ignore-every XPLATJSCOPYRIGHT1
- test comment
+ test comment 1
  */
 
 import React, {Component} from 'react';
