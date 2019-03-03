@@ -6,6 +6,8 @@ import configureStore from './app/configureStore';
 
 const store = configureStore;
 
+// test cpmment
+
 export default class App extends Component {
 
   render() {    
