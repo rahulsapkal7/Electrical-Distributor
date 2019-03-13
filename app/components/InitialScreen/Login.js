@@ -28,6 +28,7 @@ import {connect} from 'react-redux';
 
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+import {api} from '../../common/api';
 
 
  class Login extends Component {
@@ -43,7 +44,7 @@ import {NavigationActions} from 'react-navigation';
         
         
     this.state = {
-        email: '',
+        mobile: '',
         token :'',
         password: '',
         loading: false,
@@ -51,57 +52,57 @@ import {NavigationActions} from 'react-navigation';
     }
 }
 loginCall() {
-  // this.setState({loading: true});
-//   if (this.state.email === '') {
-//       Alert.alert('Login', 'Enter a valid mail or number');
-//   } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
-//       Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
-//   } else {
+  this.setState({loading: true});
+  if (this.state.mobile === '') {
+      Alert.alert('Login', 'Enter a valid mobile number');
+  } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
+      Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
+  } else {
     console.log("valid",this.state);
-    // Alert.alert('Login', this.state.email);
+    // Alert.alert('Login', this.state.mobile);
     // this.props.navigation.navigate('ShopkeeperHomePage');
-    if (this.state.email == 1 || this.state.email == '1' ) {
-            this.props.navigation.navigate('ShopkeeperHomePage');
-          } else{
-            this.props.navigation.navigate('DistributorHomePage');
+    // if (this.state.mobile == 1 || this.state.mobile == '1' ) {
+    //         this.props.navigation.navigate('ShopkeeperHomePage');
+    //       } else{
+    //         this.props.navigation.navigate('DistributorHomePage');
             
-          } 
-      // this.setState({loading: true});
-      // const url = api() + 'authenticate';
+    //       } 
+      this.setState({loading: true});
+      const url = api() + 'CustLogin.php';
 
-      // fetch(url, {
-      //     method: 'POST',
-      //     headers: {
-      //         'Accept': 'application/json',
-      //         'Content-Type': 'application/json'
-      //     },
-      //         body: JSON.stringify({emailAddressUsername: this.state.email, password: this.state.password})
-      //     })
-      //     .then(response => response.json())
-      //     .then(res => {
+      var data = new FormData()
+      data.append('MobileNumber', this.state.mobile),
+      data.append('Password', this.state.password),
+      data.append('UserType', "Customer"),
+      console.log("Data is --> ",data);
+      
+      fetch(url, {
+          method: 'POST',
+              body: data
+          })
+          .then(response => response.json())
+          .then(res => {
 
-      //         //console.log('reult' + JSON.stringify(res));
-      //          if (res.message === undefined) {
-      //              Globals.AccessToken = res.access_token;
-      //             AsyncStorage.setItem('@AccessToken:key', res.access_token);
-      //             AsyncStorage.setItem('@ExpireDate:key', res.expires_on);
-      //             this.getUserId(res.access_token);
-                     
-
-      //         } else {
-      //             this.setState({loading: false});
+              console.log('reult' + JSON.stringify(res));
+              this.setState({loading: false});
+               if (res.status === true) {
+                //   this.getUserId(res.access_token);
+                this.setState({loading: false});
+                this.props.navigation.navigate('ShopkeeperHomePage');
+              } else {
+                  this.setState({loading: false});
              
-      //             Alert.alert('Login', res.message);
-      //         }
+                  Alert.alert('Login', "You Entered wrong mobile number or password");
+              }
 
-      //     })
-      //     .catch(error => {
-      //         this.setState({loading: false});
-      //         console.log('error:' + (error));
+          })
+          .catch(error => {
+              this.setState({loading: false});
+              console.log('error:' + (error));
 
-      //     });
+          });
 
-//   }
+  }
 
 }
 
@@ -132,10 +133,10 @@ OpenRegister() {
                               </View>
       
                              
-                              <TextInput style={commonStyles.editbox} placeholder="Email or Mobile Number" 
-                                    placeholderTextColor="white" ref="email"  onSubmitEditing=
+                              <TextInput style={commonStyles.editbox} placeholder="Enter Mobile Number" 
+                                    placeholderTextColor="white" ref="mobile"  onSubmitEditing=
                                       {() => this.refs['password'].focus()}
-                                      onChangeText={(text) => this.setState({email: text})}
+                                      onChangeText={(text) => this.setState({mobile: text})}
                                       underlineColorAndroid={'transparent'} ></TextInput>
                                 
                               <TextInput style={commonStyles.editbox} placeholder="Password" 
