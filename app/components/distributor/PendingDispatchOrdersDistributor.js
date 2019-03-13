@@ -8,7 +8,7 @@ import {api} from '../../common/api';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 
- class PendingOrdersDistributor extends Component {
+ class PendingDispatchOrdersDistributor extends Component {
 
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ import {NavigationActions} from 'react-navigation';
 
 
       getPendingOrderList = () =>{
-        const url = api() + 'ViewOrderByAdmin.php';
+        const url = api() + 'ViewPendingDispatchByAdmin.php';
          console.log(url);
         
         this.setState({loading: true});
@@ -297,4 +297,4 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
   UserData
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(PendingOrdersDistributor);
+export default connect(mapStateToProps, mapDispatchToProps)(PendingDispatchOrdersDistributor);

@@ -6,8 +6,55 @@ import {connect} from 'react-redux';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import Header from '../../common/header';
+import {api} from '../../common/api';
 
 class VerifiedCustomers extends Component {
+
+
+  constructor(props) {
+    super(props);
+    console.log('inside verified customer distributor');
+    this.state = {
+      // selectedArea : this.props.navigation.state.params.selectedArea,
+      loading : false,
+      StoreData : []
+    }
+    console.log("props are --> ",JSON.stringify(props));
+  }
+
+  componentDidMount() {
+        this.getVerifiedCustomers();
+      }
+      getVerifiedCustomers = () =>{
+        // const url = api() + 'ApprovedCustList.php';
+        var url = "http://elec.mycit.co.in/PHP/webservices/ApprovedCustList.php";
+         console.log(url);
+        
+        this.setState({loading: true});
+    
+        fetch(url,{method: 'post'})
+            // .then(response => response.json())
+            .then(res => {
+              console.log("response is",res);
+              
+              console.log("response is",JSON.stringify(res));
+              if(res.status){
+
+              }
+                this.setState({
+                  StoreData: res.data,
+                  loading : false
+                    // error: res.error || null,                   
+                    // refreshing: false
+                });
+            })
+            .catch(error => {
+    
+                console.log('error:' + (error));
+                this.setState({error, loading: false});
+            });
+    
+      }
 
 renderItem=({item})=>{
         return(

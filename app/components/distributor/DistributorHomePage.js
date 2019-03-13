@@ -61,7 +61,7 @@ import {NavigationActions} from 'react-navigation';
 
 
        <View style={styles.container}>
-           <TouchableOpacity style={styles.containerStyle} >
+           <TouchableOpacity style={styles.containerStyle} onPress = {()=> this.props.navigation.navigate('PendingDispatchOrdersDistributor')}>
 
      <Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
 

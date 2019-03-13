@@ -19,6 +19,8 @@ import DistributorHomePage from '../distributor/DistributorHomePage.js';
 import MyProfileShopkeeper from '../shopkeeper/MyProfileShopkeeper.js';
 import OrderHistoryShopkeeper from '../shopkeeper/OrderHistoryShopkeeper.js';
 import PendingOrdersDistributor from '../distributor/PendingOrdersDistributor.js';
+import PendingDispatchOrdersDistributor from '../distributor/PendingDispatchOrdersDistributor.js';
+
 import VerifiedCustomers from '../distributor/VerifiedCustomers.js';
 
 
@@ -72,6 +74,13 @@ PendingOrdersDistributor : {
     header: null
   }
 },
+PendingDispatchOrdersDistributor : {
+  screen : PendingDispatchOrdersDistributor,
+  navigationOptions: {
+    header: null
+  }
+},
+
 VerifiedCustomers : {
   screen : VerifiedCustomers,
   navigationOptions: {
