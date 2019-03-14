@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 5,
     fontWeight: 'bold',
-    color: 'black'
+    color: 'white'
   },
   TxtIP: {
     fontSize: 20,

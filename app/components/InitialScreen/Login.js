@@ -53,7 +53,7 @@ import {api} from '../../common/api';
 }
 loginCall() {
   this.setState({loading: true});
-                  this.props.navigation.navigate('DistributorHomePage');
+                  this.props.navigation.navigate('ShopkeeperHomePage');
   
 
 

@@ -1,176 +1,176 @@
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,ScrollView,Button,Image,TouchableOpacity} from 'react-native'; 
+import {Platform, StyleSheet, Text, View,ScrollView,Button,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
 // import Cards from "./Cards.js"; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import Header from '../../common/header';
+import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 
 
 
  class ShopkeeperHomePage extends Component {
-  render() {
-    return ( 
-
-      <View style={styles.parentcontainer}>
-          <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Menu
-            </Text>
-          </View>
-
-      <View style={styles.verticalContainer}>
-
-       <View style={styles.container}>
-           <TouchableOpacity style={styles.containerStyle} onPress = {()=> this.props.navigation.navigate('MyProfileShopkeeper')}>
-
-     <Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-
-      <Text style={styles.txtMain}>
-      My profile
-      </Text>
-      </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle} >
-
-
-      <Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-
-      <Text style={styles.txtMain}>
-      Buy products
-      </Text>
-      </TouchableOpacity> 
-  </View>
-
-
-       <View style={styles.container}>
-           <TouchableOpacity style={styles.containerStyle} onPress = {()=> this.props.navigation.navigate('OrderHistoryShopkeeper')}>
-
-     <Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-
-      <Text style={styles.txtMain}>
-      Order history
-      </Text>
-      </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle} >
-
-<Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-      <Text style={styles.txtMain}>
-      Alerts
-      </Text>
-      </TouchableOpacity> 
-  </View>
-
-
-       <View style={styles.container}>
-           <TouchableOpacity style={styles.containerStyle} >
-<Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-      <Text style={styles.txtMain}>
-      Invoices
-      </Text>
-      </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle} >
-
-<Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-      <Text style={styles.txtMain}>
-      Purchase order
-      </Text>
-      </TouchableOpacity> 
-  </View>
-
-
-       <View style={styles.container}>
-           <TouchableOpacity style={styles.containerStyle} >
-<Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-      <Text style={styles.txtMain}>
-      View offers
-      </Text>
-      </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle} >
-
-<Image source={require('../../assets/images/default-profile.png')} style={styles.image_style}/>
-      <Text style={styles.txtMain}>
-      Settings
-      </Text>
-      </TouchableOpacity> 
-  </View>
-
-
-  </View>
-
-
-      </View>
-    );
+  state = {
+    scrollEnabled: true,
+    type: 1,
   }
+
+  _renderItem = ({ item }) => {
+    return (
+      <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
+      <View
+        style={styles.verticalContainer}>
+        <Text style={styles.textbtn}>{item.menuName}</Text>
+      </View>
+      </TouchableWithoutFeedback>
+    );
+  };
+
+  actionOnRow(item) {
+    if(item.menuName=='Alerts'){
+      this.props.navigation.navigate('AlertsPageShopkeeper')
+    }else if(item.menuName=='My profile'){
+      this.props.navigation.navigate('MyProfileShopkeeper')
+    }else if(item.menuName=='Order history'){
+      this.props.navigation.navigate('OrderHistoryShopkeeper')
+    }
+ }
+
+  render() {
+    return (
+        <View style={styles.container}>
+         <Header
+                title={'Proton enterprise'}
+                />
+           <View style={styles.firstContainer}>
+           <FlatList
+          data={[{ menuName: 'My profile' }
+          , { menuName: 'Order history' }
+          , { menuName: 'Alerts' }
+          , { menuName: 'Invoices' }
+          , { menuName: 'Purchase order' }
+          , { menuName: 'Settings' }]}
+          renderItem={this._renderItem}
+          horizontal={true}
+        ItemSeparatorComponent={() => <View style={{margin: 4}}/>}
+        />
+               </View>
+               <View style={styles.secondContainer}>
+
+                <Swiper
+            ref='ViewPager'
+            loop={true}
+            autoplay={true}
+            interval={2000}
+            onPageScroll={(e) => console.log(e, 'onPageScroll')}
+            onPageScrollStateChanged={(e) => console.log(e, 'onPageScrollStateChanged')}
+            onPageSelected={(e) => console.log(e, 'onPageSelected')}
+            scrollEnabled={this.state.scrollEnabled}
+            style={styles.container}>
+            
+            <View style={{ backgroundColor: 'red', padding: 0.5 }}> 
+            
+            </View> 
+
+            <Image source={require('../../assets/images/isco_one.jpg')} style={styles.backgroundImage}>
+                 
+                 </Image>
+            <Image source={require('../../assets/images/isco_two.jpg')} style={styles.backgroundImage}>
+                 
+            </Image>
+          </Swiper >
+               </View>
+               <View style={styles.thirdContainer}>
+
+               <TouchableOpacity style={styles.verticalContainer}  onPress = {()=> this.props.navigation.navigate('BuyProductsShopkeeper')}>
+               
+
+                <Text style={styles.textbtn}
+                >Buy products</Text>  
+               </TouchableOpacity>
+
+               <View style={styles.verticalContainer}>
+               
+
+                <Text style={styles.textbtn}
+                >Offers</Text>  
+               </View>
+
+               </View>
+        </View>
+    );
+}
 }
 
 const styles = StyleSheet.create({
-  parentcontainer: { 
-    flexDirection: 'column', 
-    height: '100%',  
-    backgroundColor: '#ddd',
-  },container: { 
-    flexDirection: 'row', 
-    height: '25%',
-    alignItems: 'center',
-    justifyContent: 'center',
+  container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#4db6ac'
   },
-  menuTextContainer: {   
-    height: '7%', 
-    backgroundColor:'skyblue',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor:'#000', 
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 5,
-         borderRadius:2,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
+  firstContainer:{
+      flex:2,
+      justifyContent: 'center'
   },
-  verticalContainer: { 
-    flexDirection: 'column', 
-    height: '90%',
-    flex: 1,
-  }, 
-  contentContainer: {
-    padding: 20,
-     flex: 1,
-  }, 
-  insideHorizontalView:{
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  secondContainer:{
+      flex:6
   },
-  txtMain:{
-    fontSize: 14,
-    color:'white',
-    fontWeight:'500'
+  thirdContainer:{
+      flex:2,
+      alignSelf:'stretch',
+      flexDirection:'row'
   },
-  image_style:{
-    width:40,
-    height:40
+  verticalContainer:{
+      justifyContent:'center',
+      alignItems:'center',
+      borderColor:'#ddd',
+      borderWidth:1,
+      width:100,
+      flex:1,
+      margin:10,
+      borderRadius:2,
+      shadowColor:'#000',
+      shadowOpacity:0.5,
+      shadowRadius:5,
+      elevation:5,
+      borderColor:'#ddd',
+      flexDirection:'column'
   },
-  containerStyle: {
-    borderWidth:1,
-    borderRadius:2,
-    borderColor: '#ddd',
-    borderBottomWidth: 0,
-    shadowColor:'#000', 
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 5,
-    marginLeft: 5,
-    backgroundColor:'skyblue',
-    flex: 1,        
-    marginRight: 5, 
-    marginTop: 10,
-    flexDirection:'column',
-    height: '80%',
-justifyContent: 'center', 
-alignItems: 'center',
-}
+  logotext: {
+      marginVertical: 25,
+      fontSize: 22,
+      color: 'black'
+  },
+  editbox: {
+      width: 300,
+      height: 40,
+      backgroundColor: 'rgba(255,255,255,0.3)',
+      borderRadius: 25,
+      paddingHorizontal: 10,
+      color: 'white',
+      marginVertical: 10
+  },
+  textbtn: {
+      fontSize: 16, 
+      color: 'white', 
+      justifyContent:'center',
+      alignItems:'center',
+
+  },
+  backgroundImage: {
+      flex: 1,
+      resizeMode: 'cover', // or 'stretch'
+  },
+  btnBackground: {
+      backgroundColor: '#1c313a',
+      borderRadius: 25,
+      paddingVertical: 10,
+      marginVertical: 20,
+      width: 300,
+  }
 });
 const mapStateToProps = (state, ownProps) => {
   // console.log('state:' + JSON.stringify(state));

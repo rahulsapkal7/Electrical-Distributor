@@ -17,6 +17,8 @@ import ShopkeeperHomePage from '../shopkeeper/ShopkeeperHomePage.js';
 import OtpScreen from '../shopkeeper/OtpScreen.js';
 import DistributorHomePage from '../distributor/DistributorHomePage.js';
 import MyProfileShopkeeper from '../shopkeeper/MyProfileShopkeeper.js';
+import BuyProductsShopkeeper from '../shopkeeper/BuyProductsShopkeeper.js';
+import AlertsPageShopkeeper from '../shopkeeper/AlertsPageShopkeeper.js';
 import OrderHistoryShopkeeper from '../shopkeeper/OrderHistoryShopkeeper.js';
 import PendingOrdersDistributor from '../distributor/PendingOrdersDistributor.js';
 import PendingDispatchOrdersDistributor from '../distributor/PendingDispatchOrdersDistributor.js';
@@ -40,6 +42,18 @@ const Stack = createStackNavigator({
   },
   ShopkeeperHomePage : {
     screen : ShopkeeperHomePage,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductsShopkeeper : {
+    screen : BuyProductsShopkeeper,
+    navigationOptions: {
+      header: null
+    }
+  },
+  AlertsPageShopkeeper : {
+    screen : AlertsPageShopkeeper,
     navigationOptions: {
       header: null
     }
