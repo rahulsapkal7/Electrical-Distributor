@@ -52,272 +52,53 @@ import {api} from '../../common/api';
     }
 }
 loginCall() {
-  this.setState({loading: true});
-                  this.props.navigation.navigate('DistributorHomePage');
-  
-
-
+    const {navigate} = this.props.navigation;
+    this.setState({loading: true});
                 // if (this.state.mobile === '') {
                 //     Alert.alert('Login', 'Enter a valid mobile number');
                 // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
                 //     Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
                 // } else {
                 //   console.log("valid",this.state);
-                //   const url = api() + 'CustLogin.php';
-                  
-                //         var data = new FormData()
-                //         // data.append('MobileNumber', this.state.mobile ),
-                //         // data.append('Password', this.state.password),
-                //         // data.append('UserType', "Customer"),
-                //         data.append('MobileNumber', "0123456789"),
-                //         data.append('Password', "pass1"),
-                //         data.append('UserType', "Customer"),
-                //         console.log("Data is --> ",JSON.stringify(data));
-                        
-                //         fetch(url, {
-                //             method: 'POST',
-                //                 body: data
-                           
-                //             })
-                //             .then(res => res.json())
-                //             // .then(function(response){
-                //             .then(function (response) {
-                //               console.log('resp -->'+response);
-                //                console.log('resp -->'+JSON.stringify(response));
-                //               console.log('resp -->'+response._bodyInit);
-                //               // alert('first then',JSON.stringify(response._bodyInit) );
-                //               if(response.status == '200'){
-                //                   // this.setState({loading: false});
-                //                   this.props.navigation.navigate('DistributorHomePage');
-                //               //   alert(response._bodyInit.message);
-                //               }else{
-                //                   console.log("status code not 200");
-                //               }
-                //             })
-                //             .catch(error => {
-                //               // this.setState({loading: false});
-                //               console.log('error:' + (error));
-                              
-                //           });
-                // // }
-
-
-    //                  const url = api() + 'CustLogin.php';
-
-    //   var data = new FormData()
-    //   data.append('MobileNumber', "0123456789"),
-    //   data.append('Password', "pass1"),
-    //   data.append('UserType', "Customer"),
-    //   console.log("Data is --> ",JSON.stringify(data));
-      
-    //   fetch(url, {
-    //       method: 'POST',
-    //           body: data
-            
-         
-    //       })
-    //       .then(function (response) {
-    //         console.log('resp -->'+response);
-    //          console.log('resp -->'+JSON.stringify(response));
-    //         console.log('resp -->'+response._bodyInit);
-    //         // alert('first then',JSON.stringify(response._bodyInit) );
-    //         if(response.status == '200'){
-    //             this.setState({loading: false});
-    //             this.props.navigation.navigate('DistributorHomePage');
-    //         //   alert(response._bodyInit.message);
-    //         }else{
-
-    //         }
-    //       })
-    //       .catch(error => {
-    //         this.setState({loading: false});
-    //         console.log('error:' + (error));
-            
-    //     });
-        //   .then(response => response.json())
-        // .then(function(response){
-        //     return response;
-        //   })
-        //   .then(function(data){
-        //     console.log('reult' + data);  
-        //     console.log('reult' + JSON.stringify(data));  
-            
-        //     return {
-        //     //   true
-        //     }
-        // });
-        // .then(result => {
-        //  return result.json()
-        // })
-        // .then(res => {
-        //    console.log('reult' + res);
-        //     res.result.map((status)=>{
-        //         console.log('error:' + status);
-        //     })
-        //       console.log('reult' + JSON.stringify(res));
-        //       this.setState({loading: false});
-        //        if (res.status === true) {
-        //         //   this.getUserId(res.access_token);
-        //         this.setState({loading: false});
-        //         // this.props.navigation.navigate('DistributorHomePage');
-        //       } else {
-        //           this.setState({loading: false});
-        //         //   this.props.navigation.navigate('DistributorHomePage');
-        //         //   Alert.alert('Login', "You Entered wrong mobile number or password");
-        //       }
-
-        //   })
-        //   .catch(error => {
-        //       this.setState({loading: false});
-        //       console.log('error:' + (error));
-              
-        //   });
-  
-    // Alert.alert('Login', this.state.mobile);
-    // this.props.navigation.navigate('ShopkeeperHomePage');
-    // if (this.state.mobile == 1 || this.state.mobile == '1' ) {
-    //         this.props.navigation.navigate('ShopkeeperHomePage');
-    //       } else{
-    //         this.props.navigation.navigate('DistributorHomePage');
-            
-    //       } 
-//       this.setState({loading: true});
-
-
-//    var data = new FormData();
-//               data.append('email', this.state.username);
-//               data.append('password', this.state.password);
-//                             console.log('data is -->'+JSON.stringify(data));
-//          fetch('http://180.149.245.182:8844/trainingapp/api/users/login', {
-//             method: "POST",
-//             body: data,
-//             })
-//             .then(function(response) {
-//                 console.log('resp -->'+response._bodyInit);
-//                 // alert('first then',JSON.stringify(response._bodyInit) );
-//                 if(response._bodyInit.status == '200'){
-//                   alert(response._bodyInit.message);
-//                 }
-                
-//             })
-//             // .then((responseData) => {
-//             //     console.log('Checker -->',JSON.stringify(responseData));
-//             //     alert('Checker -->',JSON.stringify(responseData));
-                
-//             // })
-//             .catch(function(error) {
-               
-//                 console.log('error ' + JSON.stringify(error));
-//                 console.error(error);
-//                 alert('Something went wrong. Please try again.');
-//             });                     
-
-
-    //   const url = api() + 'CustLogin.php';
-
-    //   var data = new FormData()
-    //   data.append('MobileNumber', "0123456789"),
-    //   data.append('Password', "pass1"),
-    //   data.append('UserType', "Customer"),
-    //   console.log("Data is --> ",JSON.stringify(data));
-      
-    //   fetch(url, {
-    //       method: 'POST',
-    //           body: data
-            
-         
-    //       })
-        //   .then(function (response) {
-        //     console.log('resp -->'+response);
-        //      console.log('resp -->'+JSON.stringify(response));
-        //     console.log('resp -->'+response._bodyInit);
-        //     // alert('first then',JSON.stringify(response._bodyInit) );
-        //     if(response._bodyInit.status == '200'){
-        //         this.setState({loading: false});
-        //         // this.props.navigation.navigate('DistributorHomePage');
-        //     //   alert(response._bodyInit.message);
-        //     }
-        //   })
-        //   .then(response => response.json())
-        // .then(function(response){
-        //     return response;
-        //   })
-        //   .then(function(data){
-        //     console.log('reult' + data);  
-        //     console.log('reult' + JSON.stringify(data));  
-            
-            // return {
-            // //   true
-            // }
-        // });
-        // .then(result => {
-        //  return result.json()
-        // }).then(res => {
-           // console.log('reult' + res);
-            // res.result.map((status)=>{
-            //     console.log('error:' + status);
-            // })
-            //   console.log('reult' + JSON.stringify(res));
-            //   this.setState({loading: false});
-            //    if (res.status === true) {
-            //     //   this.getUserId(res.access_token);
-            //     this.setState({loading: false});
-            //     // this.props.navigation.navigate('DistributorHomePage');
-            //   } else {
-            //       this.setState({loading: false});
-            //     //   this.props.navigation.navigate('DistributorHomePage');
-            //     //   Alert.alert('Login', "You Entered wrong mobile number or password");
-            //   }
-
-        //   })
-        //   .catch(error => {
-        //       this.setState({loading: false});
-        //       console.log('error:' + (error));
-              
-        //   });
-
-    //   const url = api() + 'CustLogin.php';
-
-    // const formData = new FormData();
-    // formData.append('MobileNumber', "0123456789"),
-    //   formData.append('Password', "pass1"),
-    //   formData.append('UserType', "Customer"),
-    // //  formData.append("MobileNumber", {}); //text data in key value pair form
-    //  fetch(
-    //     url, 
-    //  {
-    //  method: 'POST',
-    //  headers: {
-    //  'Accept': 'application/json',
-    //  'Content-Type': 'multipart/form-data'
-    //  },
-    //  body: formData,
-    //  }) 
-    //  .then((serviceResponse) => { return serviceResponse.json() } ) 
-    //  .catch((error) => console.warn("fetch error:", error))
-    //  .then((serviceResponse) => {
-    // console.log(JSON.stringify(serviceResponse));
-    // });
-
-//   }
+                  const url = api() + 'CustLogin.php';
+                        var data = new FormData()
+                        // data.append('MobileNumber', this.state.mobile ),
+                        // data.append('Password', this.state.password),
+                        // data.append('UserType', "Customer"),
+                        data.append('MobileNumber', "0123456789"),
+                        data.append('Password', "pass1"),
+                        data.append('UserType', "Customer"),
+                        console.log("Data is --> ",JSON.stringify(data));
+                        fetch(url, {
+                            method: 'POST',
+                                body: data
+                            })
+                            .then(res => res.json())
+                            .then(function (response) {
+                              console.log('resp -->'+response);
+                               console.log('resp -->'+JSON.stringify(response));
+                              if(response.status == true){
+                                  navigate('DistributorHomePage');
+                              }else{
+                                  console.log("status code not 200");
+                              }
+                            })
+                            .catch(error => {
+                              // this.setState({loading: false});
+                              console.log('error:' + (error));
+                          });
 
 }
 
 OpenRegister() {
   console.log("on click register1");
-  // this
-  // .props
-  // .navigation
-  // .goBack(null);
   this.props.navigation.navigate('Register');
-      
-      
       
 }
 
 
   render() {
-    // const {navigate} = this.props.navigation;
+   
     return (
       <View style={commonStyles.VWcontainer}>
                       <ScrollView
