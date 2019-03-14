@@ -7,6 +7,7 @@ import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import Header from '../../common/header';
 import {api} from '../../common/api';
+import Loader from '../../common/Loader.js';
 
 class VerifiedCustomers extends Component {
 
@@ -100,11 +101,7 @@ renderItem=({item})=>{
     return (
 
     <View style={styles.parentcontainer}>
-    {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Verified customers
-            </Text>
-          </View> */}
+   
           <Header
                 title={'Verified Customers'}
                 back={() => {
@@ -114,6 +111,7 @@ renderItem=({item})=>{
                   .goBack(null)
               }}/>
       <View style={styles.container}>
+      {/* <Loader visible={this.state.loading}/> */}
         <FlatList
           data={[
             {skName: 'Devin',shopName: 'Devin'},

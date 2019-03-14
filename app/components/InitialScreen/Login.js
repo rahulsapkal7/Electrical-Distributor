@@ -19,7 +19,7 @@ import {
     View,
     Image,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity,Picker
 } from 'react-native';
 import Header from '../../common/header';
 import commonStyles from '../../common/commonStyle';
@@ -29,6 +29,7 @@ import {connect} from 'react-redux';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import {api} from '../../common/api';
+import Loader from '../../common/Loader.js';
 
 
  class Login extends Component {
@@ -48,10 +49,12 @@ import {api} from '../../common/api';
         token :'',
         password: '',
         loading: false,
+        userType: "select",
         login1: {}
     }
 }
 loginCall() {
+<<<<<<< HEAD
   this.setState({loading: true});
                   this.props.navigation.navigate('ShopkeeperHomePage');
   
@@ -62,268 +65,81 @@ loginCall() {
                 // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
                 //     Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
                 // } else {
+=======
+    const {navigate} = this.props.navigation;
+    
+                if (this.state.mobile === '') {
+                    Alert.alert('Login', 'Enter a valid mobile number');
+                } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
+                    Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
+                }  else if (this.state.userType === undefined || this.state.userType === 'select') { //(!validators.RegularExpressionPassword(this.state.password))) {
+                    Alert.alert('Login', "Please select user type.");
+                } 
+                else {
+>>>>>>> 49c5e35c47722514315f1091af108b13f4a7979f
                 //   console.log("valid",this.state);
+                var url = ""
+                if (this.state.userType == "Customer") {
+                    url = api() + 'CustLogin.php';
+                } else {
+                    url = api() + 'AdminLogin.php';
+                }
                 //   const url = api() + 'CustLogin.php';
-                  
-                //         var data = new FormData()
-                //         // data.append('MobileNumber', this.state.mobile ),
-                //         // data.append('Password', this.state.password),
-                //         // data.append('UserType', "Customer"),
-                //         data.append('MobileNumber', "0123456789"),
-                //         data.append('Password', "pass1"),
-                //         data.append('UserType', "Customer"),
-                //         console.log("Data is --> ",JSON.stringify(data));
-                        
-                //         fetch(url, {
-                //             method: 'POST',
-                //                 body: data
-                           
-                //             })
-                //             .then(res => res.json())
-                //             // .then(function(response){
-                //             .then(function (response) {
-                //               console.log('resp -->'+response);
-                //                console.log('resp -->'+JSON.stringify(response));
-                //               console.log('resp -->'+response._bodyInit);
-                //               // alert('first then',JSON.stringify(response._bodyInit) );
-                //               if(response.status == '200'){
-                //                   // this.setState({loading: false});
-                //                   this.props.navigation.navigate('DistributorHomePage');
-                //               //   alert(response._bodyInit.message);
-                //               }else{
-                //                   console.log("status code not 200");
-                //               }
-                //             })
-                //             .catch(error => {
-                //               // this.setState({loading: false});
-                //               console.log('error:' + (error));
-                              
-                //           });
-                // // }
-
-
-    //                  const url = api() + 'CustLogin.php';
-
-    //   var data = new FormData()
-    //   data.append('MobileNumber', "0123456789"),
-    //   data.append('Password', "pass1"),
-    //   data.append('UserType', "Customer"),
-    //   console.log("Data is --> ",JSON.stringify(data));
-      
-    //   fetch(url, {
-    //       method: 'POST',
-    //           body: data
-            
-         
-    //       })
-    //       .then(function (response) {
-    //         console.log('resp -->'+response);
-    //          console.log('resp -->'+JSON.stringify(response));
-    //         console.log('resp -->'+response._bodyInit);
-    //         // alert('first then',JSON.stringify(response._bodyInit) );
-    //         if(response.status == '200'){
-    //             this.setState({loading: false});
-    //             this.props.navigation.navigate('DistributorHomePage');
-    //         //   alert(response._bodyInit.message);
-    //         }else{
-
-    //         }
-    //       })
-    //       .catch(error => {
-    //         this.setState({loading: false});
-    //         console.log('error:' + (error));
-            
-    //     });
-        //   .then(response => response.json())
-        // .then(function(response){
-        //     return response;
-        //   })
-        //   .then(function(data){
-        //     console.log('reult' + data);  
-        //     console.log('reult' + JSON.stringify(data));  
-            
-        //     return {
-        //     //   true
-        //     }
-        // });
-        // .then(result => {
-        //  return result.json()
-        // })
-        // .then(res => {
-        //    console.log('reult' + res);
-        //     res.result.map((status)=>{
-        //         console.log('error:' + status);
-        //     })
-        //       console.log('reult' + JSON.stringify(res));
-        //       this.setState({loading: false});
-        //        if (res.status === true) {
-        //         //   this.getUserId(res.access_token);
-        //         this.setState({loading: false});
-        //         // this.props.navigation.navigate('DistributorHomePage');
-        //       } else {
-        //           this.setState({loading: false});
-        //         //   this.props.navigation.navigate('DistributorHomePage');
-        //         //   Alert.alert('Login', "You Entered wrong mobile number or password");
-        //       }
-
-        //   })
-        //   .catch(error => {
-        //       this.setState({loading: false});
-        //       console.log('error:' + (error));
-              
-        //   });
-  
-    // Alert.alert('Login', this.state.mobile);
-    // this.props.navigation.navigate('ShopkeeperHomePage');
-    // if (this.state.mobile == 1 || this.state.mobile == '1' ) {
-    //         this.props.navigation.navigate('ShopkeeperHomePage');
-    //       } else{
-    //         this.props.navigation.navigate('DistributorHomePage');
-            
-    //       } 
-//       this.setState({loading: true});
-
-
-//    var data = new FormData();
-//               data.append('email', this.state.username);
-//               data.append('password', this.state.password);
-//                             console.log('data is -->'+JSON.stringify(data));
-//          fetch('http://180.149.245.182:8844/trainingapp/api/users/login', {
-//             method: "POST",
-//             body: data,
-//             })
-//             .then(function(response) {
-//                 console.log('resp -->'+response._bodyInit);
-//                 // alert('first then',JSON.stringify(response._bodyInit) );
-//                 if(response._bodyInit.status == '200'){
-//                   alert(response._bodyInit.message);
-//                 }
-                
-//             })
-//             // .then((responseData) => {
-//             //     console.log('Checker -->',JSON.stringify(responseData));
-//             //     alert('Checker -->',JSON.stringify(responseData));
-                
-//             // })
-//             .catch(function(error) {
-               
-//                 console.log('error ' + JSON.stringify(error));
-//                 console.error(error);
-//                 alert('Something went wrong. Please try again.');
-//             });                     
-
-
-    //   const url = api() + 'CustLogin.php';
-
-    //   var data = new FormData()
-    //   data.append('MobileNumber', "0123456789"),
-    //   data.append('Password', "pass1"),
-    //   data.append('UserType', "Customer"),
-    //   console.log("Data is --> ",JSON.stringify(data));
-      
-    //   fetch(url, {
-    //       method: 'POST',
-    //           body: data
-            
-         
-    //       })
-        //   .then(function (response) {
-        //     console.log('resp -->'+response);
-        //      console.log('resp -->'+JSON.stringify(response));
-        //     console.log('resp -->'+response._bodyInit);
-        //     // alert('first then',JSON.stringify(response._bodyInit) );
-        //     if(response._bodyInit.status == '200'){
-        //         this.setState({loading: false});
-        //         // this.props.navigation.navigate('DistributorHomePage');
-        //     //   alert(response._bodyInit.message);
-        //     }
-        //   })
-        //   .then(response => response.json())
-        // .then(function(response){
-        //     return response;
-        //   })
-        //   .then(function(data){
-        //     console.log('reult' + data);  
-        //     console.log('reult' + JSON.stringify(data));  
-            
-            // return {
-            // //   true
-            // }
-        // });
-        // .then(result => {
-        //  return result.json()
-        // }).then(res => {
-           // console.log('reult' + res);
-            // res.result.map((status)=>{
-            //     console.log('error:' + status);
-            // })
-            //   console.log('reult' + JSON.stringify(res));
-            //   this.setState({loading: false});
-            //    if (res.status === true) {
-            //     //   this.getUserId(res.access_token);
-            //     this.setState({loading: false});
-            //     // this.props.navigation.navigate('DistributorHomePage');
-            //   } else {
-            //       this.setState({loading: false});
-            //     //   this.props.navigation.navigate('DistributorHomePage');
-            //     //   Alert.alert('Login', "You Entered wrong mobile number or password");
-            //   }
-
-        //   })
-        //   .catch(error => {
-        //       this.setState({loading: false});
-        //       console.log('error:' + (error));
-              
-        //   });
-
-    //   const url = api() + 'CustLogin.php';
-
-    // const formData = new FormData();
-    // formData.append('MobileNumber', "0123456789"),
-    //   formData.append('Password', "pass1"),
-    //   formData.append('UserType', "Customer"),
-    // //  formData.append("MobileNumber", {}); //text data in key value pair form
-    //  fetch(
-    //     url, 
-    //  {
-    //  method: 'POST',
-    //  headers: {
-    //  'Accept': 'application/json',
-    //  'Content-Type': 'multipart/form-data'
-    //  },
-    //  body: formData,
-    //  }) 
-    //  .then((serviceResponse) => { return serviceResponse.json() } ) 
-    //  .catch((error) => console.warn("fetch error:", error))
-    //  .then((serviceResponse) => {
-    // console.log(JSON.stringify(serviceResponse));
-    // });
-
-//   }
-
+                        var data = new FormData()
+                        data.append('MobileNumber', this.state.mobile ),
+                        data.append('Password', this.state.password),
+                        data.append('UserType', this.state.userType),
+                        // data.append('MobileNumber', "0123456789"),
+                        // data.append('Password', "pass1"),
+                        // data.append('UserType', "Customer"),
+                        console.log("Data is --> ",JSON.stringify(data));
+                        this.setState({loading: true});
+                        var ThisView = this;
+                        fetch(url, {
+                            method: 'POST',
+                                body: data
+                            })
+                            .then(res => res.json())
+                            .then(function (response) {
+                                ThisView.setState({loading: false});
+                              console.log('resp -->'+response);
+                               console.log('resp -->'+JSON.stringify(response));
+                              if(response.status == true){
+                                if (ThisView.state.userType == "Customer") {
+                                    navigate('ShopkeeperHomePage');
+                                } else {
+                                    navigate('DistributorHomePage');
+                                }
+                                 
+                              }else{
+                                  console.log("status code not 200");
+                                  Alert.alert('Login Failed', response.message);
+                              }
+                            })
+                            .catch(error => {
+                                ThisView.setState({loading: false});
+                              console.log('error:' + (error));
+                          });
+                        }
 }
 
 OpenRegister() {
   console.log("on click register1");
-  // this
-  // .props
-  // .navigation
-  // .goBack(null);
   this.props.navigation.navigate('Register');
-      
-      
       
 }
 
 
   render() {
-    // const {navigate} = this.props.navigation;
+   
     return (
       <View style={commonStyles.VWcontainer}>
+          <Loader visible={this.state.loading}/>
                       <ScrollView
                           contentContainerStyle={{
                           width: window.width
                       }}>
+                      
                           <View style={commonStyles.SWcontainer}>
                               <View style={styles.logoBg}>
                                   <Text style={styles.bigWhite}>Electrical</Text>
@@ -342,6 +158,17 @@ OpenRegister() {
                                       onChangeText={(text) => this.setState({password: text})}
                                       underlineColorAndroid={'transparent'} ></TextInput>
       
+      <Picker
+  selectedValue={this.state.userType}
+  mode="dropdown"
+  style={commonStyles.editbox}
+  onValueChange={(itemValue, itemIndex) =>
+    this.setState({userType: itemValue})
+  }>
+  <Picker.Item label="Please select type" value="select" />
+  <Picker.Item label="Customer" value="Customer" />
+  <Picker.Item label="Distributor" value="Admin" />
+</Picker>
                               <TouchableOpacity
                                   style={{
                                   alignItems: 'center',
@@ -388,7 +215,17 @@ const styles = StyleSheet.create({
           fontSize: 45,  
           marginTop : 40,      
       },
-      
+      dropdownbox: {
+        width: 300,
+        height: 40, 
+        borderRadius: 5,
+        borderColor: 'white',
+        borderWidth:1,
+        paddingHorizontal: 10,
+        color: 'white',
+        marginVertical: 10,
+        marginBottom:30
+    },
 
 
 
