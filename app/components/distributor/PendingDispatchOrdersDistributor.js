@@ -7,6 +7,7 @@ import {api} from '../../common/api';
 
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+import Loader from '../../common/Loader.js';
 
  class PendingDispatchOrdersDistributor extends Component {
 
@@ -43,14 +44,14 @@ import {NavigationActions} from 'react-navigation';
             .then(res => {
               console.log("response is",JSON.stringify(res));
               if(res.status){
-
-              }
                 this.setState({
                   StoreData: res.data,
                   loading : false
                     // error: res.error || null,                   
                     // refreshing: false
                 });
+              }
+                
             })
             .catch(error => {
     
@@ -184,19 +185,11 @@ renderItem=({item})=>{
                   .navigation
                   .goBack(null)
               }}/>
-    {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Pending orders
-            </Text>
-          </View> */}
+   
       <View style={styles.container}>
+      <Loader visible={this.state.loading}/>
+
         <FlatList
-          // data={[
-          //   {PropreitorName: 'Devin',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Jackson',SoldToShopName: 'Devin',productName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'James',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Joel',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'}, 
-          // ]}
           data={this.state.StoreData}
           renderItem={this.renderItem}
         />

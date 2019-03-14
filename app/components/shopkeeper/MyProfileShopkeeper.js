@@ -33,11 +33,6 @@ class MyProfileShopkeeper extends Component {
         return (
 
             <View style={styles.parent_container}>
-            {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              My profile
-            </Text>
-          </View> */}
           <Header
                 title={'My profile'}
                 back={() => {
@@ -47,25 +42,11 @@ class MyProfileShopkeeper extends Component {
                   .goBack(null)
               }}/>
             <View style={styles.container}>
-                {/* <Button title="Go To Home Screen"
-                    onPress={() => this.props.navigation.navigate('Home',
-                    {
-                        itemId:86,
-                        otherParam:'Navigation working...',
-                    }
-                    )} /> */}
-                {/* <Logo/> */}
                 <View style={styles.firstContainer}>
                 <Image style={{ width: 70, height: 70 }}
                     source={require('../../assets/images/default-profile.png')}></Image>
-
                     </View>
-
-                {/* <Text style={styles.logotext}>Welcome</Text> */}
                 <View style={styles.secondContainer}> 
-
-                  
-
                 <TextInput style={styles.editbox} placeholder="Name" 
                 placeholderTextColor="black" 
                 ></TextInput>

@@ -19,7 +19,7 @@ import {
     View,
     Image,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity,Picker
 } from 'react-native';
 import Header from '../../common/header';
 import commonStyles from '../../common/commonStyle';
@@ -29,6 +29,7 @@ import {connect} from 'react-redux';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import {api} from '../../common/api';
+import Loader from '../../common/Loader.js';
 
 
  class Login extends Component {
@@ -48,46 +49,65 @@ import {api} from '../../common/api';
         token :'',
         password: '',
         loading: false,
+        userType: "select",
         login1: {}
     }
 }
 loginCall() {
     const {navigate} = this.props.navigation;
-    this.setState({loading: true});
-                // if (this.state.mobile === '') {
-                //     Alert.alert('Login', 'Enter a valid mobile number');
-                // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
-                //     Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
-                // } else {
+    
+                if (this.state.mobile === '') {
+                    Alert.alert('Login', 'Enter a valid mobile number');
+                } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
+                    Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
+                }  else if (this.state.userType === undefined || this.state.userType === 'select') { //(!validators.RegularExpressionPassword(this.state.password))) {
+                    Alert.alert('Login', "Please select user type.");
+                } 
+                else {
                 //   console.log("valid",this.state);
-                  const url = api() + 'CustLogin.php';
+                var url = ""
+                if (this.state.userType == "Customer") {
+                    url = api() + 'CustLogin.php';
+                } else {
+                    url = api() + 'AdminLogin.php';
+                }
+                //   const url = api() + 'CustLogin.php';
                         var data = new FormData()
-                        // data.append('MobileNumber', this.state.mobile ),
-                        // data.append('Password', this.state.password),
+                        data.append('MobileNumber', this.state.mobile ),
+                        data.append('Password', this.state.password),
+                        data.append('UserType', this.state.userType),
+                        // data.append('MobileNumber', "0123456789"),
+                        // data.append('Password', "pass1"),
                         // data.append('UserType', "Customer"),
-                        data.append('MobileNumber', "0123456789"),
-                        data.append('Password', "pass1"),
-                        data.append('UserType', "Customer"),
                         console.log("Data is --> ",JSON.stringify(data));
+                        this.setState({loading: true});
+                        var ThisView = this;
                         fetch(url, {
                             method: 'POST',
                                 body: data
                             })
                             .then(res => res.json())
                             .then(function (response) {
+                                ThisView.setState({loading: false});
                               console.log('resp -->'+response);
                                console.log('resp -->'+JSON.stringify(response));
                               if(response.status == true){
-                                  navigate('DistributorHomePage');
+                                if (ThisView.state.userType == "Customer") {
+                                    navigate('ShopkeeperHomePage');
+                                } else {
+                                    navigate('DistributorHomePage');
+                                }
+                                 
                               }else{
                                   console.log("status code not 200");
+                                  Alert.alert('Login Failed', response.message);
                               }
                             })
                             .catch(error => {
-                              // this.setState({loading: false});
+                                ThisView.setState({loading: false});
                               console.log('error:' + (error));
                           });
-
+                        }
 }
 
 OpenRegister() {
@@ -101,10 +121,12 @@ OpenRegister() {
    
     return (
       <View style={commonStyles.VWcontainer}>
+          <Loader visible={this.state.loading}/>
                       <ScrollView
                           contentContainerStyle={{
                           width: window.width
                       }}>
+                      
                           <View style={commonStyles.SWcontainer}>
                               <View style={styles.logoBg}>
                                   <Text style={styles.bigWhite}>Electrical</Text>
@@ -123,6 +145,17 @@ OpenRegister() {
                                       onChangeText={(text) => this.setState({password: text})}
                                       underlineColorAndroid={'transparent'} ></TextInput>
       
+      <Picker
+  selectedValue={this.state.userType}
+  mode="dropdown"
+  style={commonStyles.editbox}
+  onValueChange={(itemValue, itemIndex) =>
+    this.setState({userType: itemValue})
+  }>
+  <Picker.Item label="Please select type" value="select" />
+  <Picker.Item label="Customer" value="Customer" />
+  <Picker.Item label="Distributor" value="Admin" />
+</Picker>
                               <TouchableOpacity
                                   style={{
                                   alignItems: 'center',
@@ -169,7 +202,17 @@ const styles = StyleSheet.create({
           fontSize: 45,  
           marginTop : 40,      
       },
-      
+      dropdownbox: {
+        width: 300,
+        height: 40, 
+        borderRadius: 5,
+        borderColor: 'white',
+        borderWidth:1,
+        paddingHorizontal: 10,
+        color: 'white',
+        marginVertical: 10,
+        marginBottom:30
+    },
 
 
 

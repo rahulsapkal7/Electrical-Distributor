@@ -7,6 +7,7 @@ import {api} from '../../common/api';
 
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+import Loader from '../../common/Loader.js';
 
  class PendingOrdersDistributor extends Component {
 
@@ -184,19 +185,9 @@ renderItem=({item})=>{
                   .navigation
                   .goBack(null)
               }}/>
-    {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Pending orders
-            </Text>
-          </View> */}
       <View style={styles.container}>
+      <Loader visible={this.state.loading}/>
         <FlatList
-          // data={[
-          //   {PropreitorName: 'Devin',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Jackson',SoldToShopName: 'Devin',productName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'James',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Joel',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'}, 
-          // ]}
           data={this.state.StoreData}
           renderItem={this.renderItem}
         />
