@@ -53,19 +53,17 @@ import Loader from '../../common/Loader.js';
         login1: {}
     }
 }
-loginCall() {
-<<<<<<< HEAD
-  this.setState({loading: true});
-                  this.props.navigation.navigate('ShopkeeperHomePage');
+loginCall() { 
+//   this.setState({loading: true});
+//                   this.props.navigation.navigate('ShopkeeperHomePage');
   
 
 
-                // if (this.state.mobile === '') {
-                //     Alert.alert('Login', 'Enter a valid mobile number');
-                // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
-                //     Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
-                // } else {
-=======
+//                 // if (this.state.mobile === '') {
+//                 //     Alert.alert('Login', 'Enter a valid mobile number');
+//                 // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
+//                 //     Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
+//                 // } else { 
     const {navigate} = this.props.navigation;
     
                 if (this.state.mobile === '') {
@@ -75,8 +73,7 @@ loginCall() {
                 }  else if (this.state.userType === undefined || this.state.userType === 'select') { //(!validators.RegularExpressionPassword(this.state.password))) {
                     Alert.alert('Login', "Please select user type.");
                 } 
-                else {
->>>>>>> 49c5e35c47722514315f1091af108b13f4a7979f
+                else { 
                 //   console.log("valid",this.state);
                 var url = ""
                 if (this.state.userType == "Customer") {
