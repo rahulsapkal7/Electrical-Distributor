@@ -61,29 +61,29 @@ loginCall() {
     // .UserData(2);
     // navigate('ShopkeeperHomePage');
     
-                // if (this.state.mobile === '') {
-                //     Alert.alert('Login', 'Enter a valid mobile number');
-                // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
-                //     Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
-                // }  else if (this.state.userType === undefined || this.state.userType === 'select') { //(!validators.RegularExpressionPassword(this.state.password))) {
-                //     Alert.alert('Login', "Please select user type.");
-                // } 
-                // else {
-                // //   console.log("valid",this.state);
+                if (this.state.mobile === '') {
+                    Alert.alert('Login', 'Enter a valid mobile number');
+                } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
+                    Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
+                }  else if (this.state.userType === undefined || this.state.userType === 'select') { //(!validators.RegularExpressionPassword(this.state.password))) {
+                    Alert.alert('Login', "Please select user type.");
+                } 
+                else {
+                //   console.log("valid",this.state);
                 var url = ""
                 if (this.state.userType == "Customer") {
                     url = api() + 'CustLogin.php';
                 } else {
                     url = api() + 'AdminLogin.php';
                 }
-                  const url = api() + 'CustLogin.php';
+                //   const url = api() + 'CustLogin.php';
                         var data = new FormData()
-                        // data.append('MobileNumber', this.state.mobile ),
-                        // data.append('Password', this.state.password),
-                        // data.append('UserType', this.state.userType),
-                        data.append('MobileNumber', "0123456789"),
-                        data.append('Password', "pass1"),
-                        data.append('UserType', "Customer"),
+                        data.append('MobileNumber', this.state.mobile ),
+                        data.append('Password', this.state.password),
+                        data.append('UserType', this.state.userType),
+                        // data.append('MobileNumber', "0123456789"),
+                        // data.append('Password', "pass1"),
+                        // data.append('UserType', "Customer"),
                         // data.append('MobileNumber', "1234567890"),
                         // data.append('Password', "password"),
                         // data.append('UserType', "Admin"),
@@ -99,17 +99,14 @@ loginCall() {
                                 ThisView.setState({loading: false});
                               console.log('resp -->'+response);
                                console.log('resp -->'+JSON.stringify(response));
-                               ThisView.props.UserData(response.data[0].UserID);
                               if(response.status == true){
                                 if (ThisView.state.userType == "Customer") {
-                                    
-                                    
-                
                                     // ThisView.props.UserData(3)
+                               ThisView.props.UserData(response.data[0].UserID);
                                     navigate('ShopkeeperHomePage');
                                 } else {
-                                    // navigate('DistributorHomePage');
-                                    navigate('ShopkeeperHomePage');
+                                    navigate('DistributorHomePage');
+                                    // navigate('ShopkeeperHomePage');
                                     
                                 }
                                  
@@ -122,7 +119,7 @@ loginCall() {
                                 ThisView.setState({loading: false});
                               console.log('error:' + (error));
                           });
-                        // }
+                        }
 }
 
 OpenRegister() {

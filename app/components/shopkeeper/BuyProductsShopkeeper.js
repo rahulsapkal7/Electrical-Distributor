@@ -70,65 +70,25 @@ import Loader from '../../common/Loader.js';
 
             
             <View style={styles.productParent}>
-               
-               <View style={styles.prodcust_container1}>
-               <Image
-          source={{ uri: "https://n4.sdlcdn.com/imgs/f/n/v/eveready_600-dd3f6.jpg" }}
-          style={{ width: 100, height:100 }}
-          resizeMode="cover"
-        />
+               {/* <View style={styles.prodcust_container1}> */}
+                    <Image
+                source={{ uri: "https://n4.sdlcdn.com/imgs/f/n/v/eveready_600-dd3f6.jpg" }}
+                style={{ width: 100, height:100 }}
+                resizeMode="cover"
+              />
+                   {/* </View> */}
 
-                   </View>
-
-        <TouchableOpacity style={styles.prodcust_container2} 
-        >
-           
-            <View style={styles.card_outer}>
-                 
-                {/* <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Product ID : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.ProductID}
-                </Text>
-                </View> */}
-
-{/* <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        SKU Code : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.SKUCode}
-                </Text>
-                </View> */}
-                
-                <View style={styles.horizontal_view}>
-
-        {/* <Text style={styles.txtStyle_fourteen}>
-                    Product name : 
-                </Text> */}
+        {/* <TouchableOpacity style={styles.prodcust_container2}   >
+            <View style={styles.card_outer}> */}
+                <View style={styles.horizontal_view1}>
                 <Text style={styles.txtStyle_sixteen}>
                     {' '+item.ProductName+'('+item.MfgName+')'}
                 </Text>
                 </View>
-
-                {/* <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-            Manufacturer : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.MfgName}
-                </Text>
-                </View> */}
                 <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        MRP : 
-                </Text>
+                   <Text style={styles.txtStyle_fourteen}>
+                     MRP : 
+                  </Text>
                 <Text style={styles.txtStyle_sixteen}>
                     {' '+item.MRPPrice}
                 </Text>
@@ -136,38 +96,27 @@ import Loader from '../../common/Loader.js';
                 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-        Selling price : 
+          Selling price : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
                     {' '+item.SellingPrice}
                 </Text>
                 </View>
-
-
-                {/* <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Landing price : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.LandingPrice}
-                </Text>
-                </View> */}
-
                 <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Model no : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.ModelNo}
-                </Text>
+              <Text style={styles.txtStyle_fourteen}>
+              Model no : 
+                      </Text>
+                      <Text style={styles.txtStyle_sixteen}>
+                          {' '+item.ModelNo}
+                      </Text>
                 </View>
+                <TouchableOpacity style={styles.btnBackground}  >
 
-                
+                    <Text style={styles.txtStyle_fourteen}>Buy</Text>
+                </TouchableOpacity>
             </View> 
-        </TouchableOpacity>
-        </View>
+        // </TouchableOpacity>
+        // </View>
             )
     }
 
@@ -189,12 +138,7 @@ import Loader from '../../common/Loader.js';
               }}>
       <View style={styles.container}>
         <FlatList
-          // data={[
-          //   {PropreitorName: 'Devin',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Jackson',SoldToShopName: 'Devin',productName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'James',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Joel',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'}, 
-          // ]}
+         
           data={this.state.StoreData}
           renderItem={this.renderItem}
           numColumns={2}
@@ -221,6 +165,17 @@ const styles = StyleSheet.create({
   productParent:{
     flex:1,
     flexDirection: 'column', 
+    backgroundColor: '#4db6ac',
+    alignItems: 'center',
+    justifyContent: 'center', 
+    // borderRadius:2,
+    // borderColor: 'red',
+    margin : 10,
+    padding : 15,
+    borderWidth:1,
+    borderRadius:2,
+    borderColor: '#ddd',
+    
   },
     btnBackground: {
         backgroundColor: 'skyblue',
@@ -230,18 +185,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 10, 
         marginTop:10,
-        width: '40%',
+        width: '50%',
     },
   container: {
    flex: 1,
    paddingTop: 22,
-   height: '90%',  
+   
+   
   },
   prodcust_container1: {  
     flexDirection:'column',
     alignItems: 'center',
     justifyContent: 'center', 
-    height: '60%',  
+    // height: '60%',  
   },
   prodcust_container2: {  
    flexDirection:'column',
@@ -278,6 +234,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  horizontal_view1: { 
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop:20,
+  },
+  
   txtStyle_fourteen: {  
     fontSize: 14,
     color:'white'
@@ -285,7 +248,8 @@ const styles = StyleSheet.create({
   txtStyle_sixteen: {  
     fontSize: 16,
     color:'white',
-    fontWeight:'500'
+    fontWeight:'500',
+    
   },
   txtStyle_eighteen: {  
     fontSize: 18,
@@ -308,7 +272,7 @@ const styles = StyleSheet.create({
         marginRight: 5, 
         marginTop: 10,
         flexDirection:'column',
-        height: '80%', 
+        // height: '80%', 
   },
 })
  

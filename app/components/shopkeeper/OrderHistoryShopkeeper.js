@@ -1,12 +1,35 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet, Text,Alert, ScrollView,View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {UserData} from '../../redux/actions/UserData_action';
+import {api} from '../../common/api';
 import {NavigationActions} from 'react-navigation';
 import Header from '../../common/header';
+import Loader from '../../common/Loader.js';
 
 class OrderHistoryShopkeeper extends Component {
+
+  constructor(props) {
+    super(props);
+
+    console.log('inside order history');
+
+    this.state = {
+      // selectedArea : this.props.navigation.state.params.selectedArea,
+      loading : false,
+      StoreData : []
+    }
+
+    console.log("props are --> ",JSON.stringify(props));
+   
+  }
+
+  componentDidMount() {
+    
+        this.getOrderHistoryOfUser();
+    
+      }
 
 renderItem=({item})=>{
         return(
@@ -18,35 +41,80 @@ renderItem=({item})=>{
                 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-                    Product code : 
+        Product name : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.prodSkuCode}
+                    {' '+item.ProductName+"("+item.MfgName+")"}
                 </Text>
                 </View>
 
 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-                    Product amount : 
+        Price : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.prodSkuCode}
+                    {' '+item.Price}
                 </Text>
                 </View>
 
                 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-                    Purchase date : 
+        Quantity : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.prodSkuCode}
+                    {' '+item.Qty}
                 </Text>
                 </View>
+
+                <View style={styles.horizontal_view}>
+
+<Text style={styles.txtStyle_fourteen}>
+Date : 
+        </Text>
+        <Text style={styles.txtStyle_sixteen}>
+            {' '+item.PODate}
+        </Text>
+        </View>
             </View> 
         </TouchableOpacity>
             )
+    }
+
+    getOrderHistoryOfUser = () =>{
+      const url = api() + 'CustomerOrderHistory.php';
+       console.log(url);
+      
+      this.setState({loading: true});
+  
+      var data = new FormData();
+      // data.append('UserID',this.props.UserId ),
+      
+      data.append('UserID', "2"),
+      fetch(url,{method: 'post',
+      body: data
+    })
+          .then(response => response.json())
+          .then(res => {
+            console.warn("response is",JSON.stringify(res));
+      this.setState({loading: false});
+      
+            if(res.status){
+              this.setState({
+                StoreData: res.data,
+              });
+            }else{
+              Alert.alert('Order History', "Something went wrong");
+            }
+             
+          })
+          .catch(error => {
+  
+              console.warn('error:' + (error));
+              this.setState({ loading: false});
+          });
+  
     }
 
   render() {
@@ -61,27 +129,19 @@ renderItem=({item})=>{
                   .navigation
                   .goBack(null)
               }}/>
-    {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Order history
-            </Text>
-          </View> */}
+   <Loader visible={this.state.loading}/>
+                <ScrollView contentContainerStyle={{
+                width: window.width
+              }}>
       <View style={styles.container}>
-        <FlatList
-          data={[
-            {prodSkuCode: 'Devin',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'Jackson',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'James',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'Joel',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'John',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'Jillian',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'Jimmy',prodAmt: 'Devin',purchaseDate: 'Devin'},
-            {prodSkuCode: 'Julie',prodAmt: 'Devin',purchaseDate: 'Devin'},
-          ]}
+      <FlatList
+         
+          data={this.state.StoreData}
           renderItem={this.renderItem}
+          numColumns={2}
         />
       </View>
-
+      </ScrollView>
       </View>
     );
   }
@@ -147,7 +207,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginBottom:10,
         marginLeft: 5,
-        backgroundColor:'#ddd',
+        backgroundColor:'#4db6ac',
         flex: 1,        
         marginRight: 5, 
         marginTop: 10,
@@ -157,8 +217,9 @@ const styles = StyleSheet.create({
 })
  
 const mapStateToProps = (state, ownProps) => {
-  // console.log('state:' + JSON.stringify(state));
-  return {}
+  
+  console.log('state:' + JSON.stringify(state));
+  return {UserId: state.UserData_red.UserId}
 }
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
