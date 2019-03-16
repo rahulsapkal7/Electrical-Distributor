@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Button,
     Image,
+    Alert,
     TextInput,ScrollView,TouchableOpacity
                 
 } from "react-native";
@@ -15,6 +16,7 @@ import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import Header from '../../common/header';
 import {api} from '../../common/api';
+import Loader from '../../common/Loader.js';
 
 // 
 class MyProfileShopkeeper extends Component {
@@ -29,6 +31,7 @@ class MyProfileShopkeeper extends Component {
             userData:'',
             loading : false,
             editable : false,
+            UserID : ""
            
         }
         this.editProfile = this
@@ -41,6 +44,8 @@ class MyProfileShopkeeper extends Component {
     } 
     componentWillReceiveProps(newProps){
         console.log('newProps:' + JSON.stringify(newProps));
+       
+        
     }
     componentDidMount() {
         this.getMyProfileCustomer();
@@ -55,7 +60,7 @@ class MyProfileShopkeeper extends Component {
         console.log(url);
        this.setState({loading: true});
        var data = new FormData();
-       data.append('UserId', this.props.UserId ),
+       data.append('UserID', this.props.UserId ),
        data.append('PropreitorName', this.state.PropreitorName ),
        data.append('PrimaryMobileNo', this.state.PrimaryMobileNo ),
        data.append('AltMobileNo', this.state.AltMobileNo ),
@@ -71,13 +76,17 @@ class MyProfileShopkeeper extends Component {
        
        console.log("data before hit ",JSON.stringify(data) );
        fetch(url,{method: 'post',body:data})
-           // .then(response => response.json())
+           .then(response => response.json())
            .then(res => {
              console.log("response is",res);
-             
+             this.setState({loading: false});
              console.log("response is",JSON.stringify(res));
              if(res.status){
-               Alert.alert('My Profile', res.message);
+               Alert.alert('My Profile', res.message,[{text: 'OK', 
+               onPress: () => {
+                   console.log('OK Pressed');
+                   this.props.navigation.goBack(null)}}]
+               , {cancelable: false},);
                
              }else{
                Alert.alert('My Profile', "Something went wrong");
@@ -87,7 +96,7 @@ class MyProfileShopkeeper extends Component {
            .catch(error => {
    
                console.log('error:' + (error));
-               this.setState({error, loading: false});
+               this.setState({ loading: false});
            });
       }
       getMyProfileCustomer = () =>{
@@ -96,64 +105,65 @@ class MyProfileShopkeeper extends Component {
         
         this.setState({loading: true});
         var data = new FormData()
-        data.append('UserId', this.props.UserId ),
+        console.log("this.props.UserId",this.props.UserId);
+        data.append('UserID',this.props.UserId ),
         console.log("data before hit ",JSON.stringify(data) );
         fetch(url,{method: 'post',body:data})
-            // .then(response => response.json())
+            .then(response => response.json())
             .then(res => {
               console.log("response is",res);
-              
               console.log("response is",JSON.stringify(res));
-              res = {
-                "status": true,
-                "message": "Profile detail",
-                "data": {
-                    "UserID": "2",
-                    "PropreitorName": "Sneha",
-                    "PrimaryMobileNo": "2589647123",
-                    "AltMobileNo": "2589635147",
-                    "Status": "A",
-                    "ShopName": "ABC",
-                    "FirmType": "type",
-                    "Address1": "Write Address1",
-                    "Address2": "Write Address2",
-                    "Landmark": "Write Landmark",
-                    "Timings": "2 am",
-                    "EMailID": "email@.com",
-                    "Turnover": "12000",
-                    "GSTNo": "12jhghj",
-                    "PANNo": "12jhghj",
-                    "PANDoc": "",
-                    "AadhaarNo": "12jhghj",
-                    "AadhaarDoc": ""
-                }
-            }
+            //   res = {
+            //     "status": true,
+            //     "message": "Profile detail",
+            //     "data": {
+            //         "UserID": "2",
+            //         "PropreitorName": "Sneha",
+            //         "PrimaryMobileNo": "2589647123",
+            //         "AltMobileNo": "2589635147",
+            //         "Status": "A",
+            //         "ShopName": "ABC",
+            //         "FirmType": "type",
+            //         "Address1": "Write Address1",
+            //         "Address2": "Write Address2",
+            //         "Landmark": "Write Landmark",
+            //         "Timings": "2 am",
+            //         "EMailID": "email@.com",
+            //         "Turnover": "12000",
+            //         "GSTNo": "12jhghj",
+            //         "PANNo": "12jhghj",
+            //         "PANDoc": "",
+            //         "AadhaarNo": "12jhghj",
+            //         "AadhaarDoc": ""
+            //     }
+            // }
               if(res.status){
                 this.setState({
-                    userData: res.data,
+                    userData: res.data[0],
                     loading : false,
-                    PropreitorName: res.data.PropreitorName,
-                    PrimaryMobileNo : res.data.PrimaryMobileNo,
-                    AltMobileNo: res.data.AltMobileNo,
-                    Status : res.data.Status,
-                    ShopName : res.data.ShopName,
-                    FirmType: res.data.FirmType,
-                    Address1 : res.data.Address1,
-                    Address2: res.data.Address2,
-                    Landmark : res.data.Landmark,
-                    Timings:res.data.Timings,
-                    EMailID: res.data.EMailID,
-                    Turnover : res.data.Turnover,
-                    // GSTNo: res.data.GSTNo,
-                    // PANNo : res.data.PANNo,
-                    // AadhaarNo: res.data.AadhaarNo,
-                    // Turnover : res.data.Turnover,
+                    PropreitorName: res.data[0].PropreitorName,
+                    PrimaryMobileNo : res.data[0].PrimaryMobileNo,
+                    AltMobileNo: res.data[0].AltMobileNo,
+                    Status : res.data[0].Status,
+                    ShopName : res.data[0].ShopName,
+                    FirmType: res.data[0].FirmType,
+                    Address1 : res.data[0].Address1,
+                    Address2: res.data[0].Address2,
+                    Landmark : res.data[0].Landmark,
+                    Timings:res.data[0].Timings,
+                    EMailID: res.data[0].EMailID,
+                    Turnover : res.data[0].Turnover,
+                    // GSTNo: res.data[0].GSTNo,
+                    // PANNo : res.data[0].PANNo,
+                    // AadhaarNo: res.data[0].AadhaarNo,
+                    // Turnover : res.data[0].Turnover,
                       // error: res.error || null,                   
                       // refreshing: false
                   });
                   console.log("after set ",this.state);
               }else{
                 Alert.alert('My Profile', "Something went wrong");
+                this.setState({loading: false});
               }
                 
             })
@@ -176,6 +186,7 @@ class MyProfileShopkeeper extends Component {
                   .navigation
                   .goBack(null)
               }}/>
+                <Loader visible={this.state.loading}/>
                 <ScrollView contentContainerStyle={{
                 width: window.width
               }}>

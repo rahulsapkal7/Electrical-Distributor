@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, Text,View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../../common/header';
@@ -7,6 +7,7 @@ import {api} from '../../common/api';
 
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+import Loader from '../../common/Loader.js';
 
  class AlertsPageShopkeeper extends Component {
 
@@ -16,7 +17,6 @@ import {NavigationActions} from 'react-navigation';
     console.log('inside pending order distributor');
 
     this.state = {
-      // selectedArea : this.props.navigation.state.params.selectedArea,
       loading : false,
       StoreData : []
     }
@@ -27,12 +27,12 @@ import {NavigationActions} from 'react-navigation';
 
   componentDidMount() {
     
-        this.getPendingOrderList();
+        this.GetAlertListShopkeeper();
     
       }
 
 
-      getPendingOrderList = () =>{
+      GetAlertListShopkeeper = () =>{
         const url = api() + 'GetAlertLists.php';
          console.log(url);
         
@@ -41,16 +41,16 @@ import {NavigationActions} from 'react-navigation';
         fetch(url,{method: 'post'})
             .then(response => response.json())
             .then(res => {
-              //console.warn("response is",JSON.stringify(res));
+              console.warn("response is inside alerts page ",JSON.stringify(res));
               if(res.status){
-
-              }
                 this.setState({
                   StoreData: res.data,
                   loading : false
-                    // error: res.error || null,                   
-                    // refreshing: false
                 });
+              }else{
+                Alert.alert('My Alerts', "Something went wrong");
+              }
+                
             })
             .catch(error => {
     
@@ -63,6 +63,7 @@ import {NavigationActions} from 'react-navigation';
 
       renderItem=({item})=>{
         return(
+
         <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} 
         >
            
@@ -114,24 +115,17 @@ import {NavigationActions} from 'react-navigation';
                   .navigation
                   .goBack(null)
               }}/>
-    {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Pending orders
-            </Text>
-          </View> */}
+     <Loader visible={this.state.loading}/>
+                <ScrollView contentContainerStyle={{
+                width: window.width
+              }}>
       <View style={styles.container}>
         <FlatList
-          // data={[
-          //   {PropreitorName: 'Devin',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Jackson',SoldToShopName: 'Devin',productName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'James',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'},
-          //   {PropreitorName: 'Joel',SoldToShopName: 'Devin',ProductName: 'Devin',SKUCode: 'Devin',Qty: 'Devin'}, 
-          // ]}
           data={this.state.StoreData}
           renderItem={this.renderItem}
         />
       </View>
-
+              </ScrollView>
       </View>
     );
   }

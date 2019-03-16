@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, Text, View,TouchableOpacity,Image } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../../common/header';
@@ -7,6 +7,7 @@ import {api} from '../../common/api';
 
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+import Loader from '../../common/Loader.js';
 
  class BuyProductsShopkeeper extends Component {
 
@@ -42,20 +43,23 @@ import {NavigationActions} from 'react-navigation';
             .then(response => response.json())
             .then(res => {
               console.log("response is",JSON.stringify(res));
+              this.setState({
+                loading : false
+              })
               if(res.status){
-
-              }
                 this.setState({
                   StoreData: res.data,
-                  loading : false
-                    // error: res.error || null,                   
-                    // refreshing: false
+                    
                 });
+              }else{
+                Alert.alert('Products', "Something went wrong");
+              }
+               
             })
             .catch(error => {
     
                 console.log('error:' + (error));
-                this.setState({error, loading: false});
+                this.setState({ loading: false});
             });
     
       }
@@ -69,7 +73,7 @@ import {NavigationActions} from 'react-navigation';
                
                <View style={styles.prodcust_container1}>
                <Image
-          source={{ uri: `https://images.pexels.com/photos/671557/pexels-photo-671557.jpeg` }}
+          source={{ uri: "https://n4.sdlcdn.com/imgs/f/n/v/eveready_600-dd3f6.jpg" }}
           style={{ width: 100, height:100 }}
           resizeMode="cover"
         />
@@ -179,11 +183,10 @@ import {NavigationActions} from 'react-navigation';
                   .navigation
                   .goBack(null)
               }}/>
-    {/* <View style={styles.menuTextContainer}>
-            <Text style={styles.txtMain}>
-              Pending orders
-            </Text>
-          </View> */}
+   <Loader visible={this.state.loading}/>
+                <ScrollView contentContainerStyle={{
+                width: window.width
+              }}>
       <View style={styles.container}>
         <FlatList
           // data={[
@@ -197,7 +200,7 @@ import {NavigationActions} from 'react-navigation';
           numColumns={2}
         />
       </View>
-
+              </ScrollView>
       </View>
     );
   }

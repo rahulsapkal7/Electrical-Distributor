@@ -5,26 +5,38 @@ import {Platform, StyleSheet, Text, View,ScrollView,Button,Image,TouchableOpacit
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../../common/header';
-import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
+// import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+// import SwipeALot from 'react-native-swipe-a-lot'
 
 
 
  class ShopkeeperHomePage extends Component {
-  state = {
-    scrollEnabled: true,
-    type: 1,
+
+  constructor(props) {
+    super(props);
+
+    
+this.state = {
+  isOpen: false,
+  scrollEnabled: true,
+  type: 1,
+  selectedItem: 'About',
+      
+}
   }
+
+  
 
   _renderItem = ({ item }) => {
     return (
-      <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
-      <View
-        style={styles.verticalContainer}>
+      <TouchableOpacity  style={styles.verticalContainer} onPress={ () => this.actionOnRow(item)}>
+      {/* <View
+        style={styles.verticalContainer}> */}
         <Text style={styles.textbtn}>{item.menuName}</Text>
-      </View>
-      </TouchableWithoutFeedback>
+      {/* </View> */}
+      </TouchableOpacity>
     );
   };
 
@@ -41,7 +53,7 @@ import {NavigationActions} from 'react-navigation';
   render() {
     return (
         <View style={styles.container}>
-         <Header
+         <Header hideBack={"true"}
                 title={'Proton enterprise'}
                 />
            <View style={styles.firstContainer}>
@@ -54,34 +66,16 @@ import {NavigationActions} from 'react-navigation';
           , { menuName: 'Settings' }]}
           renderItem={this._renderItem}
           horizontal={true}
-        ItemSeparatorComponent={() => <View style={{margin: 4}}/>}
+        // ItemSeparatorComponent={() => <View style={{margin: 4}}/>}
         />
                </View>
-               <View style={styles.secondContainer}>
+              
 
-                <Swiper
-            ref='ViewPager'
-            loop={true}
-            autoplay={true}
-            interval={2000}
-            onPageScroll={(e) => console.log(e, 'onPageScroll')}
-            onPageScrollStateChanged={(e) => console.log(e, 'onPageScrollStateChanged')}
-            onPageSelected={(e) => console.log(e, 'onPageSelected')}
-            scrollEnabled={this.state.scrollEnabled}
-            style={styles.container}>
-            
-            <View style={{ backgroundColor: 'red', padding: 0.5 }}> 
-            
-            </View> 
+               <Image  style={{width: '100%',height: 340,}}  source = {{uri : "https://www.hplindia.com/photos/shares/BlogImages/382x232_0001_Electrical_outlet.jpg"}} ></Image>
 
-            <Image source={require('../../assets/images/isco_one.jpg')} style={styles.backgroundImage}>
-                 
-                 </Image>
-            <Image source={require('../../assets/images/isco_two.jpg')} style={styles.backgroundImage}>
-                 
-            </Image>
-          </Swiper >
-               </View>
+              
+          
+               
                <View style={styles.thirdContainer}>
 
                <TouchableOpacity style={styles.verticalContainer}  onPress = {()=> this.props.navigation.navigate('BuyProductsShopkeeper')}>
@@ -111,12 +105,24 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#4db6ac'
   },
+  swipercontainer: {
+    height: "30%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red'
+},
   firstContainer:{
       flex:2,
-      justifyContent: 'center'
+      // justifyContent: 'center'
   },
   secondContainer:{
       flex:6
+  },
+  slide1: {
+    height: 240,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   thirdContainer:{
       flex:2,
@@ -128,7 +134,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       borderColor:'#ddd',
       borderWidth:1,
-      width:100,
+      width:120,
       flex:1,
       margin:10,
       borderRadius:2,

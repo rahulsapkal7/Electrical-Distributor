@@ -57,12 +57,15 @@ class Header extends Component {
   render() {
   return (
     <View style={styles.container}>
+    {this.props.hideBack == "true" ? 
+    <View style={styles.Backcontainer}></View>
+    : 
       <TouchableOpacity style={styles.Backcontainer} onPress={this.props.back}>
-      {/* <Text >Back</Text> */}
       <Image source={require('../assets/images/back.png')} style={styles.image_style}/>
-
-        {/* <Icon name="chevron-left" style={styles.TxtIP} color="#818285"/> */}
       </TouchableOpacity>
+    }
+     
+
       <View style={styles.Titlecontainer}>
         <Text style={styles.text}>
           {this.props.title}

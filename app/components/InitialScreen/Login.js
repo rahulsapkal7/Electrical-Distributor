@@ -56,10 +56,11 @@ import Loader from '../../common/Loader.js';
 loginCall() {
     const {navigate} = this.props.navigation;
     // AsyncStorage.setItem('@UserId:key', "2");
-    this
-    .props
-    .UserData(2);
-    navigate('ShopkeeperHomePage');
+    // this
+    // .props
+    // .UserData(2);
+    // navigate('ShopkeeperHomePage');
+    
                 // if (this.state.mobile === '') {
                 //     Alert.alert('Login', 'Enter a valid mobile number');
                 // } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
@@ -69,55 +70,58 @@ loginCall() {
                 // } 
                 // else {
                 // //   console.log("valid",this.state);
-                // var url = ""
-                // if (this.state.userType == "Customer") {
-                //     url = api() + 'CustLogin.php';
-                // } else {
-                //     url = api() + 'AdminLogin.php';
-                // }
-                //   const url = api() + 'AdminLogin.php';
-                //         var data = new FormData()
-                //         // data.append('MobileNumber', this.state.mobile ),
-                //         // data.append('Password', this.state.password),
-                //         // data.append('UserType', this.state.userType),
-                //         data.append('MobileNumber', "0123456789"),
-                //         data.append('Password', "pass1"),
-                //         data.append('UserType', "Customer"),
-                //         // data.append('MobileNumber', "1234567890"),
-                //         // data.append('Password', "password"),
-                //         // data.append('UserType', "Admin"),
-                //         console.log("Data is --> ",JSON.stringify(data));
-                //         this.setState({loading: true});
-                //         var ThisView = this;
-                //         fetch(url, {
-                //             method: 'POST',
-                //                 body: data
-                //             })
-                //             .then(res => res.json())
-                //             .then(function (response) {
-                //                 ThisView.setState({loading: false});
-                //               console.log('resp -->'+response);
-                //                console.log('resp -->'+JSON.stringify(response));
-                //               if(response.status == true){
-                //                 if (ThisView.state.userType == "Customer") {
+                var url = ""
+                if (this.state.userType == "Customer") {
+                    url = api() + 'CustLogin.php';
+                } else {
+                    url = api() + 'AdminLogin.php';
+                }
+                  const url = api() + 'CustLogin.php';
+                        var data = new FormData()
+                        // data.append('MobileNumber', this.state.mobile ),
+                        // data.append('Password', this.state.password),
+                        // data.append('UserType', this.state.userType),
+                        data.append('MobileNumber', "0123456789"),
+                        data.append('Password', "pass1"),
+                        data.append('UserType', "Customer"),
+                        // data.append('MobileNumber', "1234567890"),
+                        // data.append('Password', "password"),
+                        // data.append('UserType', "Admin"),
+                        console.log("Data is --> ",JSON.stringify(data));
+                        this.setState({loading: true});
+                        var ThisView = this;
+                        fetch(url, {
+                            method: 'POST',
+                                body: data
+                            })
+                            .then(res => res.json())
+                            .then(function (response) {
+                                ThisView.setState({loading: false});
+                              console.log('resp -->'+response);
+                               console.log('resp -->'+JSON.stringify(response));
+                               ThisView.props.UserData(response.data[0].UserID);
+                              if(response.status == true){
+                                if (ThisView.state.userType == "Customer") {
                                     
-                // this
-                // .props
-                // .UserData(res.userID);
-                //                     navigate('ShopkeeperHomePage');
-                //                 } else {
-                //                     navigate('DistributorHomePage');
-                //                 }
+                                    
+                
+                                    // ThisView.props.UserData(3)
+                                    navigate('ShopkeeperHomePage');
+                                } else {
+                                    // navigate('DistributorHomePage');
+                                    navigate('ShopkeeperHomePage');
+                                    
+                                }
                                  
-                //               }else{
-                //                   console.log("status code not 200");
-                //                   Alert.alert('Login Failed', response.message);
-                //               }
-                //             })
-                //             .catch(error => {
-                //                 ThisView.setState({loading: false});
-                //               console.log('error:' + (error));
-                //           });
+                              }else{
+                                  console.log("status code not 200");
+                                  Alert.alert('Login Failed', response.message);
+                              }
+                            })
+                            .catch(error => {
+                                ThisView.setState({loading: false});
+                              console.log('error:' + (error));
+                          });
                         // }
 }
 
@@ -229,7 +233,7 @@ const styles = StyleSheet.create({
 
 });
 const mapStateToProps = (state, ownProps) => {
-    // console.log('state:' + JSON.stringify(state));
+    console.log('mapStateToProps login:' + JSON.stringify(state));
     return {}
 }
 
