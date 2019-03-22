@@ -22,6 +22,7 @@ import AlertsPageShopkeeper from '../shopkeeper/AlertsPageShopkeeper.js';
 import OrderHistoryShopkeeper from '../shopkeeper/OrderHistoryShopkeeper.js';
 import PendingOrdersDistributor from '../distributor/PendingOrdersDistributor.js';
 import PendingDispatchOrdersDistributor from '../distributor/PendingDispatchOrdersDistributor.js';
+import RegisterPage2 from '../InitialScreen/RegisterPage2.js';
 
 import VerifiedCustomers from '../distributor/VerifiedCustomers.js';
 
@@ -36,6 +37,12 @@ const Stack = createStackNavigator({
   },
   Register:{
     screen : Register,
+    navigationOptions: {
+      header: null
+    }
+  },
+  RegisterPage2 : {
+    screen : RegisterPage2,
     navigationOptions: {
       header: null
     }
