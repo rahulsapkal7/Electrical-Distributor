@@ -39,7 +39,7 @@ import {NavigationActions} from 'react-navigation';
         // .props
         // .navigation
         // .goBack(null);
-        this.props.navigation.navigate('ShopkeeperHomePage');
+        this.props.navigation.navigate('ShopkeeperHomePage2');
       }
     render() {
         return (

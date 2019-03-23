@@ -103,7 +103,7 @@ loginCall() {
                                console.log('resp -->'+JSON.stringify(response));
                               if(response.status == true){
                                 if (ThisView.state.userType == "Customer") {
-                                    navigate('ShopkeeperHomePage');
+                                    navigate('ShopkeeperHomePage2');
                                 } else {
                                     navigate('DistributorHomePage');
                                 }

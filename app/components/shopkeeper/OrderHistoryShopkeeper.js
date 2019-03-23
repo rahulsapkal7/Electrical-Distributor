@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, FlatList, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import commonStyles from '../../common/commonStyle';
 import {UserData} from '../../redux/actions/UserData_action';
 import {api} from '../../common/api';
 import {NavigationActions} from 'react-navigation';
@@ -76,9 +77,25 @@ Date :
             {' '+item.PODate}
         </Text>
         </View>
+
+                <View style={styles.horizontal_view}>
+      
+      <TouchableOpacity style={styles.btnBackground1}
+      onPress= {()=> this.showPDF()}>
+          <Text style={commonStyles.textbtn}>Invoice</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity style={styles.btnBackground1}
+      onPress= {()=> this.showPDF()}>
+          <Text style={commonStyles.textbtn}>Purchase order</Text>
+      </TouchableOpacity>
+        </View>
             </View> 
         </TouchableOpacity>
             )
+    }
+    showPDF() { 
+      this.props.navigation.navigate('PDFExample');
     }
 
     getOrderHistoryOfUser = () =>{
@@ -154,11 +171,29 @@ const styles = StyleSheet.create({
     flexDirection: 'column', 
     height: '100%',  
   },
+
+  btnBackground: {
+     backgroundColor:'skyblue',
+     borderRadius: 25,
+     paddingVertical: 10,
+     marginVertical: 10,
+     marginHorizontal:10,
+     width: 300,
+ },
   container: {
    flex: 1,
    paddingTop: 22,
    height: '90%',  
   },
+
+  btnBackground1: {
+     backgroundColor:'skyblue',
+     borderRadius: 25,
+     paddingVertical: 10,
+     marginVertical: 10,
+     marginHorizontal:10,
+     flex:1
+ },
   txtMain:{
     fontSize: 16,
     color:'white',
