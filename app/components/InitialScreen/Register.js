@@ -20,6 +20,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {UserData} from '../../redux/actions/UserData_action';
@@ -28,7 +29,7 @@ import commonStyles from '../../common/commonStyle';
 import {api} from '../../common/api';
 import Loader from '../../common/Loader.js';
 var ImagePicker = require('react-native-image-picker');
-
+var validators = require('../../lib/validators').validators();
 
  class Register extends Component {
   constructor(props) {
@@ -43,8 +44,10 @@ var ImagePicker = require('react-native-image-picker');
       PrimaryMobileNo: '',
       AltMobileNo: '',
       Password: '',
+      ReEnterPassword : '',
       ShopName: '',
       Firmtype: '',
+      // Status : '',
       Address1 :'',
       Address2 :'',
       Landmark:'',
@@ -54,6 +57,7 @@ var ImagePicker = require('react-native-image-picker');
       GST_No :'',
       PAN_No:'',
       Aadhar_No : '',
+      // userType : '',
       loading: false,
       filePath: {},
     }
@@ -81,43 +85,52 @@ var ImagePicker = require('react-native-image-picker');
         alert(response.customButton);
       } else {
         let source = response;
+        console.log("Sending base 64 data ",response.data);
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
         this.setState({
           filePath: source,
         });
+        // Alert.alert("Register",this.state.filePath.data)
       }
     });
   };
   registerCall() {           
     console.log("on click registerCall",this.state);
-    if (this.state.PropreitorName === '') {
+    if (this.state.PropreitorName === undefined || (!validators.RegularExpressionName(this.state.PropreitorName))) {
       Alert.alert('Register', 'Enter a valid Name');
-    }else if(this.state.PrimaryMobileNo === ''){
+    }else if(this.state.PrimaryMobileNo === undefined || (!validators.RegularExpressionMobileNumber(this.state.PrimaryMobileNo))  ){
       Alert.alert('Register', 'Enter a valid primary mobile number');
-    }else if(this.state.AltMobileNo === ''){
+    }else if(this.state.AltMobileNo === undefined || (!validators.RegularExpressionMobileNumber(this.state.AltMobileNo))){
       Alert.alert('Register', 'Enter a valid alternative mobile number');
-    }else if(this.state.Password === ''){
-      Alert.alert('Register', 'Enter a valid Password');
-    }else if(this.state.ShopName === ''){
+    }else if(this.state.Password === undefined || (!validators.RegularExpressionPassword(this.state.Password))){
+      Alert.alert('Register',"Your password should contain \n Minimum 7 characters including atleast 1 number");
+    }else if(this.state.Password != this.state.ReEnterPassword ){
+      Alert.alert('Register',"Password does not matched");
+    }
+    else if(this.state.ShopName === undefined){
       Alert.alert('Register', 'Enter a valid shopName');
-    }else if(this.state.Firmtype === ''){
+    }else if(this.state.Firmtype === undefined){
       Alert.alert('Register', 'Enter a valid Firmtype');
-    }else if(this.state.Address1 === ''){
+    }
+    // else if(this.state.Status === undefined){
+    //   Alert.alert('Register', 'Enter a valid Status');
+    // }
+    else if(this.state.Address1 === undefined){
       Alert.alert('Register', 'Enter a valid first Address');
-    }else if(this.state.Address2 === ''){
+    }else if(this.state.Address2 === undefined){
       Alert.alert('Register', 'Enter a valid second Address');
-    }else if(this.state.Landmark === ''){
+    }else if(this.state.Landmark === undefined){
       Alert.alert('Register', 'Enter a valid Landmark');
-    }else if(this.state.Timing === ''){
+    }else if(this.state.Timing === undefined){
       Alert.alert('Register', 'Enter a valid Timing');
-    }else if(this.state.EmailId === ''){
+    }else if(this.state.EmailId === undefined || (!validators.RegularExpressionEmail(this.state.EmailId))){
       Alert.alert('Register', 'Enter a valid EmailId');
-    }else if(this.state.Turnover === ''){
+    }else if(this.state.Turnover === undefined){
       Alert.alert('Register', 'Enter a valid Turnover');
-    }else if(this.state.GST_No === ''){
+    }else if(this.state.GST_No === undefined){
       Alert.alert('Register', 'Enter a valid GST Number');
-    }else if(this.state.PAN_No === ''){
+    }else if(this.state.PAN_No === undefined){
       Alert.alert('Register', 'Enter a valid PAN Number');
     // }else if(this.state.Aadhar_No === ''){
     //   Alert.alert('Login', 'Enter a valid mobile number');
@@ -133,6 +146,7 @@ var ImagePicker = require('react-native-image-picker');
      data.append('Password', this.state.Password ),
      data.append('ShopName', this.state.ShopName ),
      data.append('FirmType', this.state.Firmtype ),
+     data.append('Status', "" ),
      data.append('Address1', this.state.Address1 ),
      data.append('Address2', this.state.Address2 ),
      data.append('Landmark', this.state.Landmark ),
@@ -141,10 +155,17 @@ var ImagePicker = require('react-native-image-picker');
      data.append('Turnover', this.state.Turnover ),
      data.append('GSTNo', this.state.GST_No ),
      data.append('PANNo', this.state.PAN_No ),
-     data.append('AadharNo', this.state.Aadhar_No ),
+     data.append('AadhaarNo', this.state.Aadhar_No ),
+     data.append('UserType', "Customer" ),
+     
+     data.append('GSTDoc', this.state.filePath.data ),
+    //  data.append('PANDoc', "" ),
+    //  data.append('AadhaarDoc', "" ),
+     
+     
      console.log("data before hit ",JSON.stringify(data) );
      fetch(url,{method: 'post',body:data})
-        //  .then(response => response.json())
+         .then(response => response.json())
          .then(res => {
            console.log("response is",res);
            console.log("response is",JSON.stringify(res));
@@ -157,8 +178,10 @@ var ImagePicker = require('react-native-image-picker');
             , {cancelable: false},);
                console.log("after set ",this.state);
            }else{
-             Alert.alert('Register', "Something went wrong");
-             this.setState({loading: false});
+            //  Alert.alert('Register', "Something went wrong");
+             Alert.alert('Register', res.message);
+
+            this.setState({loading: false});
            }
              
          })
@@ -188,13 +211,6 @@ var ImagePicker = require('react-native-image-picker');
                   .goBack(null)
               }}/>
            <Loader visible={this.state.loading}/>
-              
-                        {/* <ActivityIndicator
-                            ref='loader'
-                            animating={this.state.loading}
-                            style={{position : 'absolute',alignSelf : 'center',justifyContent :'center',marginTop : '40%',zIndex : 10}}
-                            size="large"/> */}
-      
               <ScrollView contentContainerStyle={{
                 width: window.width
               }}>
@@ -203,14 +219,17 @@ var ImagePicker = require('react-native-image-picker');
                                     placeholderTextColor="white"  
                                       underlineColorAndroid={'transparent'} ></TextInput>
                                 
-                                <TextInput style={commonStyles.editbox} placeholder="Primary Mobile No " onChangeText={(text) => this.setState({PrimaryMobileNo: text})}
+                                <TextInput style={commonStyles.editbox} placeholder="Primary Mobile No "  onChangeText={(text) => this.setState({PrimaryMobileNo: text})}
                                     placeholderTextColor="white" 
                                       underlineColorAndroid={'transparent'} ></TextInput>
                                 
                                 <TextInput style={commonStyles.editbox} placeholder="Alternative Mobile No " onChangeText={(text) => this.setState({AltMobileNo: text})}
                                     placeholderTextColor="white"  
                                       underlineColorAndroid={'transparent'} ></TextInput>
-                                  <TextInput style={commonStyles.editbox} placeholder="Password" onChangeText={(text) => this.setState({Password: text})}
+                                  <TextInput style={commonStyles.editbox} secureTextEntry={true} placeholder="Password" onChangeText={(text) => this.setState({Password: text})}
+                                    placeholderTextColor="white"   
+                                      underlineColorAndroid={'transparent'} ></TextInput>
+                                      <TextInput style={commonStyles.editbox} secureTextEntry={true} placeholder="ReEnter Password" onChangeText={(text) => this.setState({ReEnterPassword: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
                 <TextInput style={commonStyles.editbox} placeholder="Shop Name" onChangeText={(text) => this.setState({ShopName: text})}
@@ -220,7 +239,9 @@ var ImagePicker = require('react-native-image-picker');
                               <TextInput style={commonStyles.editbox} placeholder="Firm type" onChangeText={(text) => this.setState({Firmtype: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
-                              
+                               {/* <TextInput style={commonStyles.editbox} placeholder="Status" onChangeText={(text) => this.setState({Status: text})}
+                                    placeholderTextColor="white"   
+                                      underlineColorAndroid={'transparent'} ></TextInput> */}
                               <TextInput style={commonStyles.editbox} placeholder="Address1" onChangeText={(text) => this.setState({Address1: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
@@ -248,6 +269,16 @@ var ImagePicker = require('react-native-image-picker');
                                       <TextInput style={commonStyles.editbox} placeholder="Aadhar No" onChangeText={(text) => this.setState({Aadhar_No: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
+                                          {/* <Picker  selectedValue={this.state.userType}
+                                              mode="dropdown"
+                                              style={commonStyles.editbox}
+                                              onValueChange={(itemValue, itemIndex) =>
+                                                this.setState({userType: itemValue})
+                                              }>
+                                              <Picker.Item label="Please select type" value="select" />
+                                              <Picker.Item label="Customer" value="Customer" />
+                                              <Picker.Item label="Distributor" value="Admin" />
+                                            </Picker> */}
                                       {/* <TouchableOpacity marginTop="10"  onPress= {()=> {console.log("Comming Soon");Alert.alert('Register', 'Comming Soon');}} > */}
                                       <TouchableOpacity marginTop="10"   onPress={this.chooseFile.bind(this)} >
                                         <Text style={commonStyles.editbox}>Upload GST Document</Text>

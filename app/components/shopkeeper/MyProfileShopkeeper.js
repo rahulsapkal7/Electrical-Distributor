@@ -17,6 +17,7 @@ import {NavigationActions} from 'react-navigation';
 import Header from '../../common/header';
 import {api} from '../../common/api';
 import Loader from '../../common/Loader.js';
+var validators = require('../../lib/validators').validators();
 
 // 
 class MyProfileShopkeeper extends Component {
@@ -55,6 +56,45 @@ class MyProfileShopkeeper extends Component {
         this.setState({editable: true});
       }
       saveProfile(){
+        if (this.state.PropreitorName === undefined || (!validators.RegularExpressionName(this.state.PropreitorName))) {
+            Alert.alert('Register', 'Enter a valid Name');
+          }else if(this.state.PrimaryMobileNo === undefined || (!validators.RegularExpressionMobileNumber(this.state.PrimaryMobileNo))  ){
+            Alert.alert('Register', 'Enter a valid primary mobile number');
+          }else if(this.state.AltMobileNo === undefined || (!validators.RegularExpressionMobileNumber(this.state.AltMobileNo))){
+            Alert.alert('Register', 'Enter a valid alternative mobile number');
+          }
+        //   else if(this.state.Password === undefined || (!validators.RegularExpressionPassword(this.state.Password))){
+        //     Alert.alert('Register',"Your password should contain \n Minimum 7 characters including atleast 1 number");
+        //   }else if(this.state.Password != this.state.ReEnterPassword ){
+        //     Alert.alert('Register',"Password does not matched");
+        //   }
+          else if(this.state.ShopName === undefined){
+            Alert.alert('Register', 'Enter a valid shopName');
+          }else if(this.state.FirmType === undefined){
+            Alert.alert('Register', 'Enter a valid FirmType');
+          }
+          // else if(this.state.Status === undefined){
+          //   Alert.alert('Register', 'Enter a valid Status');
+          // }
+          else if(this.state.Address1 === undefined){
+            Alert.alert('Register', 'Enter a valid first Address');
+          }else if(this.state.Address2 === undefined){
+            Alert.alert('Register', 'Enter a valid second Address');
+          }else if(this.state.Landmark === undefined){
+            Alert.alert('Register', 'Enter a valid Landmark');
+          }else if(this.state.Timing === undefined){
+            Alert.alert('Register', 'Enter a valid Timing');
+          }else if(this.state.EmailId === undefined || (!validators.RegularExpressionEmail(this.state.EmailId))){
+            Alert.alert('Register', 'Enter a valid EmailId');
+          }else if(this.state.Turnover === undefined){
+            Alert.alert('Register', 'Enter a valid Turnover');
+          }else if(this.state.GST_No === undefined){
+            Alert.alert('Register', 'Enter a valid GST Number');
+          }else if(this.state.PAN_No === undefined){
+            Alert.alert('Register', 'Enter a valid PAN Number');
+          // }else if(this.state.Aadhar_No === ''){
+          //   Alert.alert('Login', 'Enter a valid mobile number');
+          }else{
         console.log('saveProfile profile:',this.state );
         const url = api() + 'UpdateCustProfile.php';
         console.log(url);
@@ -73,7 +113,9 @@ class MyProfileShopkeeper extends Component {
        data.append('Timings', this.state.Timings ),
        data.append('EMailID', this.state.EMailID ),
        data.append('Turnover', this.state.Turnover ),
-       
+       data.append('GSTNo', this.state.GSTNo ),
+       data.append('PANNo', this.state.PANNo ),
+       data.append('AadhaarNo', this.state.AadhaarNo ),
        console.log("data before hit ",JSON.stringify(data) );
        fetch(url,{method: 'post',body:data})
            .then(response => response.json())
@@ -98,6 +140,7 @@ class MyProfileShopkeeper extends Component {
                console.log('error:' + (error));
                this.setState({ loading: false});
            });
+        }
       }
       getMyProfileCustomer = () =>{
         const url = api() + 'ViewCustMyProfile.php';
@@ -153,9 +196,9 @@ class MyProfileShopkeeper extends Component {
                     Timings:res.data[0].Timings,
                     EMailID: res.data[0].EMailID,
                     Turnover : res.data[0].Turnover,
-                    // GSTNo: res.data[0].GSTNo,
-                    // PANNo : res.data[0].PANNo,
-                    // AadhaarNo: res.data[0].AadhaarNo,
+                    GSTNo: res.data[0].GSTNo,
+                    PANNo : res.data[0].PANNo,
+                    AadhaarNo: res.data[0].AadhaarNo,
                     // Turnover : res.data[0].Turnover,
                       // error: res.error || null,                   
                       // refreshing: false
@@ -220,12 +263,12 @@ class MyProfileShopkeeper extends Component {
                     ></TextInput>
                      <TextInput style={styles.editbox} defaultValue={this.state.Turnover} editable={this.state.editable} onChangeText={(text) => this.setState({Turnover: text})}
                 ></TextInput>
-                {/* <TextInput style={styles.editbox} defaultValue={this.state.GSTNo}  editable={this.state.editable} onChangeText={(text) => this.setState({GSTNo: text})}
+                <TextInput style={styles.editbox} defaultValue={this.state.GSTNo}  editable={this.state.editable} onChangeText={(text) => this.setState({GSTNo: text})}
                     placeholderTextColor="black" ></TextInput>
                 <TextInput style={styles.editbox} defaultValue={this.state.PANNo}  editable={this.state.editable} onChangeText={(text) => this.setState({PANNo: text})}
                     placeholderTextColor="black" ></TextInput>
                 <TextInput style={styles.editbox} defaultValue={this.state.AadhaarNo}  editable={this.state.editable} onChangeText={(text) => this.setState({AadhaarNo: text})}
-                    placeholderTextColor="black" ></TextInput> */}
+                    placeholderTextColor="black" ></TextInput>
               { this.state.editable ?  
                 <TouchableOpacity style={styles.btnBackground} onPress= {()=> this.saveProfile()} >
                     <Text style={styles.textbtn}>Save</Text>

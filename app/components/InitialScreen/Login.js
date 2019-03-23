@@ -78,7 +78,7 @@ loginCall() {
                 }
                 //   const url = api() + 'CustLogin.php';
                         var data = new FormData()
-                        data.append('MobileNumber', this.state.mobile ),
+                        data.append('PrimaryMobileNo', this.state.mobile ),
                         data.append('Password', this.state.password),
                         data.append('UserType', this.state.userType),
                         // data.append('MobileNumber', "0123456789"),
