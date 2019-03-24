@@ -59,6 +59,7 @@ var validators = require('../../lib/validators').validators();
       Aadhar_No : '',
       // userType : '',
       loading: false,
+      showImage : false,
       filePath: {},
     }
   }
@@ -74,7 +75,7 @@ var validators = require('../../lib/validators').validators();
       },
     };
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
  
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -84,12 +85,14 @@ var validators = require('../../lib/validators').validators();
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
+
         let source = response;
-        console.log("Sending base 64 data ",response.data);
+        // console.log("Sending base 64 data ",response.data);
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
         this.setState({
           filePath: source,
+          showImage : true
         });
         // Alert.alert("Register",this.state.filePath.data)
       }
@@ -158,7 +161,7 @@ var validators = require('../../lib/validators').validators();
      data.append('AadhaarNo', this.state.Aadhar_No ),
      data.append('UserType', "Customer" ),
      
-     data.append('GSTDoc', this.state.filePath.data ),
+    //  data.append('GSTDoc', this.state.filePath.data ),
     //  data.append('PANDoc', "" ),
     //  data.append('AadhaarDoc', "" ),
      
@@ -174,7 +177,10 @@ var validators = require('../../lib/validators').validators();
             Alert.alert('Register', res.message,[{text: 'OK', 
             onPress: () => {
                 console.log('OK Pressed');
-                this.props.navigation.goBack(null)}}]
+                // this.props.navigation.goBack(null)}}]
+                this.props.navigation.navigate(Login)}}]
+                
+                
             , {cancelable: false},);
                console.log("after set ",this.state);
            }else{
@@ -283,12 +289,13 @@ var validators = require('../../lib/validators').validators();
                                       <TouchableOpacity marginTop="10"   onPress={this.chooseFile.bind(this)} >
                                         <Text style={commonStyles.editbox}>Upload GST Document</Text>
                                       </TouchableOpacity>
+                                      {this.state.showImage ? 
                                       <Image
             source={{
               uri: 'data:image/jpeg;base64,' + this.state.filePath.data,
             }}
             style={{ width: 100, height: 100 }}
-          />
+          /> : null }
                               <TouchableOpacity onPress= {()=> this.registerCall()} style={commonStyles.btnBackground}>
                                   <Text style={commonStyles.textbtn}>Register</Text>
                               </TouchableOpacity>

@@ -100,11 +100,16 @@ loginCall() {
                               console.log('resp -->'+response);
                                console.log('resp -->'+JSON.stringify(response));
                               if(response.status == true){
+                                // this.setState({
+                                //     mobile : "",
+                                //     password :"",
+                                //     userType : ""
+                                // })
                                 if (ThisView.state.userType == "Customer") {
-                                    // ThisView.props.UserData(3)
-                               ThisView.props.UserData(response.data[0].UserID);
-                                    navigate('ShopkeeperHomePage');
+                                    ThisView.props.UserData(response.data[0].UserID);
+                                    navigate('ShopkeeperHomePage2');
                                 } else {
+                                    
                                     navigate('DistributorHomePage');
                                     // navigate('ShopkeeperHomePage');
                                     
@@ -151,7 +156,7 @@ OpenRegister() {
                                       onChangeText={(text) => this.setState({mobile: text})}
                                       underlineColorAndroid={'transparent'} ></TextInput>
                                 
-                              <TextInput style={commonStyles.editbox} placeholder="Password" 
+                              <TextInput style={commonStyles.editbox} secureTextEntry={true} placeholder="Password" 
                                     placeholderTextColor="white" ref="password"  onSubmitEditing=
                                       {() => this.refs['password'].focus()}
                                       onChangeText={(text) => this.setState({password: text})}
