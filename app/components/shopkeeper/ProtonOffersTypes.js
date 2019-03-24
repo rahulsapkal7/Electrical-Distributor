@@ -13,6 +13,7 @@ import {
     TouchableOpacity,Picker
 } from 'react-native';
 import {UserData} from '../../redux/actions/UserData_action';
+import Header from '../../common/header';
 import {bindActionCreators} from 'redux';
 import commonStyles from '../../common/commonStyle';
 import {connect} from 'react-redux';
@@ -23,6 +24,16 @@ class ProtonOffersTypes extends Component {
     render() {
    
         return (
+            <View style={styles.container}>
+             <Header
+                    title={'Proton offers'}
+                    back={() => {
+                    this
+                      .props
+                      .navigation
+                      .goBack(null)
+                  }}
+                    />
           <View style={commonStyles.VWcontainer}>
 <TouchableOpacity style={styles.mainView} onPress= {()=> this.props.navigation.navigate('CashWiseOffersShopkeeper')}>
 <View >
@@ -41,6 +52,7 @@ class ProtonOffersTypes extends Component {
             </TouchableOpacity>
             
                       </View>
+                      </View>
           
         );
       }
@@ -48,11 +60,25 @@ class ProtonOffersTypes extends Component {
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1, 
+        backgroundColor: '#4db6ac'
+    },
     mainView : {
         flex:1,
-        alignItems :'center',
-        justifyContent: 'center'
+        alignItems :'center', 
+        justifyContent:'center',
+        alignItems:'center',
+        borderColor:'#ddd',
+        borderWidth:1,  
+        margin:10,
+        borderRadius:2,
+        shadowColor:'#000',
+        shadowOpacity:0.5,
+        shadowRadius:5,
+        elevation:5,
+        borderColor:'#ddd',
+        flexDirection:'column'
       }
 
 

@@ -177,8 +177,8 @@ var validators = require('../../lib/validators').validators();
             Alert.alert('Register', res.message,[{text: 'OK', 
             onPress: () => {
                 console.log('OK Pressed');
-                // this.props.navigation.goBack(null)}}]
-                this.props.navigation.navigate(Login)}}]
+                this.props.navigation.goBack(null)}}]
+                // this.props.navigation.navigate(Login)}}]
                 
                 
             , {cancelable: false},);

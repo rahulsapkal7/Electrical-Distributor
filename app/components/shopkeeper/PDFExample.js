@@ -6,7 +6,9 @@ import Pdf from 'react-native-pdf';
  
 export default class PDFExample extends Component {
     render() {
-        const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
+        // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
+        const source = {uri:'https://slicedinvoices.com/pdf/wordpress-pdf-invoice-plugin-sample.pdf',cache:true};
+        
         //const source = require('./test.pdf');  // ios only
         //const source = {uri:'bundle-assets://test.pdf'};
  
