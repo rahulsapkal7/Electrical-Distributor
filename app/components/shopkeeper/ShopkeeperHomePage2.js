@@ -34,9 +34,9 @@ import {NavigationActions} from 'react-navigation';
       this.props.navigation.navigate('AlertsPageShopkeeper')
     }else if(item.menuName=='My profile'){
       this.props.navigation.navigate('MyProfileShopkeeper')
-    }else if(item.menuName=='Order history'){
+    }else if(item.menuName=='History'){
       this.props.navigation.navigate('OrderHistoryShopkeeper')
-    }else if(item.menuName=='Buy products'){
+    }else if(item.menuName=='Buy'){
       this.props.navigation.navigate('BuyProductsShopkeeper')
     }else if(item.menuName=='Offers'){
       this.props.navigation.navigate('OffersShopkeeper')
@@ -54,9 +54,9 @@ import {NavigationActions} from 'react-navigation';
                 
            <View style={styles.firstContainer}>
            <FlatList
-          data={[{ menuName: 'Order history' }
+          data={[{ menuName: 'History' }
           , { menuName: 'Offers' }
-          , { menuName: 'Buy products' }]}
+          , { menuName: 'Buy' }]}
           renderItem={this._renderItem}
           horizontal={true}
         ItemSeparatorComponent={() => <View style={{margin: 4}}/>}
@@ -121,8 +121,7 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#4db6ac'
+      justifyContent: 'center', 
   },
   firstContainer:{
       flex:2,
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
   },
   textbtn: {
       fontSize: 16, 
-      color: 'white', 
+      color: 'black', 
       justifyContent:'center',
       alignItems:'center',
 

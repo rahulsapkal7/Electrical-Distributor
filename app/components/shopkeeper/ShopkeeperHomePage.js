@@ -10,7 +10,7 @@ import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 // import SwipeALot from 'react-native-swipe-a-lot'
 
-
+//#0094D
 
  class ShopkeeperHomePage extends Component {
 
