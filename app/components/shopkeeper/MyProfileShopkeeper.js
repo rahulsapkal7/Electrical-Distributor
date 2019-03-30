@@ -222,7 +222,7 @@ class MyProfileShopkeeper extends Component {
 
             <View style={styles.parent_container}>
           <Header
-                title={'My profile'}
+                title={'MY PROFILE'}
                 back={() => {
                 this
                   .props

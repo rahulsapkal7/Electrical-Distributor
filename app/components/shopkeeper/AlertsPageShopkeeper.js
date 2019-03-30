@@ -108,7 +108,7 @@ import Loader from '../../common/Loader.js';
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'Alerts'}
+                title={'ALERTS'}
                 back={() => {
                 this
                   .props

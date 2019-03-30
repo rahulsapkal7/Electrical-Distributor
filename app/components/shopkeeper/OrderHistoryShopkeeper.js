@@ -34,7 +34,7 @@ class OrderHistoryShopkeeper extends Component {
 
 renderItem=({item})=>{
         return(
-        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} 
+        <TouchableOpacity style={{ flex:1,marginBottom:3}} 
         >
            
             <View style={styles.card_outer}>
@@ -106,9 +106,9 @@ Date :
       this.setState({loading: true});
   
       var data = new FormData();
-      // data.append('UserID',this.props.UserId ),
+      data.append('UserID',this.props.UserId ),
       
-      data.append('UserID', "2"),
+      // data.append('UserID', "2"),
       fetch(url,{method: 'post',
       body: data
     })
@@ -139,7 +139,7 @@ Date :
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'Order History'}
+                title={'ORDER HISTORY'}
                 back={() => {
                 this
                   .props
@@ -155,7 +155,7 @@ Date :
          
           data={this.state.StoreData}
           renderItem={this.renderItem}
-          numColumns={2}
+          numColumns={1}
         />
       </View>
       </ScrollView>
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         flex: 1,        
         marginRight: 5, 
         marginTop: 10,
-        flexDirection:'column',
+        // flexDirection:'column',
         height: '80%', 
   },
 })

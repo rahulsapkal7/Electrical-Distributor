@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
       ? 70
       : 50,
     width: '100%',
-    backgroundColor: 'skyblue',
+    backgroundColor: '#7dca20',
+    // backgroundColor: 'skyblue',
     alignItems: 'center',
     // borderColor : "yellow",     borderWidth : 1,
   },
@@ -29,6 +30,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontWeight: 'bold',
     color: 'white'
+    // color: '#0094d8'
+    
+    
   },
   TxtIP: {
     fontSize: 20,

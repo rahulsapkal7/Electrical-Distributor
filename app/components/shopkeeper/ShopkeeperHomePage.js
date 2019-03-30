@@ -54,7 +54,7 @@ this.state = {
     return (
         <View style={styles.container}>
          <Header hideBack={"true"}
-                title={'Proton enterprise'}
+                title={'ROTON ENTERPRISE'}
                 />
            <View style={styles.firstContainer}>
            <FlatList

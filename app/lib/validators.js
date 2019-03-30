@@ -101,6 +101,20 @@ validators.RegularExpressionUserName = function(txt) {
 	}
 	return isValid;
 };
+validators.RegularExpressionMobileNumber = function(txt) {
+	var isValid = false;
+	var reg = /^[0-9]{10}$/g;
+	if (txt !== '' && txt.toString().trim() !== '') {
+		if (reg.test(txt) == false) {
+			isValid = false;
+		} else {
+			isValid = true;
+		}
+	} else {
+		isValid = false;
+	}
+	return isValid;
+};
 
 validators.RegularExpressionPassword = function(txt) {
 	/*TODO need to make changes here*/
@@ -138,16 +152,16 @@ validators.RegularExpressionPasswordLength = function(txt) {
 	return isValid;
 };
 
-validators.RegularExpressionMobileNumber = function(txt) {
-	var isValid = false;
+// validators.RegularExpressionMobileNumber = function(txt) {
+// 	var isValid = false;
 
-	if (isNaN(txt) === false && txt !== null) {
-		if (txt.length === 10) {
-			if (txt.trim() !== '') {
-				isValid = true;
-			}
-		}
-	}
+// 	if (isNaN(txt) === false && txt !== null) {
+// 		if (txt.length === 10) {
+// 			if (txt.trim() !== '') {
+// 				isValid = true;
+// 			}
+// 		}
+// 	}
 
-	return isValid;
-};
+// 	return isValid;
+// };

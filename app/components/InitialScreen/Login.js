@@ -30,6 +30,7 @@ import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import {api} from '../../common/api';
 import Loader from '../../common/Loader.js';
+var validators = require('../../lib/validators').validators();
 
 
  class Login extends Component {
@@ -61,10 +62,10 @@ loginCall() {
     // .UserData(2);
     // navigate('ShopkeeperHomePage');
     
-                if (this.state.mobile === '') {
-                    Alert.alert('Login', 'Enter a valid mobile number');
+                if (this.state.mobile === '' || this.state.mobile === undefined || (!validators.RegularExpressionMobileNumber(this.state.mobile))) {
+                    Alert.alert('Login', 'Please Enter a register mobile number');
                 } else if (this.state.password === undefined || this.state.password === '') { //(!validators.RegularExpressionPassword(this.state.password))) {
-                    Alert.alert('Login', "Your password should contain Minimum 8 characters & One Upper Case");
+                    Alert.alert('Login', "Please enter password");
                 }  else if (this.state.userType === undefined || this.state.userType === 'select') { //(!validators.RegularExpressionPassword(this.state.password))) {
                     Alert.alert('Login', "Please select user type.");
                 } 
@@ -107,6 +108,7 @@ loginCall() {
                                 // })
                                 if (ThisView.state.userType == "Customer") {
                                     ThisView.props.UserData(response.data[0].UserID);
+                                    AsyncStorage.setItem('@shopkeeperId:key', response.data[0].UserID); 
                                     navigate('ShopkeeperHomePage2');
                                 } else {
                                     
@@ -146,13 +148,12 @@ OpenRegister() {
                       
                           <View style={commonStyles.SWcontainer}>
                               <View style={styles.logoBg}>
-                                  <Text style={styles.bigWhite}>Electrical</Text>
+                                  <Text style={styles.bigWhite}>PROTON</Text>
                               </View>
       
                              
                               <TextInput style={commonStyles.editbox} placeholder="Enter Mobile Number" 
-                                    placeholderTextColor="white" ref="mobile"  onSubmitEditing=
-                                      {() => this.refs['password'].focus()}
+                                    placeholderTextColor="white" ref="mobile"   keyboardType="numeric"
                                       onChangeText={(text) => this.setState({mobile: text})}
                                       underlineColorAndroid={'transparent'} ></TextInput>
                                 

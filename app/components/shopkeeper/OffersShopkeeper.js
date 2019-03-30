@@ -26,7 +26,7 @@ class OffersShopkeeper extends Component {
         return (
             <View style={styles.container}>
              <Header
-                    title={'Offers'}
+                    title={'OFFERS'}
                     back={() => {
                     this
                       .props

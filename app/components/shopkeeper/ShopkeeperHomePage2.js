@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
+import {Platform, StyleSheet,AsyncStorage, Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
 // import Cards from "./Cards.js"; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -13,9 +13,32 @@ import {NavigationActions} from 'react-navigation';
 
 
  class ShopkeeperHomePage2 extends Component {
-  state = {
-    scrollEnabled: true,
-    type: 1,
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading : false,
+      scrollEnabled: true,
+      type: 1,
+    }
+    console.log("props are --> ",JSON.stringify(props));
+  }
+
+  componentWillMount() {
+    
+  
+      AsyncStorage
+          .getItem("@shopkeeperId:key")
+          .then((value) => {
+            console.log("value --> ",value);
+            if (value != null) {}
+            this.props.UserData(value);
+            // Globals.cusId = value;
+            console.log('Globals.cusId://' + value);
+            // setTimeout(() => {
+            //   this.setState({isLoading: false});
+            // }, 5);
+          })
+
   }
 
   _renderItem = ({ item }) => {
@@ -47,9 +70,9 @@ import {NavigationActions} from 'react-navigation';
     return (
         <View style={styles.container}>
          <Home_header  goToMyProfile={() => { this.props.navigation.navigate('MyProfileShopkeeper');  }}
-                title={'Proton enterprise'} 
+                title={'PROTON ENTERPRISE'} 
                 goToSetting= {() => {console.log("go to setting")}}
-                Logout = {()=>{this.props.navigation.navigate('Login');}}
+                Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.props.navigation.navigate('Login'); }}
                 />
                 
            <View style={styles.firstContainer}>
@@ -91,23 +114,23 @@ import {NavigationActions} from 'react-navigation';
                </View>
                <View style={styles.thirdContainer}>
 
-               <Image source={require('../../assets/images/crescent.png')} style={styles.backgroundLogoImage}>
+               <Image source={require('../../assets/homeLogo/Cresent.png')} style={styles.backgroundLogoImage}>
                  
                  </Image>
 
-<Image source={require('../../assets/images/download.png')} style={styles.backgroundLogoImage}>
+<Image source={require('../../assets/homeLogo/GM.png')} style={styles.backgroundLogoImage}>
   
   </Image>
 
-<Image source={require('../../assets/images/magic.png')} style={styles.backgroundLogoImage}>
+<Image source={require('../../assets/homeLogo/Magic.png')} style={styles.backgroundLogoImage}>
   
   </Image>
 
-<Image source={require('../../assets/images/opel.png')} style={styles.backgroundLogoImage}>
+<Image source={require('../../assets/homeLogo/Ople.png')} style={styles.backgroundLogoImage}>
   
   </Image>
 
-<Image source={require('../../assets/images/opel.png')} style={styles.backgroundLogoImage}>
+<Image source={require('../../assets/homeLogo/Svarochi.png')} style={styles.backgroundLogoImage}>
   
   </Image>
 

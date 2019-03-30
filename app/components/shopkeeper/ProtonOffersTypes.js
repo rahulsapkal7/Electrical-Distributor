@@ -26,7 +26,7 @@ class ProtonOffersTypes extends Component {
         return (
             <View style={styles.container}>
              <Header
-                    title={'Proton offers'}
+                    title={'PROTON OFFERS'}
                     back={() => {
                     this
                       .props

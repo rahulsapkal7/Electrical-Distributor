@@ -34,7 +34,10 @@ import Loader from '../../common/Loader.js';
 
 
       getPendingOrderList = () =>{
-        const url = api() + 'ViewProdcutsByAdmin.php';
+        // const url = api() + 'ViewProdcutsByAdmin.php';
+        const url = api() + 'ViewProdcutsByCust.php';
+        
+        
          console.log(url);
         
         this.setState({loading: true});
@@ -64,6 +67,17 @@ import Loader from '../../common/Loader.js';
     
       }
       
+     
+    openCategory = (item, image) => {
+      
+             console.log("inside openCategory ",item,image);
+                  this.props.navigation.navigate('BuyProductDetailShopkeeper',{
+                    "Image": image,
+                    "ProductObj" : item
+                });
+              // Alert.alert(item);
+      
+          }
 
       renderItem=({item})=>{
         return(
@@ -110,7 +124,10 @@ import Loader from '../../common/Loader.js';
                           {' '+item.ModelNo}
                       </Text>
                 </View>
-                <TouchableOpacity style={styles.btnBackground}  >
+                <TouchableOpacity style={styles.btnBackground}  onPress={this
+                                        .openCategory
+                                        .bind(this,item,  'https://n4.sdlcdn.com/imgs/f/n/v/eveready_600-dd3f6.jpg')}
+                                         >
 
                     <Text style={styles.txtStyle_fourteen}>Buy</Text>
                 </TouchableOpacity>
@@ -125,7 +142,7 @@ import Loader from '../../common/Loader.js';
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'Buy Products'}
+                title={'BUY PRODUCTS'}
                 back={() => {
                 this
                   .props

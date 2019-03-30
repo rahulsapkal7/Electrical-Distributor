@@ -180,7 +180,7 @@ Date :
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'Cash offers'}
+                title={'CASH OFFERS'}
                 back={() => {
                 this
                   .props
