@@ -9,6 +9,7 @@ import Home_header from '../../common/home_header';
 import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
+import ImageSlider from 'react-native-image-slider';
 
 
 
@@ -41,6 +42,37 @@ import {NavigationActions} from 'react-navigation';
 
   }
 
+  componentDidMount() {
+  //   const url = api() + 'ImageSlideShow.php';
+  //   console.log(url);
+   
+  //  this.setState({loading: true});
+  
+   
+  //  fetch(url,{method: 'post'})
+  //      .then(response => response.json())
+  //      .then(res => {
+  //        console.log("response is",res);
+  //        console.log("response is",JSON.stringify(res));
+      
+  //        if(res.status){
+  //         //  this.setState({
+             
+  //         //    });
+  //         //    console.log("after set ",this.state);
+  //        }else{
+  //         //  Alert.alert('My Profile', "Something went wrong");
+  //          this.setState({loading: false});
+  //        }
+           
+  //      })
+  //      .catch(error => {
+
+  //          console.log('error:' + (error));
+  //          this.setState({error, loading: false});
+  //      });
+  }
+  
   _renderItem = ({ item }) => {
     return (
       <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
@@ -86,9 +118,14 @@ import {NavigationActions} from 'react-navigation';
         />
                </View>
                <View style={styles.secondContainer}>
-               <Image source={require('../../assets/images/offer1.jpg')} style={styles.backgroundImage}>
+               <ImageSlider autoPlayWithInterval={2000} images={[require('../../assets/homeSliderImage/slide1.jpeg'),
+               require('../../assets/homeSliderImage/slide2.jpeg')
+        
+        
+      ]}/>
+               {/* <Image source={require('../../assets/images/offer1.jpg')} style={styles.backgroundImage}>
                  
-                 </Image>
+                 </Image> */}
                 {/* <Swiper
             ref='ViewPager'
             loop={true}
