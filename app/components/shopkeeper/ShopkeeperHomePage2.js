@@ -118,11 +118,18 @@ import ImageSlider from 'react-native-image-slider';
         />
                </View>
                <View style={styles.secondContainer}>
-               <ImageSlider autoPlayWithInterval={2000} images={[require('../../assets/homeSliderImage/slide1.jpeg'),
-               require('../../assets/homeSliderImage/slide2.jpeg')
-        
-        
-      ]}/>
+               <ImageSlider autoPlayWithInterval={3000}
+               
+      //           images={[
+      //   'https://i.imgur.com/2nCt3Sbl.jpg',
+      //   'https://i.imgur.com/lceHsT6l.jpg',
+      //   'https://i.imgur.com/KZsmUi2l.jpg','https://i.imgur.com/MABUbpDl.jpg','https://i.imgur.com/UPrs1EWl.jpg','https://i.imgur.com/UYiroysl.jpg'
+      // ]}
+      images={[require('../../assets/homeSliderImage/slide1.jpeg'),
+               require('../../assets/homeSliderImage/slide2.jpeg')  ]}
+                onPress={({ index,image }) => console.log("index is ",index," image url",image)}
+                
+     />
                {/* <Image source={require('../../assets/images/offer1.jpg')} style={styles.backgroundImage}>
                  
                  </Image> */}

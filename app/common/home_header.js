@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Platform, View, Text, StyleSheet,Image, TouchableOpacity,ToolbarAndroid} from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import OptionsMenu from "react-native-options-menu";
+import {  Icon } from 'native-base';
+
 // const MoreIcon =;
 
 const styles = StyleSheet.create({
@@ -65,7 +67,8 @@ class Home_header extends Component {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.Backcontainer} onPress={this.props.back}>
-      <Image source={require('../assets/images/bell1.png')} style={styles.image_style}/>
+      <Icon name='notifications' style={{ color: "black" }} />
+      {/* <Image source={require('../assets/images/bell1.png')} style={styles.image_style}/> */}
 
         {/* <Icon name="chevron-left" style={styles.TxtIP} color="#818285"/> */}
       </TouchableOpacity>

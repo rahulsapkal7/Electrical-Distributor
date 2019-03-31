@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, View, Text, StyleSheet,Image, TouchableOpacity} from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
+import {  Icon } from 'native-base';
 
 
 const styles = StyleSheet.create({
@@ -65,7 +66,8 @@ class Header extends Component {
     <View style={styles.Backcontainer}></View>
     : 
       <TouchableOpacity style={styles.Backcontainer} onPress={this.props.back}>
-      <Image source={require('../assets/images/back.png')} style={styles.image_style}/>
+      <Icon name='arrow-back' style={{ color: "black" }} />
+      {/* <Image source={require('../assets/images/back.png')} style={styles.image_style}/> */}
       </TouchableOpacity>
     }
      
