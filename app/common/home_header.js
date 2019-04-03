@@ -66,11 +66,10 @@ class Home_header extends Component {
   render() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.Backcontainer} onPress={this.props.back}>
-      <Icon name='notifications' style={{ color: "black" }} />
-      {/* <Image source={require('../assets/images/bell1.png')} style={styles.image_style}/> */}
-
-        {/* <Icon name="chevron-left" style={styles.TxtIP} color="#818285"/> */}
+      <TouchableOpacity style={styles.Backcontainer} onPress={this.props.menu}>
+      {/* <Icon name='notifications'  style={{ color: "black" }} /> */}
+      <Icon name='menu'  style={{ color: "black" }} />
+      
       </TouchableOpacity>
       <View style={styles.Titlecontainer}>
         <Text style={styles.text}>
@@ -79,12 +78,14 @@ class Home_header extends Component {
         
       </View>    
       <View style={styles.Menucontainer}>
-      <OptionsMenu
+      <Icon name='cart'  style={{ color: "black" }} />
+      
+      {/* <OptionsMenu
   button={ require("../assets/images/Menu-Circles.png")}
   buttonStyle={{ width: "30%", height: "80%", margin: 7.5, resizeMode: "contain" }}
   destructiveIndex={1}
   options={["Setting", "My Profile", "Logout"]}
-  actions={[this.props.goToSetting, this.props.goToMyProfile, this.props.Logout]}/>
+  actions={[this.props.goToSetting, this.props.goToMyProfile, this.props.Logout]}/> */}
     </View>
     </View>
   );

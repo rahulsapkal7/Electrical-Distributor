@@ -8,10 +8,11 @@ import Header from '../../common/header';
 import Home_header from '../../common/home_header';
 import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData} from '../../redux/actions/UserData_action';
-import {NavigationActions} from 'react-navigation';
+import {NavigationActions } from 'react-navigation';
 import ImageSlider from 'react-native-image-slider';
-
-
+// import { Drawer } from 'native-base';
+import SideMenu from 'react-native-side-menu';
+import Menu from '../../common/Menu.js';
 
  class ShopkeeperHomePage2 extends Component {
   constructor(props) {
@@ -20,7 +21,12 @@ import ImageSlider from 'react-native-image-slider';
       loading : false,
       scrollEnabled: true,
       type: 1,
+      isOpen : false,
+      ShopkeeperName : 'Welcome Rahul'
     }
+    this.toggleMenu = this
+    .toggleMenu
+    .bind(this);
     console.log("props are --> ",JSON.stringify(props));
   }
 
@@ -39,6 +45,20 @@ import ImageSlider from 'react-native-image-slider';
             //   this.setState({isLoading: false});
             // }, 5);
           })
+
+          // AsyncStorage
+          // .getItem("@shopkeeperName")
+          // .then((value) => {
+          //   console.log("shopkeeperName value --> ",value);
+          //   if (value != null) {}
+          //   this.setState({
+          //     ShopkeeperName : value
+          //   })
+            
+          //   console.log('Globals.cusId://' + value);
+           
+          // })
+          
 
   }
 
@@ -98,13 +118,33 @@ import ImageSlider from 'react-native-image-slider';
     }
  }
 
+ toggleMenu() {
+  this.setState({
+    isOpen: !this.state.isOpen
+  });
+}
+
+updateMenuState(isOpen) {
+  this.setState({isOpen});
+}
   render() {
+    var menu = <Menu Name = {this.state.ShopkeeperName} NavigationToScreen={(screen) => {this.props.navigation.navigate(screen);this.setState({isOpen : false})}}  
+     Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.props.navigation.navigate('Login'); }}
+     />;
+    
     return (
+      <SideMenu
+      menu={menu}
+      isOpen = {this.state.isOpen}
+      
+      onChange={isOpen => this.updateMenuState(isOpen)}>
+     
         <View style={styles.container}>
-         <Home_header  goToMyProfile={() => { this.props.navigation.navigate('MyProfileShopkeeper');  }}
+         <Home_header  menu = { () => {  this.toggleMenu() ;
+                        console.log("Open Menu",this.state.isOpen) }}  
                 title={'PROTON ENTERPRISE'} 
-                goToSetting= {() => {console.log("go to setting")}}
-                Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.props.navigation.navigate('Login'); }}
+               
+                
                 />
                 
            <View style={styles.firstContainer}>
@@ -180,6 +220,7 @@ import ImageSlider from 'react-native-image-slider';
 
                </View>
         </View>
+        </SideMenu>
     );
 }
 }
@@ -187,6 +228,8 @@ import ImageSlider from 'react-native-image-slider';
 const styles = StyleSheet.create({
   container: {
       flex: 1,
+      flexDirection: 'column',
+      backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center', 
   },
@@ -268,6 +311,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
   // console.log('state:' + JSON.stringify(state));
   return {}
+  
 }
 
 const mapDispatchToProps = dispatch => (bindActionCreators({

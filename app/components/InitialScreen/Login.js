@@ -109,6 +109,8 @@ loginCall() {
                                 if (ThisView.state.userType == "Customer") {
                                     ThisView.props.UserData(response.data[0].UserID);
                                     AsyncStorage.setItem('@shopkeeperId:key', response.data[0].UserID); 
+                                    // AsyncStorage.setItem('@shopkeeperName', response.data[0].PropreitorName); 
+                                    
                                     navigate('ShopkeeperHomePage2');
                                 } else {
                                     

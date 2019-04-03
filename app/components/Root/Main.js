@@ -41,6 +41,7 @@ import RegisterPage2 from '../InitialScreen/RegisterPage2.js';
 import VerifiedCustomers from '../distributor/VerifiedCustomers.js';
 
 
+
 export const HomeStack = createStackNavigator({
   Login:{
     screen : Login,
@@ -170,6 +171,9 @@ export const HomeStack = createStackNavigator({
       header: null
     }
   },
+  
+ 
+  
   // },{ initialRouteName: 'Login' })
   },{ initialRouteName: 'ShopkeeperHomePage2' })
 
@@ -303,6 +307,8 @@ export const LoginStack = createStackNavigator({
       header: null
     }
   },
+ 
+  
  
   },{ initialRouteName: 'Login' })
   // },{ initialRouteName: 'ShopkeeperHomePage2' })
