@@ -39,6 +39,10 @@ import PendingDispatchOrdersDistributor from '../distributor/PendingDispatchOrde
 import RegisterPage2 from '../InitialScreen/RegisterPage2.js';
 
 import VerifiedCustomers from '../distributor/VerifiedCustomers.js';
+import ShopkeeperBrandList from '../shopkeeper/ShopkeeperBrandList.js';
+import ViewOfferImageByCustomer from '../shopkeeper/ViewOfferImageByCustomer.js';
+
+
 
 
 
@@ -172,8 +176,18 @@ export const HomeStack = createStackNavigator({
     }
   },
   
- 
-  
+  ShopkeeperBrandList : {
+    screen : ShopkeeperBrandList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewOfferImageByCustomer :{
+    screen : ViewOfferImageByCustomer,
+    navigationOptions: {
+      header: null
+    }
+  },
   // },{ initialRouteName: 'Login' })
   },{ initialRouteName: 'ShopkeeperHomePage2' })
 
@@ -307,7 +321,18 @@ export const LoginStack = createStackNavigator({
       header: null
     }
   },
- 
+  ShopkeeperBrandList : {
+    screen : ShopkeeperBrandList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewOfferImageByCustomer :{
+    screen : ViewOfferImageByCustomer,
+    navigationOptions: {
+      header: null
+    }
+  },
   
  
   },{ initialRouteName: 'Login' })

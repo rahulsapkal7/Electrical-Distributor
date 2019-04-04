@@ -114,7 +114,7 @@ import Menu from '../../common/Menu.js';
     }else if(item.menuName=='Buy'){
       this.props.navigation.navigate('BuyProductsShopkeeper')
     }else if(item.menuName=='Offers'){
-      this.props.navigation.navigate('OffersShopkeeper')
+      this.props.navigation.navigate('ViewOfferImageByCustomer')
     }
  }
 
@@ -198,7 +198,7 @@ updateMenuState(isOpen) {
                </View>
                <View style={styles.thirdContainer}>
 
-               <Image source={require('../../assets/homeLogo/Cresent.png')} style={styles.backgroundLogoImage}>
+               {/* <Image source={require('../../assets/homeLogo/Cresent.png')} style={styles.backgroundLogoImage}>
                  
                  </Image>
 
@@ -208,7 +208,7 @@ updateMenuState(isOpen) {
 
 <Image source={require('../../assets/homeLogo/Magic.png')} style={styles.backgroundLogoImage}>
   
-  </Image>
+  </Image> */}
 
 <Image source={require('../../assets/homeLogo/Ople.png')} style={styles.backgroundLogoImage}>
   
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   },
   backgroundLogoImage: {
       flex: 1,
-      width: 100,
+      width:100,
       height:100,
       margin:10,
       resizeMode: 'stretch', // or 'stretch'
