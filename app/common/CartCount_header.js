@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Platform, View,Text, StyleSheet,Image, TouchableOpacity,ToolbarAndroid} from 'react-native';
 import {  Button, Icon, Badge } from 'native-base';
 // import Icon from 'react-native-vector-icons/FontAwesome';
-import OptionsMenu from "react-native-options-menu";
+
 import IconBadge from 'react-native-icon-badge';
 // import {  Icon } from 'native-base';
 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Home_header extends Component {
+class CartCount_header extends Component {
 
   constructor(props) {
     super(props);
@@ -71,29 +71,10 @@ class Home_header extends Component {
   render() {
   return (
 
-    // <Container>
-    // <Header>
-    //   <Left>
-    //     <Button  style={styles.Backcontainer} onPress={this.props.menu}>
-    //     <Icon name='menu'  style={{ color: "black" }} />
-    //     </Button>
-    //   </Left>
-    //   <Body>
-    //     <Title> {this.props.title}</Title>
-    //   </Body>
-    //   <Right>
-    //     <Button transparent>
-    //       <Badge style={{ position: 'absolute' }}><Text>2</Text></Badge>
-    //       <Icon name='cart'  style={{ color: "black" }} />
-    //     </Button>
-    //   </Right>
-    // </Header>
-    // <Content />
-    // </Container>
+  
     <View style={styles.container}>
-      <TouchableOpacity style={styles.Backcontainer} onPress={this.props.menu}>
-      <Icon name='menu'  style={{ color: "black" }} />
-      
+      <TouchableOpacity style={styles.Backcontainer} onPress={this.props.back}>
+      <Icon name='arrow-back' style={{ color: "black" }} />
       </TouchableOpacity>
       <View style={styles.Titlecontainer}>
         <Text style={styles.text}>
@@ -101,7 +82,7 @@ class Home_header extends Component {
         </Text>
         
       </View>    
-      <View style={styles.Menucontainer}>
+      <TouchableOpacity style={styles.Menucontainer}  onPress={this.props.GoToCart} >
       {this.props.cartCount != 0  ?  
       <IconBadge
                             MainElement={< Icon name = "cart" size = {
@@ -120,7 +101,7 @@ class Home_header extends Component {
      
     }
      
-    </View>
+    </TouchableOpacity>
     </View>
  
 
@@ -130,6 +111,6 @@ class Home_header extends Component {
 }
 
 
-export default (Home_header);
+export default (CartCount_header);
 
 

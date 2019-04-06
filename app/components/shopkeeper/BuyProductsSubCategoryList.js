@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, Text,View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert,Image, Text,View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../../common/header';
@@ -9,7 +9,7 @@ import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import Loader from '../../common/Loader.js';
 
- class AlertsPageShopkeeper extends Component {
+ class BuyProductsSubCategoryList extends Component {
 
   constructor(props) {
     super(props);
@@ -17,6 +17,7 @@ import Loader from '../../common/Loader.js';
     console.log('inside pending order distributor');
 
     this.state = {
+      BrandCategoryTableID : this.props.navigation.state.params.BrandCategoryTableID,
       loading : false,
       StoreData : []
     }
@@ -27,18 +28,20 @@ import Loader from '../../common/Loader.js';
 
   componentDidMount() {
     
-        this.GetAlertListShopkeeper();
+        this.GetCategoryListShopkeeper();
     
       }
 
 
-      GetAlertListShopkeeper = () =>{
-        const url = api() + 'GetAlertLists.php';
+      GetCategoryListShopkeeper = () =>{
+        const url = api() + 'GetSubCategory.php';
          console.log(url);
         
         this.setState({loading: true});
-    
-        fetch(url,{method: 'post'})
+        var data = new FormData()
+        console.log("this.props.BrandCategoryTableID",this.state.BrandCategoryTableID);
+        data.append('BrandCategoryTableID',this.state.BrandCategoryTableID ),
+        fetch(url,{method: 'post',body:data})
             .then(response => response.json())
             .then(res => {
               console.log("response is inside alerts page ",JSON.stringify(res));
@@ -48,7 +51,7 @@ import Loader from '../../common/Loader.js';
                   loading : false
                 });
               }else{
-                Alert.alert('My Alerts', "Something went wrong");
+                Alert.alert('Buy Product', "Something went wrong");
               }
                 
             })
@@ -64,42 +67,55 @@ import Loader from '../../common/Loader.js';
       renderItem=({item})=>{
         return(
 
-        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} 
-        >
-           
-            <View style={styles.card_outer}>
+        // <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} onPress ={() =>{ //this.props.navigation.navigate('BuyProductsCategoryList', {BrandCategoryTableID : item.BrandCategoryTableID } ) 
+        //  }}
+        // >
+          <View style={styles.productParent}>
+               
+                    <Image
+                source={{ uri: item.SubCategoryImage }}
+                style={{ width: 100, height:100 }}
+                resizeMode="cover"
+              />
                  
+
+                {/* <View style={styles.horizontal_view1}>
+                <Text style={styles.txtStyle_sixteen}>
+                    {' '+item.ProductName+'('+item.MfgName+')'}
+                </Text>
+                </View> */}
+                <View style={styles.horizontal_view}>
+                   <Text style={styles.txtStyle_fourteen}>
+                   Brand Name : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                    {' '+item.BrandName}
+                </Text>
+                </View>
                 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-        Alert title : 
+        Brand Category Name : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.AlertTitle}
+                    {' '+item.BrandCategoryName}
                 </Text>
                 </View>
-
-<View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Description : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.AlertDes}
-                </Text>
-                </View>
-                
                 <View style={styles.horizontal_view}>
+              <Text style={styles.txtStyle_fourteen}>
+              Sub Category Name : 
+                      </Text>
+                      <Text style={styles.txtStyle_sixteen}>
+                          {' '+item.SubCategoryName}
+                      </Text>
+                </View>
+                <TouchableOpacity style={styles.btnBackground}  onPress ={() =>{ this.props.navigation.navigate('BuyProductDetail', { data : {BrandCategoryTableID : this.state.BrandCategoryTableID , SubCategoryTableID : item.SubCategoryTableID } } )}}  >
 
-        <Text style={styles.txtStyle_fourteen}>
-                    Date : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.DateFrom}
-                </Text>
-                </View>   
+                    <Text style={styles.txtStyle_fourteen}>Product Detail</Text>
+                </TouchableOpacity>
             </View> 
-        </TouchableOpacity>
+           
+        // </TouchableOpacity>
             )
     }
 
@@ -108,7 +124,7 @@ import Loader from '../../common/Loader.js';
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'ALERTS'}
+                title={'BUY PRODUCTS'}
                 back={() => {
                 this
                   .props
@@ -123,6 +139,7 @@ import Loader from '../../common/Loader.js';
         <FlatList
           data={this.state.StoreData}
           renderItem={this.renderItem}
+          numColumns={1}
         />
       </View>
               </ScrollView>
@@ -145,6 +162,21 @@ const styles = StyleSheet.create({
         marginRight: 10, 
         marginTop:10,
         width: '40%',
+    },
+    productParent:{
+      flex:1,
+      flexDirection: 'column', 
+      backgroundColor: '#4db6ac',
+      alignItems: 'center',
+      justifyContent: 'center', 
+      // borderRadius:2,
+      // borderColor: 'red',
+      margin : 10,
+      padding : 15,
+      borderWidth:1,
+      borderRadius:2,
+      borderColor: '#ddd',
+      
     },
   container: {
    flex: 1,
@@ -187,6 +219,11 @@ const styles = StyleSheet.create({
     color:'white',
     fontWeight:'500'
   },
+  txtStyle_Thirty: {  
+    fontSize: 30,
+    color:'white',
+    fontWeight:'500'
+  },
   txtStyle_eighteen: {  
     fontSize: 18,
     color:'white'
@@ -210,6 +247,21 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         height: '80%', 
   },
+  Detailcontainer: {
+    flexDirection: 'column',
+    left: 20,
+    // borderColor:'blue', borderWidth:1
+  },
+  Producer: {
+    top: 18,
+    color: '#4f4f4f',
+    fontSize: 12
+  },
+  Title: {
+    top: 15,
+    color: '#4f4f4f',
+    fontSize: 18
+  },
 })
  
 const mapStateToProps = (state, ownProps) => {
@@ -221,4 +273,4 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
   UserData
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlertsPageShopkeeper);
+export default connect(mapStateToProps, mapDispatchToProps)(BuyProductsSubCategoryList);

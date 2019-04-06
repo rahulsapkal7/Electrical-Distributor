@@ -8,12 +8,12 @@ import {api} from '../../common/api';
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import Loader from '../../common/Loader.js';
-
- class AlertsPageShopkeeper extends Component {
+var ThisView = null;
+ class BuyProductsBrandList extends Component {
 
   constructor(props) {
     super(props);
-
+    ThisView = this;
     console.log('inside pending order distributor');
 
     this.state = {
@@ -27,13 +27,13 @@ import Loader from '../../common/Loader.js';
 
   componentDidMount() {
     
-        this.GetAlertListShopkeeper();
+        this.GetBrandListShopkeeper();
     
       }
 
 
-      GetAlertListShopkeeper = () =>{
-        const url = api() + 'GetAlertLists.php';
+      GetBrandListShopkeeper = () =>{
+        const url = api() + 'GetBrand.php';
          console.log(url);
         
         this.setState({loading: true});
@@ -48,7 +48,7 @@ import Loader from '../../common/Loader.js';
                   loading : false
                 });
               }else{
-                Alert.alert('My Alerts', "Something went wrong");
+                Alert.alert('Buy Product', "Something went wrong");
               }
                 
             })
@@ -64,40 +64,20 @@ import Loader from '../../common/Loader.js';
       renderItem=({item})=>{
         return(
 
-        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} 
+        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} onPress ={() => { console.log("on press ",item.BrandTableID); ThisView.props.navigation.navigate('BuyProductsCategoryList', { BrandTableID : item.BrandTableID } )  }}
         >
            
             <View style={styles.card_outer}>
                  
                 <View style={styles.horizontal_view}>
 
-        <Text style={styles.txtStyle_fourteen}>
-        Alert title : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.AlertTitle}
+        
+                <Text style={styles.txtStyle_Thirty}>
+                    {item.BrandName}
                 </Text>
                 </View>
 
-<View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Description : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.AlertDes}
-                </Text>
-                </View>
-                
-                <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-                    Date : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.DateFrom}
-                </Text>
-                </View>   
+   
             </View> 
         </TouchableOpacity>
             )
@@ -108,7 +88,7 @@ import Loader from '../../common/Loader.js';
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'ALERTS'}
+                title={'BUY PRODUCTS'}
                 back={() => {
                 this
                   .props
@@ -177,6 +157,8 @@ const styles = StyleSheet.create({
   },
   horizontal_view: { 
     flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   txtStyle_fourteen: {  
     fontSize: 14,
@@ -184,6 +166,11 @@ const styles = StyleSheet.create({
   },
   txtStyle_sixteen: {  
     fontSize: 16,
+    color:'white',
+    fontWeight:'500'
+  },
+  txtStyle_Thirty: {  
+    fontSize: 30,
     color:'white',
     fontWeight:'500'
   },
@@ -209,6 +196,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection:'column',
         height: '80%', 
+        
   },
 })
  
@@ -221,4 +209,4 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
   UserData
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlertsPageShopkeeper);
+export default connect(mapStateToProps, mapDispatchToProps)(BuyProductsBrandList);

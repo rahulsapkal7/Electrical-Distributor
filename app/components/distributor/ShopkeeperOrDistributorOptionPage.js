@@ -27,11 +27,11 @@ class LoginScreen extends Component {
         alph='/^[a-zA-Z]+$/'
         if(type=='username'){
                 // if(alph.test(text)){
-                //     console.warn('text is correct')
+                //     console.log('text is correct')
                 // }else{
-                //     console.warn('invalid text')
+                //     console.log('invalid text')
                 // }
-                console.warn('text is '+text)
+                console.log('text is '+text)
         }
     }
 

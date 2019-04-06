@@ -9,7 +9,7 @@ import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
 import Loader from '../../common/Loader.js';
 
- class AlertsPageShopkeeper extends Component {
+ class BuyProductsCategoryList extends Component {
 
   constructor(props) {
     super(props);
@@ -17,6 +17,7 @@ import Loader from '../../common/Loader.js';
     console.log('inside pending order distributor');
 
     this.state = {
+      BrandTableID : this.props.navigation.state.params.BrandTableID,
       loading : false,
       StoreData : []
     }
@@ -27,18 +28,20 @@ import Loader from '../../common/Loader.js';
 
   componentDidMount() {
     
-        this.GetAlertListShopkeeper();
+        this.GetCategoryListShopkeeper();
     
       }
 
 
-      GetAlertListShopkeeper = () =>{
-        const url = api() + 'GetAlertLists.php';
+      GetCategoryListShopkeeper = () =>{
+        const url = api() + 'GetCategory.php';
          console.log(url);
         
         this.setState({loading: true});
-    
-        fetch(url,{method: 'post'})
+        var data = new FormData()
+        console.log("this.props.BrandTableID",this.state.BrandTableID);
+        data.append('BrandTableID',this.state.BrandTableID ),
+        fetch(url,{method: 'post',body:data})
             .then(response => response.json())
             .then(res => {
               console.log("response is inside alerts page ",JSON.stringify(res));
@@ -48,7 +51,7 @@ import Loader from '../../common/Loader.js';
                   loading : false
                 });
               }else{
-                Alert.alert('My Alerts', "Something went wrong");
+                Alert.alert('Buy Product', "Something went wrong");
               }
                 
             })
@@ -64,40 +67,21 @@ import Loader from '../../common/Loader.js';
       renderItem=({item})=>{
         return(
 
-        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} 
+        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} onPress ={() =>{ this.props.navigation.navigate('BuyProductsSubCategoryList', {BrandCategoryTableID : item.BrandCategoryTableID } ) 
+         }}
         >
            
             <View style={styles.card_outer}>
                  
                 <View style={styles.horizontal_view}>
 
-        <Text style={styles.txtStyle_fourteen}>
-        Alert title : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.AlertTitle}
+        
+                <Text style={styles.txtStyle_Thirty}>
+                    {item.BrandCategoryName}
                 </Text>
                 </View>
 
-<View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Description : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.AlertDes}
-                </Text>
-                </View>
-                
-                <View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-                    Date : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.DateFrom}
-                </Text>
-                </View>   
+   
             </View> 
         </TouchableOpacity>
             )
@@ -108,7 +92,7 @@ import Loader from '../../common/Loader.js';
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'ALERTS'}
+                title={'BUY PRODUCTS'}
                 back={() => {
                 this
                   .props
@@ -177,6 +161,8 @@ const styles = StyleSheet.create({
   },
   horizontal_view: { 
     flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   txtStyle_fourteen: {  
     fontSize: 14,
@@ -184,6 +170,11 @@ const styles = StyleSheet.create({
   },
   txtStyle_sixteen: {  
     fontSize: 16,
+    color:'white',
+    fontWeight:'500'
+  },
+  txtStyle_Thirty: {  
+    fontSize: 30,
     color:'white',
     fontWeight:'500'
   },
@@ -221,4 +212,4 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
   UserData
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlertsPageShopkeeper);
+export default connect(mapStateToProps, mapDispatchToProps)(BuyProductsCategoryList);

@@ -41,6 +41,13 @@ import RegisterPage2 from '../InitialScreen/RegisterPage2.js';
 import VerifiedCustomers from '../distributor/VerifiedCustomers.js';
 import ShopkeeperBrandList from '../shopkeeper/ShopkeeperBrandList.js';
 import ViewOfferImageByCustomer from '../shopkeeper/ViewOfferImageByCustomer.js';
+import BuyProductsCategoryList from '../shopkeeper/BuyProductsCategoryList.js';
+import BuyProductsBrandList from '../shopkeeper/BuyProductsBrandList.js';
+import BuyProductsSubCategoryList from '../shopkeeper/BuyProductsSubCategoryList.js';
+import BuyProductDetail from '../shopkeeper/BuyProductDetail.js';
+import MyCartShopkeeper from '../shopkeeper/MyCartShopkeeper.js';
+
+
 
 
 
@@ -184,6 +191,36 @@ export const HomeStack = createStackNavigator({
   },
   ViewOfferImageByCustomer :{
     screen : ViewOfferImageByCustomer,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductsCategoryList :{
+    screen : BuyProductsCategoryList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductsBrandList :{
+    screen : BuyProductsBrandList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductsSubCategoryList :{
+    screen : BuyProductsSubCategoryList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductDetail : {
+    screen : BuyProductDetail,
+    navigationOptions: {
+      header: null
+    }
+  },
+  MyCartShopkeeper: {
+    screen : MyCartShopkeeper,
     navigationOptions: {
       header: null
     }
@@ -333,8 +370,36 @@ export const LoginStack = createStackNavigator({
       header: null
     }
   },
-  
- 
+  BuyProductsCategoryList :{
+    screen : BuyProductsCategoryList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductsBrandList :{
+    screen : BuyProductsBrandList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductsSubCategoryList :{
+    screen : BuyProductsSubCategoryList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BuyProductDetail : {
+    screen : BuyProductDetail,
+    navigationOptions: {
+      header: null
+    }
+  },
+  MyCartShopkeeper: {
+    screen : MyCartShopkeeper,
+    navigationOptions: {
+      header: null
+    }
+  },
   },{ initialRouteName: 'Login' })
   // },{ initialRouteName: 'ShopkeeperHomePage2' })
   var UserId = ''; 

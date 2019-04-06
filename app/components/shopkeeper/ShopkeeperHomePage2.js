@@ -7,7 +7,9 @@ import {connect} from 'react-redux';
 import Header from '../../common/header';
 import Home_header from '../../common/home_header';
 import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
-import {UserData} from '../../redux/actions/UserData_action';
+import {UserData  } from '../../redux/actions/UserData_action';
+import {cartData } from '../../redux/actions/getCart_action';
+
 import {NavigationActions } from 'react-navigation';
 import ImageSlider from 'react-native-image-slider';
 // import { Drawer } from 'native-base';
@@ -22,17 +24,25 @@ import Menu from '../../common/Menu.js';
       scrollEnabled: true,
       type: 1,
       isOpen : false,
+      myCartCount : 0,
       ShopkeeperName : 'Welcome Rahul'
     }
     this.toggleMenu = this
     .toggleMenu
     .bind(this);
-    console.log("props are --> ",JSON.stringify(props));
+    console.log("props ShopkeeperHomePage2 are --> ",JSON.stringify(props));
   }
-
-  componentWillMount() {
+  componentWillReceiveProps(newProps){
+    // console.log(JSON.stringify(newProps));
+    console.log(JSON.stringify('newProps inside home',newProps));
     
-  
+     this.setState({
+      myCartCount : newProps.cartData
+      });
+  }
+  componentWillMount() {
+    console.log('cartData ://' + this.props.cartData);
+    
       AsyncStorage
           .getItem("@shopkeeperId:key")
           .then((value) => {
@@ -112,7 +122,7 @@ import Menu from '../../common/Menu.js';
     }else if(item.menuName=='History'){
       this.props.navigation.navigate('OrderHistoryShopkeeper')
     }else if(item.menuName=='Buy'){
-      this.props.navigation.navigate('BuyProductsShopkeeper')
+      this.props.navigation.navigate('BuyProductsBrandList')
     }else if(item.menuName=='Offers'){
       this.props.navigation.navigate('ViewOfferImageByCustomer')
     }
@@ -143,7 +153,7 @@ updateMenuState(isOpen) {
          <Home_header  menu = { () => {  this.toggleMenu() ;
                         console.log("Open Menu",this.state.isOpen) }}  
                 title={'PROTON ENTERPRISE'} 
-               
+                cartCount = { this.props.getCartred && this.props.getCartred.length > 0 ? this.props.getCartred.length : 0 }
                 
                 />
                 
@@ -309,13 +319,18 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = (state, ownProps) => {
-  // console.log('state:' + JSON.stringify(state));
-  return {}
+  console.log('state:' + JSON.stringify(state));
+  console.log('cartData :' + JSON.stringify(state.getCartred));
+  console.log('cartData length :' + state.getCartred.length);
+  console.log('ownProps:' + JSON.stringify(ownProps));
+  
+  // return { cartData : state.getCartred}
+  return {UserId: state.UserData_red.UserId , cartData : state.getCartred}
   
 }
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  UserData
+  UserData ,cartData
 }, dispatch));
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperHomePage2);

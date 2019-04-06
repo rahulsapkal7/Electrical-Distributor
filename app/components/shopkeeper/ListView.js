@@ -27,7 +27,7 @@ class ListItem extends React.Component {
   }
 }
 
-class ShopkeeperHomePage extends React.Component {
+class ListView extends React.Component {
   state = {
     products,
   };
@@ -73,4 +73,4 @@ class ShopkeeperHomePage extends React.Component {
   }
 }
 
-export default ShopkeeperHomePage;
+export default ListView;

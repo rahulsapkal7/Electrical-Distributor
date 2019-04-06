@@ -208,7 +208,7 @@ this.props.NavigationToScreen(screen)
                 </Text>
             </TouchableOpacity>
             <View style={styles.horizontalLine}></View> */}
-            <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('BuyProductsShopkeeper') }  >
+            <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('BuyProductsBrandList') }  >
              <Icon name="aperture" style={styles.iconImage}/>
                 <Text  style={styles.item}>
                     Buy Product

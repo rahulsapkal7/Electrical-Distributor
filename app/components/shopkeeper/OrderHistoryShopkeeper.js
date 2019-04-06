@@ -114,7 +114,7 @@ Date :
     })
           .then(response => response.json())
           .then(res => {
-            console.warn("response is",JSON.stringify(res));
+            console.log("response is",JSON.stringify(res));
       this.setState({loading: false});
       
             if(res.status){
@@ -128,7 +128,7 @@ Date :
           })
           .catch(error => {
   
-              console.warn('error:' + (error));
+              console.log('error:' + (error));
               this.setState({ loading: false});
           });
   
