@@ -3,13 +3,17 @@ import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, ListItem,Text, Vie
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 // import Header from '../../common/header';
-// import Home_header from '../../common/home_header';
-import CartCount_header from '../../common/CartCount_header';
+import Home_header from '../../common/home_header';
+// import CartCount_header from '../../common/CartCount_header';
 
 import {api} from '../../common/api';
 
 import {UserData } from '../../redux/actions/UserData_action';
 import {cartData } from '../../redux/actions/getCart_action';
+import {CartCountData } from '../../redux/actions/CartCountData_action';
+
+import SideMenu from 'react-native-side-menu';
+import Menu from '../../common/Menu.js';
 
 import {NavigationActions} from 'react-navigation';
 import Loader from '../../common/Loader.js';
@@ -26,8 +30,13 @@ var ThisView = null;
     ThisView = this
     this.state = {
       loading : false,
-      MyCartData : this.props.navigation.state.params.MyCartData,
+      isOpen : false,
+      MyCartData : [],
+      
     }
+    this.toggleMenu = this
+    .toggleMenu
+    .bind(this);
     this.addQty = this
     .addQty
     .bind(this);
@@ -50,7 +59,11 @@ var ThisView = null;
     });
     console.log("inside componentWillReceiveProps ",JSON.stringify(this.state) )
   }
- 
+  toggleMenu() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
       
       addQty = (item,index) =>{
         console.log("on press addQty index",index);
@@ -148,33 +161,39 @@ var ThisView = null;
   
 
   render() {
+    var menu = <Menu Name = {this.state.ShopkeeperName} NavigationToScreen={(screen) => {this.props.navigation.navigate(screen);this.setState({isOpen : false})}}  
+     Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.props.navigation.navigate('Login'); }}
+     />;
     return (
-
+      <SideMenu
+      menu={menu}
+      isOpen = {this.state.isOpen}
+      onChange={isOpen => this.setState({isOpen})}>
     <View style={styles.parentcontainer}>
-    <CartCount_header
+    {/* <CartCount_header
                 title={'MY CART'}
-                cartCount = { this.state.addToCartData && this.state.addToCartData.length > 0 ? this.state.addToCartData.length : 0 }
+                cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0 }
                 GoToCart = {() => {} }
                 back={() => {
                 this
                   .props
                   .navigation
                   .goBack(null)
-                  // this.props.navigation.navigate('ShopkeeperHomePage2')
-              }}/>
-             
-              {/* <Home_header  menu = { () => {  this.toggleMenu() ;
+              }}/> */}
+              <Home_header  menu = { () => {  this.toggleMenu() ;
                         console.log("Open Menu",this.state.isOpen) }}  
-                title={'PROTON ENTERPRISE'} 
-               
+                title={'MY CART'} 
+                cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
                 
-                /> */}
+                />
+             
+             
    <Loader visible={this.state.loading}/>
                 <ScrollView contentContainerStyle={{
                 width: window.width
               }}>
       <View style={styles.container}>
-
+{ this.state.MyCartData.length > 0 ? 
  <FlatList
         data={this.state.MyCartData}
           renderItem={({ item, index }) => (
@@ -189,9 +208,25 @@ var ThisView = null;
           )}
           keyExtractor={item => item.ProductTableID.toString()}
         />
+        : 
+        <View style={styles.emptyCartContainar} >
+        
+        <Text style={styles.txtStyle_fourteen}>
+          Your Shopping Cart is empty !
+          </Text>
+          <Text style={styles.txtStyle_fourteen}>
+          Add items to it now
+          </Text>
+          <TouchableOpacity style={styles.btnBackground} onPress={ () => this.props.navigation.navigate('BuyProductsBrandList',) } 
+        >
+            <Text style={styles.txtStyle_fourteen}>Shop Now</Text>
+        </TouchableOpacity>
+        </View>
+         }
       </View>
               </ScrollView>
       </View>
+      </SideMenu>
     );
   }
 }
@@ -227,7 +262,6 @@ class ListItemData extends React.Component {
         {item.ProductCode }
         </Text>
         </View>
-
         <View style={styles.horizontal_view}>
            <Text style={styles.txtStyle_fourteen}>
            Power W : 
@@ -307,6 +341,7 @@ const styles = StyleSheet.create({
       },
   parentcontainer: { 
     flexDirection: 'column', 
+    backgroundColor: 'white',
     height: '100%',  
   },
   productParent:{
@@ -315,6 +350,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#4db6ac',
     // alignItems: 'center',
     // justifyContent: 'center', 
+    borderRadius:2,
+    borderColor: 'red',
+    margin : 10,
+    padding : 15,
+    borderWidth:1,
+    borderRadius:2,
+    borderColor: '#ddd',
+    
+  },
+  emptyCartContainar:{
+    flex:1,
+    flexDirection: 'column', 
+    backgroundColor: '#4db6ac',
+    alignItems: 'center',
+    justifyContent: 'center', 
     borderRadius:2,
     borderColor: 'red',
     margin : 10,
@@ -467,14 +517,14 @@ const mapStateToProps = (state, ownProps) => {
   console.log('cartData :' + JSON.stringify(state.getCartred));
   console.log('cartData length :' + state.getCartred.length);
   console.log('ownProps:' + JSON.stringify(ownProps));
-  
-  return {UserId: state.UserData_red.UserId , cartData : JSON.stringify(state.getCartred) }
+  console.log('CartCount @@@ :' + state.CartCountData_red.CartCount);
+  return {UserId: state.UserData_red.UserId , cartData : state.getCartred ,CartCount: state.CartCountData_red.CartCount }
   
   // return {}
 }
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  UserData ,cartData
+  UserData ,cartData ,CartCountData
 }, dispatch));
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCartShopkeeper);

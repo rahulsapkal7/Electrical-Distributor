@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import {Platform, StyleSheet,AsyncStorage, Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
 // import Cards from "./Cards.js"; 
@@ -9,6 +8,7 @@ import Home_header from '../../common/home_header';
 import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData  } from '../../redux/actions/UserData_action';
 import {cartData } from '../../redux/actions/getCart_action';
+import {CartCountData } from '../../redux/actions/CartCountData_action';
 
 import {NavigationActions } from 'react-navigation';
 import ImageSlider from 'react-native-image-slider';
@@ -153,8 +153,8 @@ updateMenuState(isOpen) {
          <Home_header  menu = { () => {  this.toggleMenu() ;
                         console.log("Open Menu",this.state.isOpen) }}  
                 title={'PROTON ENTERPRISE'} 
-                cartCount = { this.props.getCartred && this.props.getCartred.length > 0 ? this.props.getCartred.length : 0 }
-                
+                cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
+                GoToCart = {() =>  this.props.navigation.navigate('MyCartShopkeeper')}
                 />
                 
            <View style={styles.firstContainer}>
@@ -197,7 +197,6 @@ updateMenuState(isOpen) {
             <View style={{ backgroundColor: 'red', padding: 0.5 }}> 
             
             </View> 
-
             <Image source={require('../../assets/images/isco_one.jpg')} style={styles.backgroundImage}>
                  
                  </Image>
@@ -211,11 +210,9 @@ updateMenuState(isOpen) {
                {/* <Image source={require('../../assets/homeLogo/Cresent.png')} style={styles.backgroundLogoImage}>
                  
                  </Image>
-
 <Image source={require('../../assets/homeLogo/GM.png')} style={styles.backgroundLogoImage}>
   
   </Image>
-
 <Image source={require('../../assets/homeLogo/Magic.png')} style={styles.backgroundLogoImage}>
   
   </Image> */}
@@ -323,14 +320,15 @@ const mapStateToProps = (state, ownProps) => {
   console.log('cartData :' + JSON.stringify(state.getCartred));
   console.log('cartData length :' + state.getCartred.length);
   console.log('ownProps:' + JSON.stringify(ownProps));
+  console.log('CartCount @@@ :' + state.CartCountData_red.CartCount);
   
   // return { cartData : state.getCartred}
-  return {UserId: state.UserData_red.UserId , cartData : state.getCartred}
+  return {UserId: state.UserData_red.UserId , cartData : state.getCartred , CartCount: state.CartCountData_red.CartCount}
   
 }
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  UserData ,cartData
+  UserData ,cartData, CartCountData
 }, dispatch));
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperHomePage2);

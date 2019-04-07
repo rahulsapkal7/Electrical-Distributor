@@ -44,7 +44,7 @@ import ViewOfferImageByCustomer from '../shopkeeper/ViewOfferImageByCustomer.js'
 import BuyProductsCategoryList from '../shopkeeper/BuyProductsCategoryList.js';
 import BuyProductsBrandList from '../shopkeeper/BuyProductsBrandList.js';
 import BuyProductsSubCategoryList from '../shopkeeper/BuyProductsSubCategoryList.js';
-import BuyProductDetail from '../shopkeeper/BuyProductDetail.js';
+import AddToCartShopkeeper from '../shopkeeper/AddToCartShopkeeper.js';
 import MyCartShopkeeper from '../shopkeeper/MyCartShopkeeper.js';
 
 
@@ -213,8 +213,8 @@ export const HomeStack = createStackNavigator({
       header: null
     }
   },
-  BuyProductDetail : {
-    screen : BuyProductDetail,
+  AddToCartShopkeeper : {
+    screen : AddToCartShopkeeper,
     navigationOptions: {
       header: null
     }
@@ -388,8 +388,8 @@ export const LoginStack = createStackNavigator({
       header: null
     }
   },
-  BuyProductDetail : {
-    screen : BuyProductDetail,
+  AddToCartShopkeeper : {
+    screen : AddToCartShopkeeper,
     navigationOptions: {
       header: null
     }

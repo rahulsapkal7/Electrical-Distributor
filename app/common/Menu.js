@@ -236,13 +236,13 @@ this.props.NavigationToScreen(screen)
                 </Text>
             </TouchableOpacity>
             <View style={styles.horizontalLine}></View>
-            {/* <TouchableOpacity style={styles.listContainer}>
+            <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('MyCartShopkeeper') } >
              <Icon name="cart" style={styles.iconImage}/>
                 <Text  style={styles.item}>
                 My Cart
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View> */}
+            <View style={styles.horizontalLine}></View>
              {/* <TouchableOpacity style={styles.listContainer}>
              <Icon name="business" style={styles.iconImage}/>
                 <Text  style={styles.item}>

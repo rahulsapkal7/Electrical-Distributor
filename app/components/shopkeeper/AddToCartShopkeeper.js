@@ -10,13 +10,14 @@ import {api} from '../../common/api';
 
 import {UserData } from '../../redux/actions/UserData_action';
 import {cartData } from '../../redux/actions/getCart_action';
+import {CartCountData } from '../../redux/actions/CartCountData_action';
 
 import {NavigationActions} from 'react-navigation';
 import Loader from '../../common/Loader.js';
 var ThisView = null;
 
 
- class BuyProductDetail extends Component {
+ class AddToCartShopkeeper extends Component {
   
 
   constructor(props) {
@@ -95,7 +96,7 @@ var ThisView = null;
                   loading : false
                 });
               }else{
-                Alert.alert('Buy Product', "Something went wrong");
+                Alert.alert('Add To Cart', "Something went wrong");
               }
                 
             })
@@ -108,6 +109,7 @@ var ThisView = null;
       }
       
       addQty = (item,index) =>{
+        if (item.AddedToCartFlag == false) {
         console.log("on press addQty index",index);
         console.log("on press addQty item",item);
         const ProductData = [...this.state.ProductData];
@@ -115,21 +117,28 @@ var ThisView = null;
         this.setState({ ProductData });
           console.log("on press addQty",this.state.ProductData[index]);
           console.log("on press addQty",this.state.ProductData);
-         
+        }else{
+          Alert.alert('Add To Cart', "To change quantity click below Go to Cart button");
+        }
       }
       subtractQty = (item,index) =>{
         console.log("on press subtractQty index",index);
         console.log("on press subtractQty item",item);
         console.log("on press subtractQty",this.state.ProductData[index].Qty);
+        if (item.AddedToCartFlag == false) {
         
         if (this.state.ProductData[index].Qty == 0) {
-          Alert.alert('Buy Product', "Below 0 not allow");
+          Alert.alert('Add To Cart', "Below 0 not allow");
         } else {
           const ProductData = [...this.state.ProductData];
           ProductData[index].Qty -= 1;
           this.setState({ ProductData })
          
         }
+      }else{
+        Alert.alert('Add To Cart', "To change quantity click below Go to Cart button");
+        
+                }
       }
 
       addToCart = (item,index) =>{
@@ -137,13 +146,20 @@ var ThisView = null;
           console.log("on press addToCart index",index);
           console.log("on press addToCart item",item);
           console.log("on press addToCart this.props.cartData ",this.props.cartData );
-          var arr = this.state.addToCartData;
-          arr.push(item);
-          this.setState({ addToCartData :  arr})
-          console.log('after add to cart ',this.state.addToCartData);
-          const ProductData = [...this.state.ProductData];
-          ProductData[index].AddedToCartFlag = true;
-          this.setState({ ProductData })
+          if (item.Qty == 0 ) {
+            Alert.alert('Add To Cart', "Please add Quantity first");
+          } else {
+            var arr = this.state.addToCartData;
+            arr.push(item);
+            this.setState({ addToCartData :  arr})
+            console.log('after add to cart ',this.state.addToCartData);
+            const ProductData = [...this.state.ProductData];
+            ProductData[index].AddedToCartFlag = true;
+            this.setState({ ProductData });
+            this.props.CartCountData(this.state.addToCartData.length);
+            console.log("after update cart count ",this.props.CartCountData);
+          }
+         
         } else {
           console.log("navigate to cart page")
         }
@@ -175,6 +191,8 @@ var ThisView = null;
         
         this.props.cartData(this.state.addToCartData);
         console.log("on press GoToCart this.props.cartData ",this.props.cartData );
+        this.props.CartCountData(this.state.addToCartData.length);
+        console.log("after update cart count ",this.props.CartCountData);
         this.props.navigation.navigate('MyCartShopkeeper',{MyCartData : this.state.addToCartData });
         // console.log("on press addToCart",this.state.ProductData[index].Qty);
         // var d = []
@@ -560,14 +578,14 @@ const mapStateToProps = (state, ownProps) => {
   console.log('cartData :' + JSON.stringify(state.getCartred));
   console.log('cartData length :' + state.getCartred.length);
   console.log('ownProps:' + JSON.stringify(ownProps));
-  
-  return {UserId: state.UserData_red.UserId , cartData : state.getCartred}
+  console.log('CartCount @@@ :' + state.CartCountData_red.CartCount);
+  return {UserId: state.UserData_red.UserId , cartData : state.getCartred , CartCount: state.CartCountData_red.CartCount}
   
   // return {}
 }
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  UserData ,cartData
+  UserData ,cartData ,CartCountData
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuyProductDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(AddToCartShopkeeper);

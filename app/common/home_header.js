@@ -101,7 +101,7 @@ class Home_header extends Component {
         </Text>
         
       </View>    
-      <View style={styles.Menucontainer}>
+      <TouchableOpacity style={styles.Menucontainer} onPress={this.props.GoToCart}>
       {this.props.cartCount != 0  ?  
       <IconBadge
                             MainElement={< Icon name = "cart" size = {
@@ -120,7 +120,7 @@ class Home_header extends Component {
      
     }
      
-    </View>
+    </TouchableOpacity>
     </View>
  
 
