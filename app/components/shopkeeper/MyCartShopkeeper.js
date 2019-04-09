@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 // import Header from '../../common/header';
 import Home_header from '../../common/home_header';
 // import CartCount_header from '../../common/CartCount_header';
+import {   Icon, Badge } from 'native-base';
 
 import {api} from '../../common/api';
 
@@ -59,6 +60,40 @@ var ThisView = null;
     });
     console.log("inside componentWillReceiveProps ",JSON.stringify(this.state) )
   }
+
+  componentDidMount() {
+        this.ViewCartData();
+      }
+      ViewCartData = () =>{
+        const url = api() + 'ViewCart.php';
+         console.log(url);
+        
+        this.setState({loading: true});
+        var data = new FormData();
+        console.log("this.props.UserId",this.props.UserId);
+        data.append('UserID',this.props.UserId ),
+        fetch(url,{method: 'post',body: data})
+            .then(response => response.json())
+            .then(res => {
+              console.log("response is inside alerts page ",JSON.stringify(res));
+              if(res.status){
+                this.setState({
+                  MyCartData: res.data,
+                  loading : false
+                });
+              }else{
+                Alert.alert('My Cart', "Something went wrong");
+              }
+                
+            })
+            .catch(error => {
+    
+                //console.log('error:' + (error));
+                this.setState({error, loading: false});
+            });
+    
+      }
+      
   toggleMenu() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -69,7 +104,7 @@ var ThisView = null;
         console.log("on press addQty index",index);
         console.log("on press addQty item",item);
         const MyCartData = [...this.state.MyCartData];
-        MyCartData[index].Qty += 1;
+        MyCartData[index].Quantity = parseInt(MyCartData[index].Quantity) + 1 ;
         this.setState({ MyCartData });
           console.log("on press addQty",this.state.MyCartData[index]);
           console.log("on press addQty",this.state.MyCartData);
@@ -78,13 +113,14 @@ var ThisView = null;
       subtractQty = (item,index) =>{
         console.log("on press subtractQty index",index);
         console.log("on press subtractQty item",item);
-        console.log("on press subtractQty",this.state.MyCartData[index].Qty);
+        console.log("on press subtractQty",this.state.MyCartData[index].Quantity);
         
-        if (this.state.MyCartData[index].Qty == 0) {
+        if (this.state.MyCartData[index].Quantity == 0) {
           Alert.alert('Buy Product', "Below 0 not allow");
         } else {
           const MyCartData = [...this.state.MyCartData];
-          MyCartData[index].Qty -= 1;
+          MyCartData[index].Quantity = parseInt(MyCartData[index].Quantity) - 1 ;
+          // MyCartData[index].Quantity -= 1;
           this.setState({ MyCartData })
          
         }
@@ -183,7 +219,7 @@ var ThisView = null;
               <Home_header  menu = { () => {  this.toggleMenu() ;
                         console.log("Open Menu",this.state.isOpen) }}  
                 title={'MY CART'} 
-                cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
+                cartCount = { this.state.MyCartData && this.state.MyCartData.length > 0 ? this.state.MyCartData.length : 0  }
                 
                 />
              
@@ -235,58 +271,16 @@ class ListItemData extends React.Component {
     const { item } = this.props;
 
     return (
-      <View style={styles.productParent} >
-      
+      <View style={styles.CartContainer}>
+     
            
-        <View style={styles.horizontal_view}>
-           <Text style={styles.txtStyle_fourteen}>
-           Brand Category Name : 
-          </Text>
-        <Text style={styles.txtStyle_sixteen}>
-        {item.BrandCategoryName }
-        </Text>
-        </View>
-        <View style={styles.horizontal_view}>
-           <Text style={styles.txtStyle_fourteen}>
-           Sub Category Name : 
-          </Text>
-        <Text style={styles.txtStyle_sixteen}>
-        {item.SubCategoryName }
-        </Text>
-        </View>
-        {/* <View style={styles.horizontal_view}>
-           <Text style={styles.txtStyle_fourteen}>
-           Product Code : 
-          </Text>
+      <View style={styles.productParent} >
         <Text style={styles.txtStyle_sixteen}>
         {item.ProductCode }
         </Text>
-        </View>
-        <View style={styles.horizontal_view}>
-           <Text style={styles.txtStyle_fourteen}>
-           Power W : 
-          </Text>
-        <Text style={styles.txtStyle_sixteen}>
-        {item.PowerW }
-        </Text>
-        </View>
-        <View style={styles.horizontal_view}>
-           <Text style={styles.txtStyle_fourteen}>
-           Colour : 
-          </Text>
-        <Text style={styles.txtStyle_sixteen}>
-        {item.Colour }
-        </Text>
-        </View>
-        <View style={styles.horizontal_view}>
-           <Text style={styles.txtStyle_fourteen}>
-           Product Desc : 
-          </Text>
         <Text style={styles.txtStyle_sixteen}>
         {item.ProductDes }
         </Text>
-        </View> */}
-
         <View style={styles.horizontal_view}>
            <Text style={styles.txtStyle_fourteen}>
            MRP : 
@@ -303,31 +297,41 @@ class ListItemData extends React.Component {
             <Text style={styles.txtStyle_fourteen}>+</Text>
         </TouchableOpacity>
         <Text style={styles.txtStyle_sixteenQty} >
-        {item.Qty }
+        {item.Quantity }
         </Text>
         <TouchableOpacity style={styles.btnBackgroundSub} onPress={ this.props.subtractQty} >
 
             <Text style={styles.txtStyle_fourteen}>-</Text>
         </TouchableOpacity>
+       
         </View>
         <View style={styles.horizontal_view}>
            <Text style={styles.txtStyle_fourteen}>
            Total : 
           </Text>
         <Text style={styles.txtStyle_sixteen}>
-        { (item.MRP) * (item.Qty) }
+        { (item.MRP) * (item.Quantity) }
         </Text>
         </View>
         <View style={{ width : '100%',alignItems: 'center',justifyContent: 'center'}} >
        
-          <TouchableOpacity style={styles.btnBackground} onPress={this.props.RemoveFromCart} 
+          {/* <TouchableOpacity style={styles.btnBackground} onPress={this.props.RemoveFromCart} 
         >
             <Text style={styles.txtStyle_fourteen}>Remove from Cart</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         
        
         </View> 
     </View> 
+    <Image
+              source={{ uri: item.Image }}
+              style={{ width: 50, height:50 }}
+              resizeMode="cover"
+            />
+             <TouchableOpacity style={{ justifyContent: 'flex-end'}}  onPress={this.props.RemoveFromCart} >
+        <Icon name='trash' style={{ color: "red" }} />
+         </TouchableOpacity>
+    </View>
     )
   }
 }
@@ -348,15 +352,14 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'column', 
     backgroundColor: '#4db6ac',
-    // alignItems: 'center',
-    // justifyContent: 'center', 
-    borderRadius:2,
-    borderColor: 'red',
-    margin : 10,
-    padding : 15,
-    borderWidth:1,
-    borderRadius:2,
-    borderColor: '#ddd',
+    
+    // borderRadius:2,
+    // borderColor: 'red',
+    // margin : 10,
+    // padding : 15,
+    // borderWidth:1,
+    // borderRadius:2,
+    // borderColor: '#ddd',
     
   },
   emptyCartContainar:{
@@ -464,6 +467,19 @@ const styles = StyleSheet.create({
   horizontal_view: { 
     flexDirection: 'row', 
     
+  },
+  CartContainer : {
+    flexDirection: 'row',
+    backgroundColor: '#4db6ac',
+    // alignItems: 'center',
+    // justifyContent: 'center', 
+    borderRadius:2,
+    borderColor: 'red',
+    margin : 10,
+    padding : 15,
+    borderWidth:1,
+    borderRadius:2,
+    borderColor: '#ddd', 
   },
   horizontal_view1: { 
     flexDirection: 'row', 

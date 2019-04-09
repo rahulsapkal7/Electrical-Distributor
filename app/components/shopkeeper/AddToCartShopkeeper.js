@@ -149,15 +149,55 @@ var ThisView = null;
           if (item.Qty == 0 ) {
             Alert.alert('Add To Cart', "Please add Quantity first");
           } else {
-            var arr = this.state.addToCartData;
-            arr.push(item);
-            this.setState({ addToCartData :  arr})
-            console.log('after add to cart ',this.state.addToCartData);
-            const ProductData = [...this.state.ProductData];
-            ProductData[index].AddedToCartFlag = true;
-            this.setState({ ProductData });
-            this.props.CartCountData(this.state.addToCartData.length);
-            console.log("after update cart count ",this.props.CartCountData);
+           
+               const url = api() + 'AddToCart.php';
+        // UserID,SKUCode,Qty
+        
+         console.log(url);
+        
+        this.setState({loading: true});
+    
+        var data = new FormData();
+        console.log("this.props.UserId",this.props.UserId);
+        data.append('UserID',this.props.UserId ),
+        // data.append('UserID', "2"),
+        data.append('ProductTableID', item.ProductTableID),
+        data.append('Quantity', item.Qty),
+        // data.append('Qty', 3),
+        
+        console.log("data is", data);
+        fetch(url,{method: 'post',
+        body: data
+      })
+            .then(response => response.json())
+            .then(res => {
+              console.log("response of place order is",JSON.stringify(res));
+              this.setState({
+                loading : false
+              })
+              if(res.status == true){
+                var arr = this.state.addToCartData;
+                arr.push(item);
+                this.setState({ addToCartData :  arr})
+                console.log('after add to cart ',this.state.addToCartData);
+                const ProductData = [...this.state.ProductData];
+                ProductData[index].AddedToCartFlag = true;
+                this.setState({ ProductData });
+                this.props.CartCountData(this.state.addToCartData.length);
+                console.log("after update cart count ",this.props.CartCountData);
+                Alert.alert('Add To Cart', res.message);
+                
+              }else{
+                Alert.alert('Add To Cart', "Something went wrong");
+              }
+               
+            })
+            .catch(error => {
+    
+                console.log('error:' + (error));
+                this.setState({ loading: false});
+            });
+    
           }
          
         } else {
@@ -193,7 +233,7 @@ var ThisView = null;
         console.log("on press GoToCart this.props.cartData ",this.props.cartData );
         this.props.CartCountData(this.state.addToCartData.length);
         console.log("after update cart count ",this.props.CartCountData);
-        this.props.navigation.navigate('MyCartShopkeeper',{MyCartData : this.state.addToCartData });
+        this.props.navigation.navigate('MyCartShopkeeper');
         // console.log("on press addToCart",this.state.ProductData[index].Qty);
         // var d = []
         // d.push(item);
