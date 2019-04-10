@@ -11,6 +11,7 @@ import {api} from '../../common/api';
 
 import {UserData } from '../../redux/actions/UserData_action';
 import {cartData } from '../../redux/actions/getCart_action';
+import commonStyles from '../../common/commonStyle';
 import {CartCountData } from '../../redux/actions/CartCountData_action';
 
 import SideMenu from 'react-native-side-menu';
@@ -97,7 +98,8 @@ var ThisView = null;
                 // console.log("this.props.this.props.cartData",this.props.cartData);
                 
               }else{
-                Alert.alert('My Cart', "Something went wrong");
+                Alert.alert('My Cart', "There is no data in the cart currently");
+                this.setState({loading: false});
               }
                 
             })
@@ -213,6 +215,33 @@ var ThisView = null;
     
       // }
       
+
+      placeOrder(){
+        const url = api() + 'AddOrder.php';
+        var data = new FormData();
+        console.log("this.props.UserId",this.props.UserId);
+        data.append('UserID',this.props.UserId ),
+        fetch(url,{method: 'post',body: data})
+            .then(response => response.json())
+            .then(res => {
+              console.log("response is inside alerts page ",JSON.stringify(res));
+              if(res.status){
+                Alert.alert('My Profile', res.message,[{text: 'OK', 
+                onPress: () => {
+                    console.log('OK Pressed');
+                    this.props.navigation.goBack(null)}}]
+                , {cancelable: false},);
+              }else{
+                Alert.alert('My Cart', "Something went wrong");
+              }
+                
+            })
+            .catch(error => {
+    
+                //console.log('error:' + (error));
+                this.setState({error, loading: false});
+            });
+      }
   
 
   render() {
@@ -249,6 +278,8 @@ var ThisView = null;
               }}>
       <View style={styles.container}>
 { this.state.MyCartData.length > 0 ? 
+
+  <View>
  <FlatList
         data={this.state.MyCartData}
           renderItem={({ item, index }) => (
@@ -263,6 +294,12 @@ var ThisView = null;
           )}
           keyExtractor={item => item.ProductTableID.toString()}
         />
+
+        <TouchableOpacity onPress= {()=> this.placeOrder()} style={commonStyles.btnBackground}>
+                                  <Text style={commonStyles.textbtn}>Place order</Text>
+                              </TouchableOpacity>
+
+                              </View>
         : 
         <View style={styles.emptyCartContainar} >
         
@@ -272,10 +309,10 @@ var ThisView = null;
           <Text style={styles.txtStyle_fourteen}>
           Add items to it now
           </Text>
-          <TouchableOpacity style={styles.btnBackground} onPress={ () => this.props.navigation.navigate('BuyProductsBrandList',) } 
+          {/* <TouchableOpacity style={styles.btnBackground} onPress={ () => this.props.navigation.navigate('BuyProductsBrandList',) } 
         >
             <Text style={styles.txtStyle_fourteen}>Shop Now</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         </View>
          }
       </View>
@@ -292,6 +329,11 @@ class ListItemData extends React.Component {
     return (
       <View style={styles.CartContainer}>
      
+    <Image
+              source={{ uri: item.Image }}
+              style={{ width: 100, height:100 }}
+              resizeMode="cover"
+            />
            
       <View style={styles.productParent} >
         <Text style={styles.txtStyle_sixteen}>
@@ -343,14 +385,9 @@ class ListItemData extends React.Component {
         </View> 
     </View> 
     <View>
-    <Image
-              source={{ uri: item.Image }}
-              style={{ width: 50, height:50 }}
-              resizeMode="cover"
-            />
-             <TouchableOpacity style={{ justifyContent: 'flex-end'}}  onPress={this.props.RemoveFromCart} >
+             {/* <TouchableOpacity style={{ justifyContent: 'flex-end'}}  onPress={this.props.RemoveFromCart} >
         <Icon name='trash' style={{ color: "red" }} />
-         </TouchableOpacity>
+         </TouchableOpacity> */}
          </View>
     </View>
     )
@@ -373,7 +410,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'column', 
     backgroundColor: '#4db6ac',
-    
+    marginLeft:10
     // borderRadius:2,
     // borderColor: 'red',
     // margin : 10,
@@ -446,6 +483,8 @@ const styles = StyleSheet.create({
   container: {
    flex: 1,
    paddingTop: 22,
+   alignItems: 'center',
+   justifyContent: 'center',
    
    
   },
@@ -492,8 +531,8 @@ const styles = StyleSheet.create({
   CartContainer : {
     flexDirection: 'row',
     backgroundColor: '#4db6ac',
-    // alignItems: 'center',
-    // justifyContent: 'center', 
+     alignItems: 'center',
+     justifyContent: 'center', 
     borderRadius:2,
     borderColor: 'red',
     margin : 10,

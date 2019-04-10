@@ -180,7 +180,7 @@ Date :
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'BRAND OFFERS'}
+                title={'Brand offers'}
                 back={() => {
                 this
                   .props
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     borderRadius:2,
     borderColor: '#ddd',
     borderBottomWidth: 0,
-  },
+  }, 
   item: {
     padding: 10,
     fontSize: 18,

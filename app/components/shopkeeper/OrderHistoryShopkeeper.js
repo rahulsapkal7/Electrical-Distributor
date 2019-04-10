@@ -45,7 +45,7 @@ renderItem=({item})=>{
         Product name : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.ProductName+"("+item.MfgName+")"}
+                    {' '+item.SubCategoryName+"("+item.BrandCategoryName+"-"+item.BrandName+")"}
                 </Text>
                 </View>
 
@@ -55,7 +55,7 @@ renderItem=({item})=>{
         Price : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.Price}
+                    {' '+item.Amount}
                 </Text>
                 </View>
 
@@ -65,7 +65,7 @@ renderItem=({item})=>{
         Quantity : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.Qty}
+                    {' '+item.Quantity}
                 </Text>
                 </View>
 
@@ -75,9 +75,19 @@ renderItem=({item})=>{
 Date : 
         </Text>
         <Text style={styles.txtStyle_sixteen}>
-            {' '+item.PODate}
+            {' '+item.OrderDate}
         </Text>
         </View>
+
+<View style={styles.horizontal_view}>
+
+<Text style={styles.txtStyle_fourteen}>
+Order id : 
+</Text>
+<Text style={styles.txtStyle_sixteen}>
+{' '+item.OrderID}
+</Text>
+</View>
 
                 <View style={styles.horizontal_view}>
       
@@ -100,7 +110,7 @@ Date :
     }
 
     getOrderHistoryOfUser = () =>{
-      const url = api() + 'CustomerOrderHistory.php';
+      const url = api() + 'ViewAddOrder.php';
        console.log(url);
       
       this.setState({loading: true});
