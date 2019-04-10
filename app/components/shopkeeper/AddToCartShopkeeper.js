@@ -30,6 +30,7 @@ var ThisView = null;
       loading : false,
       ProductData : [],
       addToCartData : [],
+      cartCount : this.props.CartCount,
       BrandCategoryTableID : this.props.navigation.state.params.data.BrandCategoryTableID,
       SubCategoryTableID : this.props.navigation.state.params.data.SubCategoryTableID ,
       Qty : 1
@@ -115,6 +116,7 @@ var ThisView = null;
         const ProductData = [...this.state.ProductData];
         ProductData[index].Qty += 1;
         this.setState({ ProductData });
+       
           console.log("on press addQty",this.state.ProductData[index]);
           console.log("on press addQty",this.state.ProductData);
         }else{
@@ -183,8 +185,17 @@ var ThisView = null;
                 const ProductData = [...this.state.ProductData];
                 ProductData[index].AddedToCartFlag = true;
                 this.setState({ ProductData });
-                this.props.CartCountData(this.state.addToCartData.length);
+                var cartCountLocal = this.state.cartCount;
+                cartCountLocal = cartCountLocal + 1;
+                this.setState({
+                  cartCount : cartCountLocal,
+                })
+                this.props.CartCountData(this.state.cartCount);
+                // this.props.CartCountData(this.state.addToCartData.length);
                 console.log("after update cart count ",this.props.CartCountData);
+                // this.setState({
+                //   cartCount : (this.state.cartCount + 1)
+                // })
                 Alert.alert('Add To Cart', res.message);
                 
               }else{
@@ -231,7 +242,18 @@ var ThisView = null;
         
         this.props.cartData(this.state.addToCartData);
         console.log("on press GoToCart this.props.cartData ",this.props.cartData );
-        this.props.CartCountData(this.state.addToCartData.length);
+        // var cartCountLocal = this.state.cartCount;
+        // cartCountLocal = cartCountLocal + 1;
+        // this.setState({
+        //   cartCount : cartCountLocal,
+        // })
+        console.log("on press GoToCart tthis.state.cartCount ",this.state.cartCount );
+        
+        this.props.CartCountData(this.state.cartCount);
+        // this.props.CartCountData(this.state.addToCartData.length);
+       
+       
+        // this.props.CartCountData(this.state.addToCartData.length);
         console.log("after update cart count ",this.props.CartCountData);
         this.props.navigation.navigate('MyCartShopkeeper');
         // console.log("on press addToCart",this.state.ProductData[index].Qty);
@@ -297,9 +319,10 @@ var ThisView = null;
     <View style={styles.parentcontainer}>
     <CartCount_header
                 title={'ADD TO CART'}
-                cartCount = { this.state.addToCartData && this.state.addToCartData.length > 0 ? this.state.addToCartData.length : 0 }
+                // cartCount = { this.state.addToCartData && this.state.addToCartData.length > 0 ? this.state.addToCartData.length : 0 }
+                cartCount = { this.state.cartCount && this.state.cartCount > 0 ? this.state.cartCount : 0 }
 
-                // cartCount = {this.state.addToCartData.length}
+                // cartCount = {this.state.cartCount}
                 GoToCart = {() => this.GoToCart() }
                 back={() => {
                 this

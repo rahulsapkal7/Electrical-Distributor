@@ -56,18 +56,18 @@ import Menu from '../../common/Menu.js';
             // }, 5);
           })
 
-          // AsyncStorage
-          // .getItem("@shopkeeperName")
-          // .then((value) => {
-          //   console.log("shopkeeperName value --> ",value);
-          //   if (value != null) {}
-          //   this.setState({
-          //     ShopkeeperName : value
-          //   })
+          AsyncStorage
+          .getItem("@shopkeeperCartCount")
+          .then((value) => {
+            console.log("shopkeeperCartCount value --> ",value);
+            if (value != null) {}
+            // this.setState({
+            //   ShopkeeperName : value
+            // })
             
-          //   console.log('Globals.cusId://' + value);
+            console.log('Globals.shopkeeperCartCount://' + value);
            
-          // })
+          })
           
 
   }

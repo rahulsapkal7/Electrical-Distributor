@@ -62,6 +62,12 @@ var ThisView = null;
   }
 
   componentDidMount() {
+       console.log("inside componentDidMount this.state.MyCartData ",this.state.MyCartData);
+      //  this.props.CartCountData(this.state.addToCartData.length);
+      //  console.log("after update cart count ",this.props.CartCountData);
+      }
+      
+      componentWillMount () {
         this.ViewCartData();
       }
       ViewCartData = () =>{
@@ -81,6 +87,15 @@ var ThisView = null;
                   MyCartData: res.data,
                   loading : false
                 });
+                console.log("length is ",res.data.length);
+                console.log("this.state.MyCartData.length ",this.state.MyCartData.length);
+                // console.log("this.props.this.props.cartData",this.props.cartData);
+               
+                // AsyncStorage.setItem('@shopkeeperCartCount', this.state.MyCartData.length); 
+                // this.props.CartCountData(this.state.MyCartData.length);
+                // console.log("this.state.MyCartData.length ",this.state.MyCartData.length);
+                // console.log("this.props.this.props.cartData",this.props.cartData);
+                
               }else{
                 Alert.alert('My Cart', "Something went wrong");
               }
@@ -95,6 +110,10 @@ var ThisView = null;
       }
       
   toggleMenu() {
+    console.log("inside componentDidMount this.state.MyCartData ",this.state.MyCartData);
+     this.props.CartCountData(this.state.MyCartData.length);
+       console.log("after update cart count ",this.props.CartCountData);
+    
     this.setState({
       isOpen: !this.state.isOpen
     });
@@ -323,6 +342,7 @@ class ListItemData extends React.Component {
        
         </View> 
     </View> 
+    <View>
     <Image
               source={{ uri: item.Image }}
               style={{ width: 50, height:50 }}
@@ -331,6 +351,7 @@ class ListItemData extends React.Component {
              <TouchableOpacity style={{ justifyContent: 'flex-end'}}  onPress={this.props.RemoveFromCart} >
         <Icon name='trash' style={{ color: "red" }} />
          </TouchableOpacity>
+         </View>
     </View>
     )
   }
@@ -534,6 +555,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log('cartData length :' + state.getCartred.length);
   console.log('ownProps:' + JSON.stringify(ownProps));
   console.log('CartCount @@@ :' + state.CartCountData_red.CartCount);
+  
   return {UserId: state.UserData_red.UserId , cartData : state.getCartred ,CartCount: state.CartCountData_red.CartCount }
   
   // return {}
