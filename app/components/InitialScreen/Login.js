@@ -50,7 +50,7 @@ var validators = require('../../lib/validators').validators();
         token :'',
         password: '',
         loading: false,
-        userType: "select",
+        userType: "Customer",
         login1: {}
     }
 }
@@ -81,7 +81,7 @@ loginCall() {
                         var data = new FormData()
                         data.append('PrimaryMobileNo', this.state.mobile ),
                         data.append('Password', this.state.password),
-                        data.append('UserType', this.state.userType),
+                        data.append('UserType', "Customer"),
                         // data.append('MobileNumber', "0123456789"),
                         // data.append('Password', "pass1"),
                         // data.append('UserType', "Customer"),
@@ -165,7 +165,7 @@ OpenRegister() {
                                       onChangeText={(text) => this.setState({password: text})}
                                       underlineColorAndroid={'transparent'} ></TextInput>
       
-      <Picker
+      {/* <Picker
   selectedValue={this.state.userType}
   mode="dropdown"
   style={commonStyles.editbox}
@@ -175,7 +175,7 @@ OpenRegister() {
   <Picker.Item label="Please select type" value="select" />
   <Picker.Item label="Customer" value="Customer" />
   <Picker.Item label="Distributor" value="Admin" />
-</Picker>
+</Picker> */}
                               <TouchableOpacity
                                   style={{
                                   alignItems: 'center',
@@ -233,6 +233,14 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginBottom:30
     },
+
+    btnBackground: {
+       backgroundColor:'skyblue',
+       borderRadius: 25,
+       paddingVertical: 10,
+       marginVertical: 20,
+       width: 300,
+   },
 
 
 

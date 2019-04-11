@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     // height: window.height,
-    backgroundColor: '#2c2b2b',
+    backgroundColor: 'black',
     paddingTop: 35,
     flexDirection: 'column'
 },
@@ -57,8 +57,7 @@ profileImg: {
 name: {
     color: 'honeydew',
     fontWeight: 'bold',
-    fontSize: 26,
-    paddingTop: 20
+    fontSize: 26, 
 },
 eamil: {
     color: 'honeydew',
@@ -79,9 +78,8 @@ paddingLeft:20,
     fontWeight: 'bold'
 },
 item: {
-    fontSize: 20,
-    color: 'honeydew',
-    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#7dca20', 
     paddingLeft: 15
 }
   //   menu: {
@@ -182,24 +180,30 @@ this.props.NavigationToScreen(screen)
     return (
         <ScrollView  style={styles.menu}>
             <View style={styles.avatarContainer}>
-                <Image style={styles.profileImg}  source={a}/>
+                {/* <Image style={styles.profileImg}  source={a}/> */}
                 <Text style={styles.name}>{this.props.Name}</Text>
             </View>
             <View style={styles.horizontalLine}></View>
-             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('ShopkeeperHomePage2') } >
-             <Icon name="home" style={styles.iconImage}/>
-                <Text  style={styles.item}> Home </Text>
+             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('BuyProductsBrandList') } >
+             {/* <Icon name="home" style={styles.iconImage}/> */}
+                <Text  style={styles.item}> Shop by brand </Text>
                 
             </TouchableOpacity>
             <View style={styles.horizontalLine}></View>
+             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('ShopkeeperHomePage2') } >
+             {/* <Icon name="home" style={styles.iconImage}/> */}
+                <Text  style={styles.item}> Home </Text>
+                
+            </TouchableOpacity>
+            {/* <View style={styles.horizontalLine}></View> */}
             
              <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('MyProfileShopkeeper') } >
-             <Icon name="people" style={styles.iconImage}/>
+             {/* <Icon name="people" style={styles.iconImage}/> */}
                 <Text  style={styles.item}>
                     My Profile
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View>
+            {/* <View style={styles.horizontalLine}></View> */}
             
              {/* <TouchableOpacity style={styles.listContainer}>
              <Icon name="settings" style={styles.iconImage}/>
@@ -209,40 +213,40 @@ this.props.NavigationToScreen(screen)
             </TouchableOpacity>
             <View style={styles.horizontalLine}></View> */}
             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('BuyProductsBrandList') }  >
-             <Icon name="aperture" style={styles.iconImage}/>
+             {/* <Icon name="aperture" style={styles.iconImage}/> */}
                 <Text  style={styles.item}>
                     Buy Product
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View>
+            {/* <View style={styles.horizontalLine}></View> */}
             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('ViewOfferImageByCustomer') } >
-             <Icon name="trophy" style={styles.iconImage}/>
+             {/* <Icon name="trophy" style={styles.iconImage}/> */}
                 <Text  style={styles.item}>
                     Offers
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View>
+            {/* <View style={styles.horizontalLine}></View> */}
             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('OrderHistoryShopkeeper') }  >
-             <Icon name="time" style={styles.iconImage}/>
+             {/* <Icon name="time" style={styles.iconImage}/> */}
                 <Text  style={styles.item}>
                     Order History
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View>
+            {/* <View style={styles.horizontalLine}></View> */}
             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('AlertsPageShopkeeper') } >
-             <Icon name="notifications" style={styles.iconImage}/>
+             {/* <Icon name="notifications" style={styles.iconImage}/> */}
                 <Text  style={styles.item}>
                     Alerts
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View>
+            {/* <View style={styles.horizontalLine}></View> */}
             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.NavigationToScreen('MyCartShopkeeper') } >
-             <Icon name="cart" style={styles.iconImage}/>
+             {/* <Icon name="cart" style={styles.iconImage}/> */}
                 <Text  style={styles.item}>
                 My Cart
                 </Text>
             </TouchableOpacity>
-            <View style={styles.horizontalLine}></View>
+            {/* <View style={styles.horizontalLine}></View> */}
              {/* <TouchableOpacity style={styles.listContainer}>
              <Icon name="business" style={styles.iconImage}/>
                 <Text  style={styles.item}>
@@ -254,7 +258,7 @@ this.props.NavigationToScreen(screen)
             
         
             <TouchableOpacity style={styles.listContainer} onPress={ () => this.props.Logout() } >
-            <Icon name="log-out" style={styles.iconImage}/>
+            {/* <Icon name="log-out" style={styles.iconImage}/> */}
                 <Text style={styles.item}>
                     Logout
                 </Text>

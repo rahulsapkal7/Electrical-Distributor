@@ -159,7 +159,7 @@ updateMenuState(isOpen) {
                 
            <View style={styles.firstContainer}>
            <FlatList
-          data={[{ menuName: 'History' }
+          data={[{ menuName: 'Order\nhistory' }
           , { menuName: 'Offers' }
           , { menuName: 'Buy' }]}
           renderItem={this._renderItem}
@@ -221,6 +221,8 @@ updateMenuState(isOpen) {
   
   </Image>
 
+  <View style={styles.horizontalLine}></View>
+
 <Image source={require('../../assets/homeLogo/Svarochi.png')} style={styles.backgroundLogoImage}>
   
   </Image>
@@ -239,6 +241,11 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center', 
+  },
+  horizontalLine:{
+      backgroundColor:'#4f4f4f',
+      height:window.height,
+      width:1, 
   },
   firstContainer:{
       flex:2,
