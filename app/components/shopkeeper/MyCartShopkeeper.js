@@ -229,7 +229,9 @@ var ThisView = null;
                 Alert.alert('My Profile', res.message,[{text: 'OK', 
                 onPress: () => {
                     console.log('OK Pressed');
-                    this.props.navigation.goBack(null)}}]
+                    this.props.navigation.navigate('ShopkeeperHomePage2');
+                    // this.props.navigation.goBack(null)
+                  }}]
                 , {cancelable: false},);
               }else{
                 Alert.alert('My Cart', "Something went wrong");
