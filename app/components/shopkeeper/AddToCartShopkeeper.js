@@ -434,15 +434,15 @@ class ListItemData extends React.Component {
        <Text style={styles.txtStyle_fourteen}>
            Quantity :     
           </Text>
-        <TouchableOpacity style={styles.btnBackgroundAdd} onPress={ this.props.addQty} >
-            <Text style={styles.txtStyle_fourteen}>+</Text>
+        <TouchableOpacity style={styles.btnBackgroundAdd} onPress={ this.props.subtractQty} >
+            <Text style={styles.txtStyle_fourteen}>-</Text>
         </TouchableOpacity>
         <Text style={styles.txtStyle_sixteenQty} >
         {item.Qty }
         </Text>
-        <TouchableOpacity style={styles.btnBackgroundSub} onPress={ this.props.subtractQty} >
+        <TouchableOpacity style={styles.btnBackgroundSub} onPress={ this.props.addQty} >
 
-            <Text style={styles.txtStyle_fourteen}>-</Text>
+            <Text style={styles.txtStyle_fourteen}>+</Text>
         </TouchableOpacity>
         </View>
         <View style={styles.horizontal_view}>

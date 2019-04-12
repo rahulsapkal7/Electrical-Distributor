@@ -85,26 +85,26 @@ import Loader from '../../common/Loader.js';
                 </Text>
                 </View> */}
                 <View style={styles.horizontal_view}>
-                   <Text style={styles.txtStyle_fourteen}>
+                   {/* <Text style={styles.txtStyle_fourteen}>
                    Brand Name : 
-                  </Text>
+                  </Text> */}
                 <Text style={styles.txtStyle_sixteen}>
                     {' '+item.BrandName}
                 </Text>
                 </View>
                 <View style={styles.horizontal_view}>
 
-        <Text style={styles.txtStyle_fourteen}>
-        Brand Category Name : 
-                </Text>
+        {/* <Text style={styles.txtStyle_fourteen}>
+        Category name : 
+                </Text> */}
                 <Text style={styles.txtStyle_sixteen}>
                     {' '+item.BrandCategoryName}
                 </Text>
                 </View>
                 <View style={styles.horizontal_view}>
-              <Text style={styles.txtStyle_fourteen}>
+              {/* <Text style={styles.txtStyle_fourteen}>
               Sub Category Name : 
-                      </Text>
+                      </Text> */}
                       <Text style={styles.txtStyle_sixteen}>
                           {' '+item.SubCategoryName}
                       </Text>
@@ -139,7 +139,7 @@ import Loader from '../../common/Loader.js';
         <FlatList
           data={this.state.StoreData}
           renderItem={this.renderItem}
-          numColumns={1}
+          numColumns={2}
         />
       </View>
               </ScrollView>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 10, 
         marginTop:10,
-        width: '40%',
+        width: '80%',
     },
     productParent:{
       flex:1,
