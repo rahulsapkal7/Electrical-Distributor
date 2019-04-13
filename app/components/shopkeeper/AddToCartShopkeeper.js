@@ -31,7 +31,7 @@ var ThisView = null;
       ProductData : [],
       addToCartData : [],
       cartCount : this.props.CartCount,
-      BrandCategoryTableID : this.props.navigation.state.params.data.BrandCategoryTableID,
+      BrandCategoryTableID : this.props.navigation.state.params.data.BrandCategoryTableID  ,
       SubCategoryTableID : this.props.navigation.state.params.data.SubCategoryTableID ,
       Qty : 1
       // ProductImage : 
@@ -60,8 +60,27 @@ var ThisView = null;
     //   });
   }
   componentDidMount() {
-    
-        this.getProductDetails();
+        if (this.props.navigation.state.params.data.BrandCategoryTableID == '') {
+        //  this.setState({
+        //   ProductData : this.props.navigation.state.params.data.searchProductData
+        //  }) ;
+         var searchProductData = this.props.navigation.state.params.data.searchProductData
+         searchProductData.map((item, i) => { item.qty})
+         var result = searchProductData.map(function(obj) {
+           var data = Object.assign({}, obj);
+           data.Qty = 0;
+           data.AddedToCartFlag = false;
+           return data;
+         })
+         console.log('result is',result);
+         this.setState({
+           ProductData: result,
+           
+         });
+        } else {
+          this.getProductDetails();
+        }
+      
     
       }
 
@@ -109,6 +128,7 @@ var ThisView = null;
     
       }
       
+    
       addQty = (item,index) =>{
         if (item.AddedToCartFlag == false) {
         console.log("on press addQty index",index);
