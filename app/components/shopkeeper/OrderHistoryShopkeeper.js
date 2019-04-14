@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text,Alert, ScrollView,View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet,TextInput, Text,Alert, ScrollView,View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import commonStyles from '../../common/commonStyle';
@@ -8,6 +8,10 @@ import {api} from '../../common/api';
 import {NavigationActions} from 'react-navigation';
 import Header from '../../common/header';
 import Loader from '../../common/Loader.js';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
+import {  Icon } from 'native-base';
+import {_} from 'underscore';
 
 class OrderHistoryShopkeeper extends Component {
 
@@ -18,14 +22,142 @@ class OrderHistoryShopkeeper extends Component {
 
     this.state = {
       // selectedArea : this.props.navigation.state.params.selectedArea,
+      isDateTimePickerVisible: false,
+      isEndDatePickerVisible : false,
+      startDate : 'Start Date',
+      endDate : 'End Date',
       loading : false,
-      StoreData : []
+      StoreData : [],
+      orderHistoryList : [],
+      orderSearchText : ''
     }
-
+    // this.searchOrder = this
+    // .searchOrder
+    // .bind(this);
     console.log("props are --> ",JSON.stringify(props));
    
   }
+  _showDateTimePicker = () => this.setState({isDateTimePickerVisible: true});
+  
+      _hideDateTimePicker = () => {this.setState({isDateTimePickerVisible: false });console.log("Cancel pressed")};
 
+      _handleDatePicked = (date) => {
+        console.log('A date has been picked: ', date);
+        
+        // let formattedDate = new Date(date).toLocaleDateString();
+        let formattedDate = moment(date).format('DD/MM/YYYY');
+        
+        console.log("formattedDate is",formattedDate);
+        this.setState({startDate : formattedDate, endDate : 'End Date'});
+        this._hideDateTimePicker();
+      };
+
+      _showEndDatePicker = () => {
+        console.log("isDateTimePickerVisible --> ",this.state.isDateTimePickerVisible);
+        if (this.state.startDate == 'Start Date') {
+          Alert.alert('Order History', "Please select start date first");
+        } else{
+          this.setState({isEndDatePickerVisible: true});
+        }
+        
+
+    
+    };
+   
+      _hideEndDateTimePicker = () => this.setState({isEndDatePickerVisible: false});
+    
+          _handleEndDatePicked = (date) => {
+            console.log('A date has been picked: ', date);
+           
+            // let formattedDate = new Date(date).toLocaleDateString();
+            let formattedDate = moment(date).format('DD/MM/YYYY');
+            console.log("formattedDate is",formattedDate);
+            var startDate =  moment(this.state.startDate, "DD/MM/YYYY");
+            var endDate = moment(formattedDate, "DD/MM/YYYY");
+            console.log('endDate < startDate ',endDate < startDate);
+            if(endDate < startDate){
+              Alert.alert('Order History', "End date should be more than start date");
+              this._hideEndDateTimePicker();
+            }else{
+              this.setState({endDate : formattedDate});
+              this.filterDataOnDate();
+              this._hideEndDateTimePicker();
+            }
+           
+          };
+
+          filterDataOnDate () {
+            console.log("after set both dates this.state.startDate ->",this.state.startDate)
+            console.log("after set both dates this.state.endDate ->",this.state.endDate)
+            console.log("after set both dates this.state.StoreData ->",this.state.StoreData)
+            console.log("after set both dates this.state.orderHistoryList ->",this.state.orderHistoryList);
+            var data = this.state.orderHistoryList;
+            var startDate =  moment(this.state.startDate, "DD/MM/YYYY");
+            var endDate = moment(this.state.endDate, "DD/MM/YYYY");
+            var filterData = [];
+            var a = data.filter((item) => {
+            console.log("item --> ",item.OrderDate);
+            var orderDate =  moment(item.OrderDate, "YYYY-DD-MM") ;
+            console.log("startDate --> ",startDate);
+            console.log("fromDate <= orderDate", startDate <= orderDate );
+            console.log("toDate --> ",endDate);
+            console.log("orderDate <= toDate ", orderDate <= endDate );
+                            if(startDate <= orderDate && orderDate <= endDate ){
+                              filterData.push(item);
+            }
+                        });
+          // //  fromDate <= orderDate && orderDate <= toDate
+          //   var data = this.state.orderHistoryList;
+          //   var filterData = [];
+          //   var fromDate = this.state.startDate ;
+          //   var toDate =this.state.endDate ;
+          //   // var fromDate = moment(this.state.startDate, "DD/MM/YYYY") ;
+          //   // var toDate = moment(this.state.endDate, "DD/MM/YYYY") ;
+          //   data = data.filter((item) => {
+          //     console.log("OrderDate --> ",item.OrderDate)
+          //     // orderDate =  moment(this.state.endDate, "YYYY-DD-MM") ;
+          //     var flag =  new Date(item.OrderDate).getTime() >= new Date(fromDate).getTime() &&
+          //     new Date(item.OrderDate).getTime() <= new Date(toDate).getTime();
+          //     // var flag =  fromDate <= orderDate && orderDate <= toDate
+              
+          //     if(flag){
+          //     console.log("inside true OrderDate --> ",item.OrderDate)
+             
+          //       filterData.push(item);
+          //     }
+          // });
+          console.log('filterData is --> ', filterData);
+          this.setState({
+            StoreData : filterData,
+            
+          })
+
+          };
+          clearDate (){
+
+            this.setState({
+              
+              StoreData : this.state.orderHistoryList,
+              startDate : 'Start Date',
+              endDate : 'End Date',
+            })
+          }
+          searchOrder (){
+            if (this.state.orderSearchText == '') {
+              Alert.alert('Order History', "Please enter Brand name first");
+            } else {
+              console.log('search box is not empty',this.state.orderSearchText);
+              var orderSearchText = this.state.orderSearchText;
+            var search_data = _.filter(this.state.orderHistoryList, function (item) { 
+              console.log('item is',item);
+              return  (item.BrandName.toLowerCase().indexOf(orderSearchText.toLowerCase())  >= 0 )
+            })
+            console.log("search_data is",search_data);
+            this.setState({
+              StoreData : search_data
+            });
+          }
+          }
   componentDidMount() {
     
         this.getOrderHistoryOfUser();
@@ -130,6 +262,7 @@ Order id :
             if(res.status){
               this.setState({
                 StoreData: res.data,
+                orderHistoryList : res.data,
               });
             }else{
               Alert.alert('Order History', "Something went wrong");
@@ -160,6 +293,40 @@ Order id :
                 <ScrollView contentContainerStyle={{
                 width: window.width
               }}>
+              <View style={styles.filtercontainer}> 
+               <TouchableOpacity style={{paddingLeft:10}} onPress={this._showDateTimePicker}>
+               <TextInput style={styles.editbox} value={this.state.startDate}  editable={false}
+                ></TextInput>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={{paddingLeft:10}} onPress={this._showEndDatePicker}>
+               <TextInput style={styles.editbox} value={this.state.endDate}  editable={false}
+                ></TextInput>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btnBackground}
+      onPress= {()=> this.clearDate()}>
+          <Text style={commonStyles.textbtn}>Clear</Text>
+      </TouchableOpacity>
+        <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+        />
+        <DateTimePicker
+          isVisible={this.state.isEndDatePickerVisible}
+          onConfirm={this._handleEndDatePicked}
+          onCancel={this._hideEndDateTimePicker}
+        />
+              </View>
+              <View style={styles.searchContainer}> 
+                  <TextInput style={styles.searchEditbox} placeholder={'Please enter order details'} placeholderTextColor={'#ddd'} onChangeText={(text) => this.setState({orderSearchText: text})} 
+                ></TextInput>
+                  <TouchableOpacity style={styles.searchBackcontainer} onPress={() => this.searchOrder()}>
+                  <Icon name='search'  style={{ color: "black" }} />
+                   </TouchableOpacity>
+               
+                  </View>
       <View style={styles.container}>
       <FlatList
          
@@ -168,6 +335,7 @@ Order id :
           numColumns={1}
         />
       </View>
+     
       </ScrollView>
       </View>
     );
@@ -175,6 +343,36 @@ Order id :
 }
 
 const styles = StyleSheet.create({
+  searchContainer: {
+    flexDirection: 'row',
+    height: 50,
+    paddingLeft : 10,
+    width: '100%',
+    paddingTop : 10
+    // backgroundColor: '#7dca20',
+    // alignItems: 'center',
+    // borderColor : "yellow",     borderWidth : 1,
+  },
+  searchEditbox: {
+    width: 300,
+    height: 40, 
+    borderRadius: 5,
+    borderColor: 'black',
+    borderWidth:1,
+    paddingHorizontal: 10,
+    color: 'black',
+    marginVertical: 10,
+    marginBottom:15
+},
+searchBackcontainer: {
+  width: '15%',
+  height: 40,
+  marginVertical: 10,
+  marginBottom:15,
+  paddingHorizontal: 10, 
+  // alignItems: 'center'
+  
+},
   parentcontainer: { 
     flexDirection: 'column', 
     height: '100%',  
@@ -182,18 +380,43 @@ const styles = StyleSheet.create({
 
   btnBackground: {
      backgroundColor:'skyblue',
-     borderRadius: 25,
-     paddingVertical: 10,
-     marginVertical: 10,
-     marginHorizontal:10,
-     width: 300,
+     borderRadius: 5,
+     width: 100,
+     height: 40, 
+    //  paddingHorizontal: 10,
+    //  marginVertical: 10,
+    //  margin : 10
+    paddingVertical: 10,
+    marginVertical: 10,
+    marginHorizontal:10,
+     marginBottom:15,
+     marginLeft:10
  },
+ editbox: {
+  width: 100,
+  height: 40, 
+  borderRadius: 5,
+  borderColor: 'black',
+  borderWidth:1,
+  paddingHorizontal: 10,
+  color: 'black',
+  marginVertical: 10,
+  marginBottom:15
+},
+
   container: {
    flex: 1,
    paddingTop: 22,
    height: '90%',  
   },
-
+  filtercontainer: {
+    flexDirection: 'row',
+    height: 40,
+    width: '100%',
+    // backgroundColor: '#7dca20',
+    // alignItems: 'center',
+    // borderColor : "yellow",     borderWidth : 1,
+  },
   btnBackground1: {
      backgroundColor:'skyblue',
      borderRadius: 25,

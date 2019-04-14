@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   Menucontainer:{
-    width: '25%',
+    width: '10%',
     alignItems: 'center',
     marginTop: 5,
     
@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
   },
   Backcontainer: {
     width: '15%',
+    alignItems: 'center'
+    
+  },
+  SearchContainer :{
+    width: '10%',
     alignItems: 'center'
     
   },
@@ -66,6 +71,7 @@ class Home_header extends Component {
      
 
   };
+  console.log("props are ",props);
   }
   
   render() {
@@ -121,6 +127,16 @@ class Home_header extends Component {
     }
      
     </TouchableOpacity>
+    {this.props.showSearch == true  ?  
+      <TouchableOpacity style={styles.SearchContainer} onPress={this.props.gotoSearchScreens}>
+                  <Icon name='search'  style={{ color: "black" }} />
+                   </TouchableOpacity>
+      :
+      <View style={styles.SearchContainer} >
+                 
+                   </View>
+    }
+    
     </View>
  
 

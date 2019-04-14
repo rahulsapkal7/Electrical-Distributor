@@ -109,7 +109,7 @@ import Loader from '../../common/Loader.js';
                           {' '+item.SubCategoryName}
                       </Text>
                 </View>
-                <TouchableOpacity style={styles.btnBackground}  onPress ={() =>{ this.props.navigation.navigate('AddToCartShopkeeper', { data : {BrandCategoryTableID : this.state.BrandCategoryTableID , SubCategoryTableID : item.SubCategoryTableID } } )}}  >
+                <TouchableOpacity style={styles.btnBackground}  onPress ={() =>{ this.props.navigation.navigate('AddToCartShopkeeper', { data : {BrandCategoryTableID : this.state.BrandCategoryTableID , SubCategoryTableID : item.SubCategoryTableID, searchProductData:'' } } )}}  >
 
                     <Text style={styles.txtStyle_fourteen}>Product Detail</Text>
                 </TouchableOpacity>

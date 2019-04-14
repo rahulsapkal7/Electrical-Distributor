@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet,AsyncStorage, Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
+import {Platform, StyleSheet,AsyncStorage,Alert, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
 // import Cards from "./Cards.js"; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -9,12 +9,14 @@ import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData  } from '../../redux/actions/UserData_action';
 import {cartData } from '../../redux/actions/getCart_action';
 import {CartCountData } from '../../redux/actions/CartCountData_action';
-
+import {api} from '../../common/api';
+import Loader from '../../common/Loader.js';
 import {NavigationActions } from 'react-navigation';
 import ImageSlider from 'react-native-image-slider';
 // import { Drawer } from 'native-base';
 import SideMenu from 'react-native-side-menu';
 import Menu from '../../common/Menu.js';
+import {  Icon } from 'native-base';
 
  class ShopkeeperHomePage2 extends Component {
   constructor(props) {
@@ -25,10 +27,14 @@ import Menu from '../../common/Menu.js';
       type: 1,
       isOpen : false,
       myCartCount : 0,
+      productSearchText : '',
       ShopkeeperName : 'Welcome Rahul'
     }
     this.toggleMenu = this
     .toggleMenu
+    .bind(this);
+    this.searchProduct = this
+    .searchProduct
     .bind(this);
     console.log("props ShopkeeperHomePage2 are --> ",JSON.stringify(props));
   }
@@ -113,13 +119,25 @@ import Menu from '../../common/Menu.js';
       </TouchableWithoutFeedback>
     );
   };
-
+  _renderItemBG = ({ item }) => {
+    return (
+      
+      <TouchableWithoutFeedback onPress={ () =>  this.actionOnRow(item)}>
+      <View
+        style={styles.verticalContainer1}>
+      <ImageBackground source={item.backgroundImg} style={{width: 60,height:60,opacity :1}}>
+      </ImageBackground> 
+      <Text style={styles.textbtn}>{item.menuName}</Text>
+      </View>
+      </TouchableWithoutFeedback>
+    );
+  };
   actionOnRow(item) {
     if(item.menuName=='Alerts'){
       this.props.navigation.navigate('AlertsPageShopkeeper')
     }else if(item.menuName=='My profile'){
       this.props.navigation.navigate('MyProfileShopkeeper')
-    }else if(item.menuName=='History'){
+    }else if(item.menuName=='Order History'){
       this.props.navigation.navigate('OrderHistoryShopkeeper')
     }else if(item.menuName=='Buy'){
       this.props.navigation.navigate('BuyProductsBrandList')
@@ -133,10 +151,50 @@ import Menu from '../../common/Menu.js';
     isOpen: !this.state.isOpen
   });
 }
+searchProduct (){
+  if (this.state.productSearchText == '') {
+    Alert.alert('Home', "Please enter product name first");
+  } else {
+    const url = api() + 'SearchProduct.php';
+    console.log(url);
+   this.setState({loading: true});
+   var data = new FormData();
+   data.append('word', this.state.productSearchText ),
+   console.log("data before hit ",JSON.stringify(data) );
+   fetch(url,{method: 'post',body:data})
+       .then(response => response.json())
+       .then(res => {
+         console.log("response is",res);
+         this.setState({loading: false});
+         console.log("response is",JSON.stringify(res));
+         if(res.status){
+          //  Alert.alert('My Profile', res.message,[{text: 'OK', 
+          //  onPress: () => {
+          //      console.log('OK Pressed');
+          //      this.props.navigation.goBack(null)}}]
+          //  , {cancelable: false},);
+          console.log('res is',res);
+          this.setState({
+            productSearchText : ''
+          })
+          this.props.navigation.navigate('AddToCartShopkeeper', { data : {BrandCategoryTableID : '' , SubCategoryTableID : '', searchProductData : res.data} })
+           
+         }else{
+           Alert.alert('Home', res.message);
+         }
+           
+       })
+       .catch(error => {
 
+           console.log('error:' + (error));
+           this.setState({ loading: false});
+       });
+  }
+}
 updateMenuState(isOpen) {
   this.setState({isOpen});
 }
+
   render() {
     var menu = <Menu Name = {this.state.ShopkeeperName} NavigationToScreen={(screen) => {this.props.navigation.navigate(screen);this.setState({isOpen : false})}}  
      Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.props.navigation.navigate('Login'); }}
@@ -155,17 +213,41 @@ updateMenuState(isOpen) {
                 title={'PROTON ENTERPRISE'} 
                 cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
                 GoToCart = {() =>  this.props.navigation.navigate('MyCartShopkeeper')}
+                showSearch = {true}
+                gotoSearchScreens = {() => this.props.navigation.navigate('SearchProduct') }
                 />
-                
+                  <Loader visible={this.state.loading}/>
+                  {/* <View style={styles.searchcontainer}> 
+                  <TextInput style={styles.editbox} placeholder={'Please enter product name'} placeholderTextColor={'#ddd'} onChangeText={(text) => this.setState({productSearchText: text})} value={this.state.productSearchText}
+                ></TextInput>
+                  <TouchableOpacity style={styles.Backcontainer} onPress={this.searchProduct}>
+                  <Icon name='search'  style={{ color: "black" }} />
+                   </TouchableOpacity>
+               
+                  </View> */}
            <View style={styles.firstContainer}>
            <FlatList
-          data={[{ menuName: 'Order\nhistory' }
-          , { menuName: 'Offers' }
-          , { menuName: 'Buy' }]}
-          renderItem={this._renderItem}
+          data={[{ menuName: 'Order History',backgroundImg : require('../../assets/images/history.png') }
+          , { menuName: 'Offers' ,backgroundImg : require('../../assets/images/Sale.png') }
+          , { menuName: 'Buy' ,backgroundImg : require('../../assets/images/Buy.png') }]}
+          renderItem={this._renderItemBG}
           horizontal={true}
         ItemSeparatorComponent={() => <View style={{margin: 4}}/>}
         />
+        {/* <TouchableWithoutFeedback onPress={ () =>  this.props.navigation.navigate('OrderHistoryShopkeeper')}>
+     
+      <ImageBackground source={require('../../assets/images/history.png')} style={{width: 100}}>
+    
+  </ImageBackground>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={ () =>  this.props.navigation.navigate('ViewOfferImageByCustomer')}>
+      <ImageBackground source={require('../../assets/images/history.png')} style={{width: 100}}>
+      </ImageBackground>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={ () =>  this.props.navigation.navigate('BuyProductsBrandList')}>
+      <ImageBackground source={require('../../assets/images/history.png')} style={{width: 100}}>
+      </ImageBackground>
+      </TouchableWithoutFeedback> */}
                </View>
                <View style={styles.secondContainer}>
                <ImageSlider autoPlayWithInterval={3000}
@@ -221,8 +303,14 @@ updateMenuState(isOpen) {
   
   </Image>
 
-  <View style={styles.horizontalLine}></View>
-
+  {/* <View style={styles.horizontalLine}></View> */}
+  <View
+  style={{
+    height: 100,
+          width: 3,
+          backgroundColor: '#4183DA'
+  }}
+/>
 <Image source={require('../../assets/homeLogo/Svarochi.png')} style={styles.backgroundLogoImage}>
   
   </Image>
@@ -249,7 +337,8 @@ const styles = StyleSheet.create({
   },
   firstContainer:{
       flex:2,
-      justifyContent: 'center'
+      justifyContent: 'center',
+      // flexDirection:'row',
   },
   secondContainer:{
       flex:6,
@@ -280,20 +369,29 @@ const styles = StyleSheet.create({
       borderColor:'#ddd',
       flexDirection:'column'
   },
+  verticalContainer1:{
+    justifyContent:'center',
+    alignItems:'center',
+    // borderColor:'#ddd',
+    // borderWidth:1,
+    width:100,
+    flex:1,
+    // borderRadius:2,
+    // shadowColor:'#000',
+    // shadowOpacity:0.5,
+    // shadowRadius:5,
+    elevation:5,
+    // borderColor:'#ddd',
+    flexDirection:'column',
+    // margin:5,
+},
   logotext: {
       marginVertical: 25,
       fontSize: 22,
       color: 'black'
   },
-  editbox: {
-      width: 300,
-      height: 40,
-      backgroundColor: 'rgba(255,255,255,0.3)',
-      borderRadius: 25,
-      paddingHorizontal: 10,
-      color: 'white',
-      marginVertical: 10
-  },
+
+
   textbtn: {
       fontSize: 16, 
       color: 'black', 
@@ -320,7 +418,37 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       marginVertical: 20,
       width: 300,
-  }
+  },
+  searchcontainer: {
+    flexDirection: 'row',
+    flex : 1,
+   
+    paddingLeft : 10,
+    width: '100%',
+    // backgroundColor: '#7dca20',
+    // alignItems: 'center',
+    // borderColor : "yellow",     borderWidth : 1,
+  },
+  editbox: {
+    width: 300,
+    height: 40, 
+    borderRadius: 5,
+    borderColor: 'black',
+    borderWidth:1,
+    paddingHorizontal: 10,
+    color: 'black',
+    marginVertical: 10,
+    marginBottom:15
+},
+Backcontainer: {
+  width: '15%',
+  height: 40,
+  marginVertical: 10,
+  marginBottom:15,
+  paddingHorizontal: 10, 
+  // alignItems: 'center'
+  
+},
 });
 const mapStateToProps = (state, ownProps) => {
   console.log('state:' + JSON.stringify(state));
