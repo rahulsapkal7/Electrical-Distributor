@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, Text,View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet,ScrollView,Image, Alert, Text,View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../../common/header';
@@ -105,7 +105,7 @@ var ThisView = null;
           renderItem={this.renderItem}
         />
       </View>
-              </ScrollView>
+              </ScrollView> 
       </View>
     );
   }
@@ -115,6 +115,27 @@ const styles = StyleSheet.create({
   parentcontainer: { 
     flexDirection: 'column', 
     height: '100%',  
+  },
+  spaceView:{
+    flexDirection: 'row', 
+  },
+  spaceView2:{
+    flexDirection: 'row', 
+    width: '70%',
+  },
+  spaceView3:{
+    flexDirection: 'row', 
+    width: '30%',
+  },
+  backgroundLogoImage: { 
+      width:100,
+      height:100,
+      width: '80%',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
+      marginRight: 10, 
+      marginTop:10,
+      marginBottom:10
   },
     btnBackground: {
         backgroundColor: 'skyblue',
