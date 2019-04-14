@@ -180,7 +180,7 @@ searchProduct (){
           this.props.navigation.navigate('AddToCartShopkeeper', { data : {BrandCategoryTableID : '' , SubCategoryTableID : '', searchProductData : res.data} })
            
          }else{
-           Alert.alert('Home', "Something went wrong");
+           Alert.alert('Home', res.message);
          }
            
        })
@@ -213,16 +213,18 @@ updateMenuState(isOpen) {
                 title={'PROTON ENTERPRISE'} 
                 cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
                 GoToCart = {() =>  this.props.navigation.navigate('MyCartShopkeeper')}
+                showSearch = {true}
+                gotoSearchScreens = {() => this.props.navigation.navigate('SearchProduct') }
                 />
                   <Loader visible={this.state.loading}/>
-                  <View style={styles.searchcontainer}> 
+                  {/* <View style={styles.searchcontainer}> 
                   <TextInput style={styles.editbox} placeholder={'Please enter product name'} placeholderTextColor={'#ddd'} onChangeText={(text) => this.setState({productSearchText: text})} value={this.state.productSearchText}
                 ></TextInput>
                   <TouchableOpacity style={styles.Backcontainer} onPress={this.searchProduct}>
                   <Icon name='search'  style={{ color: "black" }} />
                    </TouchableOpacity>
                
-                  </View>
+                  </View> */}
            <View style={styles.firstContainer}>
            <FlatList
           data={[{ menuName: 'Order History',backgroundImg : require('../../assets/images/history.png') }
@@ -301,10 +303,10 @@ updateMenuState(isOpen) {
   
   </Image>
 
-  <View style={styles.horizontalLine}></View>
+  {/* <View style={styles.horizontalLine}></View> */}
   <View
   style={{
-    height: 75,
+    height: 100,
           width: 3,
           backgroundColor: '#4183DA'
   }}
@@ -334,7 +336,7 @@ const styles = StyleSheet.create({
       width:1, 
   },
   firstContainer:{
-      flex:1.5,
+      flex:2,
       justifyContent: 'center',
       // flexDirection:'row',
   },
@@ -346,7 +348,7 @@ const styles = StyleSheet.create({
       // color: 'white',
   },
   thirdContainer:{
-      flex:1.5, 
+      flex:2, 
       flexDirection:'row',
       alignItems: 'center',
       justifyContent: 'center',

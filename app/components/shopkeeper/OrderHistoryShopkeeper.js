@@ -44,7 +44,9 @@ class OrderHistoryShopkeeper extends Component {
       _handleDatePicked = (date) => {
         console.log('A date has been picked: ', date);
         
-        let formattedDate = new Date(date).toLocaleDateString();
+        // let formattedDate = new Date(date).toLocaleDateString();
+        let formattedDate = moment(date).format('DD/MM/YYYY');
+        
         console.log("formattedDate is",formattedDate);
         this.setState({startDate : formattedDate, endDate : 'End Date'});
         this._hideDateTimePicker();
@@ -67,7 +69,8 @@ class OrderHistoryShopkeeper extends Component {
           _handleEndDatePicked = (date) => {
             console.log('A date has been picked: ', date);
            
-            let formattedDate = new Date(date).toLocaleDateString();
+            // let formattedDate = new Date(date).toLocaleDateString();
+            let formattedDate = moment(date).format('DD/MM/YYYY');
             console.log("formattedDate is",formattedDate);
             var startDate =  moment(this.state.startDate, "DD/MM/YYYY");
             var endDate = moment(formattedDate, "DD/MM/YYYY");
@@ -345,6 +348,7 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft : 10,
     width: '100%',
+    paddingTop : 10
     // backgroundColor: '#7dca20',
     // alignItems: 'center',
     // borderColor : "yellow",     borderWidth : 1,
@@ -378,15 +382,19 @@ searchBackcontainer: {
      backgroundColor:'skyblue',
      borderRadius: 5,
      width: 100,
-     height: 30, 
-     paddingHorizontal: 10,
-     marginVertical: 10,
+     height: 40, 
+    //  paddingHorizontal: 10,
+    //  marginVertical: 10,
+    //  margin : 10
+    paddingVertical: 10,
+    marginVertical: 10,
+    marginHorizontal:10,
      marginBottom:15,
      marginLeft:10
  },
  editbox: {
   width: 100,
-  height: 30, 
+  height: 40, 
   borderRadius: 5,
   borderColor: 'black',
   borderWidth:1,

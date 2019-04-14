@@ -47,6 +47,7 @@ import BuyProductsBrandList from '../shopkeeper/BuyProductsBrandList.js';
 import BuyProductsSubCategoryList from '../shopkeeper/BuyProductsSubCategoryList.js';
 import AddToCartShopkeeper from '../shopkeeper/AddToCartShopkeeper.js';
 import MyCartShopkeeper from '../shopkeeper/MyCartShopkeeper.js';
+import SearchProduct from '../shopkeeper/SearchProduct.js';
 
 
 
@@ -232,6 +233,12 @@ export const HomeStack = createStackNavigator({
       header: null
     }
   },
+  SearchProduct: {
+    screen : SearchProduct,
+    navigationOptions: {
+      header: null
+    }
+  },
   // },{ initialRouteName: 'Login' })
   },{ initialRouteName: 'ShopkeeperHomePage2' })
 
@@ -409,6 +416,12 @@ export const LoginStack = createStackNavigator({
   },
   MyCartShopkeeper: {
     screen : MyCartShopkeeper,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SearchProduct: {
+    screen : SearchProduct,
     navigationOptions: {
       header: null
     }

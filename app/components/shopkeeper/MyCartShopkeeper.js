@@ -349,7 +349,7 @@ class ListItemData extends React.Component {
            MRP : 
           </Text>
         <Text style={styles.txtStyle_sixteen}>
-        {item.MRP }
+        {item.ProductPrice }
         </Text>
         </View>
          <View style={styles.horizontal_view}>
@@ -373,7 +373,7 @@ class ListItemData extends React.Component {
            Total : 
           </Text>
         <Text style={styles.txtStyle_sixteen}>
-        { (item.MRP) * (item.Quantity) }
+        { item.Amount }
         </Text>
         </View>
         <View style={{ width : '100%',alignItems: 'center',justifyContent: 'center'}} >
