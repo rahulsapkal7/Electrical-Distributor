@@ -80,7 +80,7 @@ class OrderHistoryShopkeeper extends Component {
               this._hideEndDateTimePicker();
             }else{
               this.setState({endDate : formattedDate});
-              this.filterDataOnDate();
+              // this.filterDataOnDate();
               this._hideEndDateTimePicker();
             }
            
@@ -143,9 +143,9 @@ class OrderHistoryShopkeeper extends Component {
             })
           }
           searchOrder (){
-            if (this.state.orderSearchText == '') {
-              Alert.alert('Order History', "Please enter Brand name first");
-            } else {
+            // if (this.state.orderSearchText == '') {
+            //   Alert.alert('Order History', "Please enter Brand name first");
+            // } else {
               console.log('search box is not empty',this.state.orderSearchText);
               var orderSearchText = this.state.orderSearchText;
             var search_data = _.filter(this.state.orderHistoryList, function (item) { 
@@ -156,7 +156,7 @@ class OrderHistoryShopkeeper extends Component {
             this.setState({
               StoreData : search_data
             });
-          }
+          // }
           }
   componentDidMount() {
     
@@ -164,9 +164,15 @@ class OrderHistoryShopkeeper extends Component {
     
       }
 
+      goToCompleteDetails(){
+        // this.props.navigation.navigate('AlertsPageShopkeeper')
+      }
+
+
 renderItem=({item})=>{
         return(
         <TouchableOpacity style={{ flex:1,marginBottom:3}} 
+        onPress={() => this.goToCompleteDetails()}
         >
            
             <View style={styles.card_outer}>
@@ -174,10 +180,10 @@ renderItem=({item})=>{
                 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-        Product name : 
+        Cart no : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.SubCategoryName+"("+item.BrandCategoryName+"-"+item.BrandName+")"}
+                    {' '+item.CartNo}
                 </Text>
                 </View>
 
@@ -194,10 +200,10 @@ renderItem=({item})=>{
                 <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-        Quantity : 
+        Status : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.Quantity}
+                    {' '+item.Status}
                 </Text>
                 </View>
 
@@ -211,7 +217,7 @@ Date :
         </Text>
         </View>
 
-<View style={styles.horizontal_view}>
+{/* <View style={styles.horizontal_view}>
 
 <Text style={styles.txtStyle_fourteen}>
 Order id : 
@@ -219,9 +225,9 @@ Order id :
 <Text style={styles.txtStyle_sixteen}>
 {' '+item.OrderID}
 </Text>
-</View>
+</View> */}
 
-                <View style={styles.horizontal_view}>
+                {/* <View style={styles.horizontal_view}>
       
       <TouchableOpacity style={styles.btnBackground1}
       onPress= {()=> this.showPDF()}>
@@ -232,7 +238,7 @@ Order id :
       onPress= {()=> this.showPDF()}>
           <Text style={commonStyles.textbtn}>Purchase order</Text>
       </TouchableOpacity>
-        </View>
+        </View> */}
             </View> 
         </TouchableOpacity>
             )
@@ -242,7 +248,7 @@ Order id :
     }
 
     getOrderHistoryOfUser = () =>{
-      const url = api() + 'ViewAddOrder.php';
+      const url = api() + 'ViewAddOrderNew.php';
        console.log(url);
       
       this.setState({loading: true});
@@ -308,6 +314,10 @@ Order id :
       onPress= {()=> this.clearDate()}>
           <Text style={commonStyles.textbtn}>Clear</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style={styles.searchBackcontainer} onPress={() => this.filterDataOnDate()}>
+                  <Icon name='search'  style={{ color: "black" }} />
+                   </TouchableOpacity>
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this._handleDatePicked}
@@ -319,14 +329,12 @@ Order id :
           onCancel={this._hideEndDateTimePicker}
         />
               </View>
-              <View style={styles.searchContainer}> 
+              {/* <View style={styles.searchContainer}> 
                   <TextInput style={styles.searchEditbox} placeholder={'Please enter order details'} placeholderTextColor={'#ddd'} onChangeText={(text) => this.setState({orderSearchText: text})} 
                 ></TextInput>
-                  <TouchableOpacity style={styles.searchBackcontainer} onPress={() => this.searchOrder()}>
-                  <Icon name='search'  style={{ color: "black" }} />
-                   </TouchableOpacity>
+                 
                
-                  </View>
+                  </View> */}
       <View style={styles.container}>
       <FlatList
          
