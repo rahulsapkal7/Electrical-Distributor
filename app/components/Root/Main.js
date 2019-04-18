@@ -30,7 +30,6 @@ import DealWiseOffersShopkeeper from '../shopkeeper/DealWiseOffersShopkeeper.js'
 import PDFExample from '../shopkeeper/PDFExample.js';
 import BuyProductsShopkeeper from '../shopkeeper/BuyProductsShopkeeper.js';
 import BuyProductDetailShopkeeper from '../shopkeeper/BuyProductDetailShopkeeper.js';
-import SplashScreen from '../shopkeeper/SplashScreen.js';
 
 
 import AlertsPageShopkeeper from '../shopkeeper/AlertsPageShopkeeper.js';
@@ -63,12 +62,7 @@ export const HomeStack = createStackNavigator({
     }
     
   },
-  SplashScreen:{
-    screen : SplashScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
+
   Register:{
     screen : Register,
     navigationOptions: {
@@ -251,12 +245,7 @@ export const LoginStack = createStackNavigator({
     }
     
   },
-  SplashScreen:{
-    screen : SplashScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
+
   Register:{
     screen : Register,
     navigationOptions: {

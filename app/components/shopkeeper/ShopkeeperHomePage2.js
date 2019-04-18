@@ -87,7 +87,8 @@ componentWillUnmount() {
 
 handleBackButtonClick() {
   console.log("android back press");
-  return false;
+  BackHandler.exitApp();
+  // return false;
   // this.exitApp();
 }
 
@@ -220,7 +221,7 @@ updateMenuState(isOpen) {
 
   render() {
     var menu = <Menu Name = {this.state.ShopkeeperName} NavigationToScreen={(screen) => {this.props.navigation.navigate(screen);this.setState({isOpen : false})}}  
-     Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.props.navigation.navigate('Login'); }}
+     Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.setState({isOpen : false}) ;this.props.navigation.navigate('Login'); }}
      />;
     
     return (
