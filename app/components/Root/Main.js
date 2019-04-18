@@ -501,6 +501,3 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
 // export default createAppContainer(Stack);
-
-
-
