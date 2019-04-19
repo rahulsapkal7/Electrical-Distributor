@@ -60,6 +60,7 @@ var validators = require('../../lib/validators').validators();
       // userType : '',
       loading: false,
       showImage : false,
+      
       filePath: {},
     }
   }
@@ -98,7 +99,10 @@ var validators = require('../../lib/validators').validators();
       }
     });
   };
-  registerCall() {           
+  registerCall() {
+    // this.props.navigation.navigate('OtpScreen');
+    
+
     console.log("on click registerCall",this.state);
     if (this.state.PropreitorName === undefined || (!validators.RegularExpressionName(this.state.PropreitorName))) {
       Alert.alert('Register', 'Enter a valid Name');
@@ -138,7 +142,7 @@ var validators = require('../../lib/validators').validators();
     // }else if(this.state.Aadhar_No === ''){
     //   Alert.alert('Login', 'Enter a valid mobile number');
     }else{
-      const url = api() + 'Reg.php';
+      const url = api() + 'Reg1.php';
       console.log(url);
      
      this.setState({loading: true});
@@ -160,10 +164,9 @@ var validators = require('../../lib/validators').validators();
      data.append('PANNo', this.state.PAN_No ),
      data.append('AadhaarNo', this.state.Aadhar_No ),
      data.append('UserType', "Customer" ),
-     
-    //  data.append('GSTDoc', this.state.filePath.data ),
-    //  data.append('PANDoc', "" ),
-    //  data.append('AadhaarDoc', "" ),
+     data.append('GSTDoc', this.state.filePath.data ),
+     data.append('PANDoc', this.state.filePath.data ),
+     data.append('AadhaarDoc', this.state.filePath.data ),
      
      
      console.log("data before hit ",JSON.stringify(data) );
@@ -177,7 +180,10 @@ var validators = require('../../lib/validators').validators();
             Alert.alert('Register', res.message,[{text: 'OK', 
             onPress: () => {
                 console.log('OK Pressed');
-                this.props.navigation.goBack(null)}}]
+                this.props.navigation.navigate('OtpScreen');
+                // this.props.navigation.goBack(null);
+              }
+              }]
                 // this.props.navigation.navigate(Login)}}]
                 
                 
@@ -197,10 +203,7 @@ var validators = require('../../lib/validators').validators();
              this.setState({error, loading: false});
          });
     }
-    // this
-    // .props
-    // .navigation
-    // .goBack(null);
+    
    
   }
   render() {
