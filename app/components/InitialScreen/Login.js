@@ -71,17 +71,17 @@ loginCall() {
                 } 
                 else {
                 //   console.log("valid",this.state);
-                var url = ""
-                if (this.state.userType == "Customer") {
-                    url = api() + 'CustLogin.php';
-                } else {
-                    url = api() + 'AdminLogin.php';
-                }
-                //   const url = api() + 'CustLogin.php';
+                // var url = ""
+                // if (this.state.userType == "Customer") {
+                //     url = api() + 'CustLogin.php';
+                // } else {
+                //     url = api() + 'AdminLogin.php';
+                // }
+                  const url = api() + 'CustLogin.php';
                         var data = new FormData()
                         data.append('PrimaryMobileNo', this.state.mobile ),
                         data.append('Password', this.state.password),
-                        data.append('UserType', "Customer"),
+                        // data.append('UserType', "Customer"),
                         // data.append('MobileNumber', "0123456789"),
                         // data.append('Password', "pass1"),
                         // data.append('UserType', "Customer"),
@@ -106,15 +106,15 @@ loginCall() {
                                 //     password :"",
                                 //     userType : ""
                                 // })
-                                if (ThisView.state.userType == "Customer") {
+                                if (response.data[0].UserType == "Customer") {
                                     ThisView.props.UserData(response.data[0].UserID);
                                     AsyncStorage.setItem('@shopkeeperId:key', response.data[0].UserID); 
                                     // AsyncStorage.setItem('@shopkeeperName', response.data[0].PropreitorName); 
-                                    
+                                    // navigate('DistributorHomePage');
                                     navigate('ShopkeeperHomePage2');
                                 } else {
                                     
-                                    navigate('DistributorHomePage');
+                                    navigate('DistributorHomePage2');
                                     // navigate('ShopkeeperHomePage');
                                     
                                 }

@@ -19,6 +19,8 @@ import ShopkeeperHomePage from '../shopkeeper/ShopkeeperHomePage.js';
 import ShopkeeperHomePage2 from '../shopkeeper/ShopkeeperHomePage2.js';
 import OtpScreen from '../shopkeeper/OtpScreen.js';
 import DistributorHomePage from '../distributor/DistributorHomePage.js';
+import DistributorHomePage2 from '../distributor/DistributorHomePage2.js';
+
 import MyProfileShopkeeper from '../shopkeeper/MyProfileShopkeeper.js';
 import OffersShopkeeper from '../shopkeeper/OffersShopkeeper.js';
 import BrandWiseOffersShopkeeper from '../shopkeeper/BrandWiseOffersShopkeeper.js';
@@ -147,6 +149,12 @@ export const HomeStack = createStackNavigator({
       header: null
     },
   },
+  DistributorHomePage2 : {
+    screen : DistributorHomePage2,
+    navigationOptions: {
+      header: null
+    },
+  }, 
   MyProfileShopkeeper : {
     screen : MyProfileShopkeeper,
     navigationOptions: {
@@ -326,6 +334,12 @@ export const LoginStack = createStackNavigator({
   },
   DistributorHomePage : {
     screen : DistributorHomePage,
+    navigationOptions: {
+      header: null
+    },
+  },
+  DistributorHomePage2 : {
+    screen : DistributorHomePage2,
     navigationOptions: {
       header: null
     },
