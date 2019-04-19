@@ -25,12 +25,13 @@ import BrandWiseOffersShopkeeper from '../shopkeeper/BrandWiseOffersShopkeeper.j
 import ProtonOffersTypes from '../shopkeeper/ProtonOffersTypes.js';
 import CashWiseOffersShopkeeper from '../shopkeeper/CashWiseOffersShopkeeper.js';
 import DealWiseOffersShopkeeper from '../shopkeeper/DealWiseOffersShopkeeper.js';
+import CompleteOrderDetails from '../shopkeeper/CompleteOrderDetails.js';
 
 
 import PDFExample from '../shopkeeper/PDFExample.js';
 import BuyProductsShopkeeper from '../shopkeeper/BuyProductsShopkeeper.js';
 import BuyProductDetailShopkeeper from '../shopkeeper/BuyProductDetailShopkeeper.js';
-import SplashScreen from '../shopkeeper/SplashScreen.js';
+// import SplashScreen from '../shopkeeper/SplashScreen.js';
 
 
 import AlertsPageShopkeeper from '../shopkeeper/AlertsPageShopkeeper.js';
@@ -63,12 +64,12 @@ export const HomeStack = createStackNavigator({
     }
     
   },
-  SplashScreen:{
-    screen : SplashScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
+  // SplashScreen:{
+  //   screen : SplashScreen,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
   Register:{
     screen : Register,
     navigationOptions: {
@@ -239,6 +240,12 @@ export const HomeStack = createStackNavigator({
       header: null
     }
   },
+  CompleteOrderDetails: {
+    screen : CompleteOrderDetails,
+    navigationOptions: {
+      header: null
+    }
+  },
   // },{ initialRouteName: 'Login' })
   },{ initialRouteName: 'ShopkeeperHomePage2' })
 
@@ -251,12 +258,12 @@ export const LoginStack = createStackNavigator({
     }
     
   },
-  SplashScreen:{
-    screen : SplashScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
+  // SplashScreen:{
+  //   screen : SplashScreen,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
   Register:{
     screen : Register,
     navigationOptions: {
@@ -422,6 +429,12 @@ export const LoginStack = createStackNavigator({
   },
   SearchProduct: {
     screen : SearchProduct,
+    navigationOptions: {
+      header: null
+    }
+  },
+  CompleteOrderDetails: {
+    screen : CompleteOrderDetails,
     navigationOptions: {
       header: null
     }
@@ -501,6 +514,3 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
 // export default createAppContainer(Stack);
-
-
-

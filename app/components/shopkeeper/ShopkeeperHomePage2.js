@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet,AsyncStorage,Alert, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
+import {Platform, StyleSheet,AsyncStorage,Alert,BackHandler, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
 // import Cards from "./Cards.js"; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -28,6 +28,7 @@ import {  Icon } from 'native-base';
       isOpen : false,
       myCartCount : 0,
       productSearchText : '',
+      ImageSliderData : [],
       ShopkeeperName : 'Welcome Rahul'
     }
     this.toggleMenu = this
@@ -36,6 +37,7 @@ import {  Icon } from 'native-base';
     this.searchProduct = this
     .searchProduct
     .bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     console.log("props ShopkeeperHomePage2 are --> ",JSON.stringify(props));
   }
   componentWillReceiveProps(newProps){
@@ -75,40 +77,61 @@ import {  Icon } from 'native-base';
            
           })
           
-
+          BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+          
   }
+  
+componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+}
+
+handleBackButtonClick() {
+  console.log("android back press");
+  return false;
+  // this.exitApp();
+}
 
   componentDidMount() {
-  //   const url = api() + 'ImageSlideShow.php';
-  //   console.log(url);
+    // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    const url = api() + 'ImageSlideShow.php';
+    console.log(url);
    
-  //  this.setState({loading: true});
+   this.setState({loading: true});
   
    
-  //  fetch(url,{method: 'post'})
-  //      .then(response => response.json())
-  //      .then(res => {
-  //        console.log("response is",res);
-  //        console.log("response is",JSON.stringify(res));
+   fetch(url,{method: 'post'})
+       .then(response => response.json())
+       .then(res => {
+         console.log("response is",res);
+         console.log("response is",JSON.stringify(res));
       
-  //        if(res.status){
-  //         //  this.setState({
-             
-  //         //    });
-  //         //    console.log("after set ",this.state);
-  //        }else{
-  //         //  Alert.alert('My Profile', "Something went wrong");
-  //          this.setState({loading: false});
-  //        }
-           
-  //      })
-  //      .catch(error => {
+         if(res.status){
+           var imgArr = [];
+           res.data.forEach((item) => {
+            imgArr.push(item.DisplayImage);
+          })
+          console.log('imgArr --> ',imgArr);
+           this.setState({
+             ImageSliderData: imgArr
+             });
+             console.log("after set ",this.state);
+          this.setState({loading: false});
 
-  //          console.log('error:' + (error));
-  //          this.setState({error, loading: false});
-  //      });
+         }else{
+          //  Alert.alert('My Profile', "Something went wrong");
+           this.setState({loading: false});
+         }
+           
+       })
+       .catch(error => {
+
+           console.log('error:' + (error));
+           this.setState({error, loading: false});
+       });
   }
   
+  
+
   _renderItem = ({ item }) => {
     return (
       <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
@@ -251,14 +274,9 @@ updateMenuState(isOpen) {
                </View>
                <View style={styles.secondContainer}>
                <ImageSlider autoPlayWithInterval={3000}
-               
-      //           images={[
-      //   'https://i.imgur.com/2nCt3Sbl.jpg',
-      //   'https://i.imgur.com/lceHsT6l.jpg',
-      //   'https://i.imgur.com/KZsmUi2l.jpg','https://i.imgur.com/MABUbpDl.jpg','https://i.imgur.com/UPrs1EWl.jpg','https://i.imgur.com/UYiroysl.jpg'
-      // ]}
-      images={[require('../../assets/homeSliderImage/slide1.jpeg'),
-               require('../../assets/homeSliderImage/slide2.jpeg')  ]}
+                images ={this.state.ImageSliderData}
+      // images={[require('../../assets/homeSliderImage/slide1.jpeg'),
+      //          require('../../assets/homeSliderImage/slide2.jpeg')  ]}
                 onPress={({ index,image }) => console.log("index is ",index," image url",image)}
                 
      />

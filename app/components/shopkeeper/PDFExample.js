@@ -5,9 +5,22 @@ import React, { Component } from 'react';
 import Pdf from 'react-native-pdf';
  
 export default class PDFExample extends Component {
+    
+  constructor(props) {
+    super(props);
+
+    console.log('inside order history');
+    // this.params = this.props.navigation.state.params;
+    
+
+    this.state = {
+        pdfURL : this.props.navigation.state.params.pdfURL,  
+    } 
+   
+  }
     render() {
         // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
-        const source = {uri:'https://slicedinvoices.com/pdf/wordpress-pdf-invoice-plugin-sample.pdf',cache:true};
+        const source = {uri:this.state.pdfURL,cache:true};
         
         //const source = require('./test.pdf');  // ios only
         //const source = {uri:'bundle-assets://test.pdf'};

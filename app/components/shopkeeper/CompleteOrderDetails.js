@@ -13,23 +13,27 @@ import moment from 'moment';
 import {  Icon } from 'native-base';
 import {_} from 'underscore';
 
-class OrderHistoryShopkeeper extends Component {
+class CompleteOrderDetails extends Component {
 
   constructor(props) {
     super(props);
 
     console.log('inside order history');
+    // this.params = this.props.navigation.state.params;
+    
 
     this.state = {
-      // selectedArea : this.props.navigation.state.params.selectedArea,
-      isDateTimePickerVisible: false,
-      isEndDatePickerVisible : false,
-      startDate : 'Start Date',
-      endDate : 'End Date',
+        CartId : this.props.navigation.state.params.CartId,
+    //   isDateTimePickerVisible: false,
+    //   isEndDatePickerVisible : false,
+    //   startDate : 'Start Date',
+    //   endDate : 'End Date',
       loading : false,
       StoreData : [],
-      orderHistoryList : [],
-      orderSearchText : ''
+      mTotalAmount:0,
+      mFilePathOfInvoice:''
+    //   orderHistoryList : [],
+    //   orderSearchText : ''
     }
     // this.searchOrder = this
     // .searchOrder
@@ -62,156 +66,61 @@ class OrderHistoryShopkeeper extends Component {
         
 
     
-    };
-   
-      _hideEndDateTimePicker = () => this.setState({isEndDatePickerVisible: false});
-    
-          _handleEndDatePicked = (date) => {
-            console.log('A date has been picked: ', date);
-           
-            // let formattedDate = new Date(date).toLocaleDateString();
-            let formattedDate = moment(date).format('DD/MM/YYYY');
-            console.log("formattedDate is",formattedDate);
-            var startDate =  moment(this.state.startDate, "DD/MM/YYYY");
-            var endDate = moment(formattedDate, "DD/MM/YYYY");
-            console.log('endDate < startDate ',endDate < startDate);
-            if(endDate < startDate){
-              Alert.alert('Order History', "End date should be more than start date");
-              this._hideEndDateTimePicker();
-            }else{
-              this.setState({endDate : formattedDate});
-              // this.filterDataOnDate();
-              this._hideEndDateTimePicker();
-            }
-           
-          };
-
-          filterDataOnDate () {
-            console.log("after set both dates this.state.startDate ->",this.state.startDate)
-            console.log("after set both dates this.state.endDate ->",this.state.endDate)
-            console.log("after set both dates this.state.StoreData ->",this.state.StoreData)
-            console.log("after set both dates this.state.orderHistoryList ->",this.state.orderHistoryList);
-            var data = this.state.orderHistoryList;
-            var startDate =  moment(this.state.startDate, "DD/MM/YYYY");
-            var endDate = moment(this.state.endDate, "DD/MM/YYYY");
-            var filterData = [];
-            var a = data.filter((item) => {
-            console.log("item --> ",item.OrderDate);
-            var orderDate =  moment(item.OrderDate, "YYYY-DD-MM") ;
-            console.log("startDate --> ",startDate);
-            console.log("fromDate <= orderDate", startDate <= orderDate );
-            console.log("toDate --> ",endDate);
-            console.log("orderDate <= toDate ", orderDate <= endDate );
-                            if(startDate <= orderDate && orderDate <= endDate ){
-                              filterData.push(item);
-            }
-                        });
-          // //  fromDate <= orderDate && orderDate <= toDate
-          //   var data = this.state.orderHistoryList;
-          //   var filterData = [];
-          //   var fromDate = this.state.startDate ;
-          //   var toDate =this.state.endDate ;
-          //   // var fromDate = moment(this.state.startDate, "DD/MM/YYYY") ;
-          //   // var toDate = moment(this.state.endDate, "DD/MM/YYYY") ;
-          //   data = data.filter((item) => {
-          //     console.log("OrderDate --> ",item.OrderDate)
-          //     // orderDate =  moment(this.state.endDate, "YYYY-DD-MM") ;
-          //     var flag =  new Date(item.OrderDate).getTime() >= new Date(fromDate).getTime() &&
-          //     new Date(item.OrderDate).getTime() <= new Date(toDate).getTime();
-          //     // var flag =  fromDate <= orderDate && orderDate <= toDate
-              
-          //     if(flag){
-          //     console.log("inside true OrderDate --> ",item.OrderDate)
-             
-          //       filterData.push(item);
-          //     }
-          // });
-          console.log('filterData is --> ', filterData);
-          this.setState({
-            StoreData : filterData,
-            
-          })
-
-          };
-          clearDate (){
-
-            this.setState({
-              
-              StoreData : this.state.orderHistoryList,
-              startDate : 'Start Date',
-              endDate : 'End Date',
-            })
-          }
-          searchOrder (){
-            // if (this.state.orderSearchText == '') {
-            //   Alert.alert('Order History', "Please enter Brand name first");
-            // } else {
-              console.log('search box is not empty',this.state.orderSearchText);
-              var orderSearchText = this.state.orderSearchText;
-            var search_data = _.filter(this.state.orderHistoryList, function (item) { 
-              console.log('item is',item);
-              return  (item.BrandName.toLowerCase().indexOf(orderSearchText.toLowerCase())  >= 0 )
-            })
-            console.log("search_data is",search_data);
-            this.setState({
-              StoreData : search_data
-            });
-          // }
-          }
+    }; 
+     
   componentDidMount() {
     
-        this.getOrderHistoryOfUser();
+        this.getCompleteDetailsOfSpecificCart();
     
-      }
-
-      goToCompleteDetails(CartNo){
-        this.navigate = this.props.navigation.navigate;
-        this.navigate("CompleteOrderDetails", {
-          CartId: CartNo
-        }); 
-        // this.props.navigation.navigate('')
-      }
+      } 
 
 
 renderItem=({item})=>{
+
+        // this.state.mTotalAmount=this.state.mTotalAmount+item.Amount;
+        // console.warn(this.state.mTotalAmount);
+
         return(
-        <TouchableOpacity style={{ flex:1,marginBottom:3}} 
-        onPress={() => this.goToCompleteDetails(item.CartNo)}
+        <TouchableOpacity style={{ flex:1,marginBottom:3}}  
         >
            
             <View style={styles.card_outer}>
                  
                 <View style={styles.horizontal_view}>
 
-        <Text style={styles.txtStyle_fourteen}>
+        {/* <Text style={styles.txtStyle_fourteen}>
         Cart no : 
+                </Text> */}
+                <Text style={styles.txtStyle_fourteen}>
+                    {' '+item.ProductName+' ('+item.Quantity+')'}
                 </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.CartNo}
-                </Text>
-                </View>
 
-<View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-        Price : 
-                </Text>
                 <Text style={styles.txtStyle_sixteen}>
                     {' '+item.Amount}
                 </Text>
                 </View>
 
-                <View style={styles.horizontal_view}>
+{/* <View style={styles.horizontal_view}>
 
         <Text style={styles.txtStyle_fourteen}>
-        Status : 
+        Quantity : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.Status}
+                    {' ('+item.Quantity}
                 </Text>
-                </View>
+                </View> */}
 
-                <View style={styles.horizontal_view}>
+                {/* <View style={styles.horizontal_view}>
+
+        <Text style={styles.txtStyle_fourteen}>
+        Amount : 
+                </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                    {' '+item.Amount}
+                </Text>
+                </View> */}
+
+                {/* <View style={styles.horizontal_view}>
 
 <Text style={styles.txtStyle_fourteen}>
 Date : 
@@ -219,7 +128,7 @@ Date :
         <Text style={styles.txtStyle_sixteen}>
             {' '+item.OrderDate}
         </Text>
-        </View>
+        </View> */}
 
 {/* <View style={styles.horizontal_view}>
 
@@ -235,30 +144,33 @@ Order id :
       
       <TouchableOpacity style={styles.btnBackground1}
       onPress= {()=> this.showPDF()}>
-          <Text style={commonStyles.textbtn}>Invoice</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity style={styles.btnBackground1}
-      onPress= {()=> this.showPDF()}>
-          <Text style={commonStyles.textbtn}>Purchase order</Text>
-      </TouchableOpacity>
+          <Text style={commonStyles.textbtn}>View invoice</Text>
+      </TouchableOpacity> 
         </View> */}
             </View> 
         </TouchableOpacity>
             )
     }
+
     showPDF() { 
-      this.props.navigation.navigate('PDFExample');
+    //   this.props.navigation.navigate('');
+      this.navigate = this.props.navigation.navigate;
+      this.navigate("PDFExample", {
+        pdfURL: this.state.mFilePathOfInvoice
+      }); 
     }
 
-    getOrderHistoryOfUser = () =>{
-      const url = api() + 'ViewAddOrderNew.php';
+    getCompleteDetailsOfSpecificCart = () =>{
+      const url = api() + 'ViewOrderCustomer.php';
        console.log(url);
       
       this.setState({loading: true});
+
+      console.warn(this.state.CartId);
   
       var data = new FormData();
       data.append('UserID',this.props.UserId ),
+      data.append('CartNo',this.state.CartId ),
       
       // data.append('UserID', "2"),
       fetch(url,{method: 'post',
@@ -273,6 +185,7 @@ Order id :
               this.setState({
                 StoreData: res.data,
                 orderHistoryList : res.data,
+                mFilePathOfInvoice:res.result.file_path
               });
             }else{
               Alert.alert('Order History', "Something went wrong");
@@ -292,7 +205,7 @@ Order id :
 
     <View style={styles.parentcontainer}>
     <Header
-                title={'ORDER HISTORY'}
+                title={'COMPLETE DETAILS'}
                 back={() => {
                 this
                   .props
@@ -303,7 +216,7 @@ Order id :
                 <ScrollView contentContainerStyle={{
                 width: window.width
               }}>
-              <View style={styles.filtercontainer}> 
+              {/* <View style={styles.filtercontainer}> 
                <TouchableOpacity style={{paddingLeft:10}} onPress={this._showDateTimePicker}>
                <TextInput style={styles.editbox} value={this.state.startDate}  editable={false}
                 ></TextInput>
@@ -332,7 +245,7 @@ Order id :
           onConfirm={this._handleEndDatePicked}
           onCancel={this._hideEndDateTimePicker}
         />
-              </View>
+              </View> */}
               {/* <View style={styles.searchContainer}> 
                   <TextInput style={styles.searchEditbox} placeholder={'Please enter order details'} placeholderTextColor={'#ddd'} onChangeText={(text) => this.setState({orderSearchText: text})} 
                 ></TextInput>
@@ -346,6 +259,14 @@ Order id :
           renderItem={this.renderItem}
           numColumns={1}
         />
+
+         <View style={styles.horizontal_view}>
+      
+      <TouchableOpacity style={styles.btnBackground1}
+      onPress= {()=> this.showPDF()}>
+          <Text style={commonStyles.textbtn}>View invoice</Text>
+      </TouchableOpacity> 
+        </View>
       </View>
      
       </ScrollView>
@@ -465,11 +386,13 @@ searchBackcontainer: {
   },
   txtStyle_fourteen: {  
     fontSize: 14,
-    color:'white'
+    color:'white',
+    width:'70%'
   },
   txtStyle_sixteen: {  
     fontSize: 16,
-    color:'white'
+    color:'white',
+    width:'30%'
   },
   txtStyle_eighteen: {  
     fontSize: 18,
@@ -506,4 +429,4 @@ const mapDispatchToProps = dispatch => (bindActionCreators({
   UserData
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderHistoryShopkeeper  );
+export default connect(mapStateToProps, mapDispatchToProps)(CompleteOrderDetails  );

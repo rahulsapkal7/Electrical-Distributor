@@ -147,5 +147,3 @@ class Home_header extends Component {
 
 
 export default (Home_header);
-
-
