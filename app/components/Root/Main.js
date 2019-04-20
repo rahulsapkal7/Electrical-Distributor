@@ -50,10 +50,8 @@ import AddToCartShopkeeper from '../shopkeeper/AddToCartShopkeeper.js';
 import MyCartShopkeeper from '../shopkeeper/MyCartShopkeeper.js';
 import SearchProduct from '../shopkeeper/SearchProduct.js';
 
-
-
-
-
+import ViewCartListDistributor from '../distributor/ViewCartListDistributor.js';
+import ViewCartDetailDistributor from '../distributor/ViewCartDetailDistributor.js';
 
 
 export const HomeStack = createStackNavigator({
@@ -237,6 +235,18 @@ export const HomeStack = createStackNavigator({
   },
   SearchProduct: {
     screen : SearchProduct,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewCartListDistributor : {
+    screen : ViewCartListDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewCartDetailDistributor : {
+    screen : ViewCartDetailDistributor,
     navigationOptions: {
       header: null
     }
@@ -425,6 +435,18 @@ export const LoginStack = createStackNavigator({
   },
   SearchProduct: {
     screen : SearchProduct,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewCartListDistributor : {
+    screen : ViewCartListDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewCartDetailDistributor : {
+    screen : ViewCartDetailDistributor,
     navigationOptions: {
       header: null
     }

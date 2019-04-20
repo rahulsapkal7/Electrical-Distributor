@@ -73,7 +73,16 @@ import {NavigationActions} from 'react-navigation';
       Upload  scroller Images
       </Text>
       </TouchableOpacity>  
-
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'CartList'})}>
+      <Text style={styles.txtMain}>
+      View Cart List
+      </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'PendingCartList'})}>
+      <Text style={styles.txtMain}>
+      Pending Orders
+      </Text>
+      </TouchableOpacity>
   </View>
 
 
