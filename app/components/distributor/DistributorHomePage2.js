@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet,ImageBackground, Text, View,ScrollView,Button,Image,TouchableOpacity} from 'react-native'; 
+import {Platform,BackHandler,AsyncStorage, StyleSheet,ImageBackground, Text, View,ScrollView,Button,Image,TouchableOpacity} from 'react-native'; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -18,16 +18,31 @@ import {NavigationActions} from 'react-navigation';
  class DistributorHomePage extends Component {
   constructor(props) {
     super(props);
-   
-
     this.state = {
-     
       firstname: '',
       lastname: '',
-      
-     
     }
   }
+
+  componentWillMount() {
+      AsyncStorage
+          .getItem("@distributorId:key")
+          .then((value) => {
+            console.log("value --> ",value);
+            if (value != null) {}
+            // this.props.UserData(value);
+            console.log('Globals.cusId://' + value);
+            
+          })
+          
+          BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+          
+  }
+  
+componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+}
+
   render() {
     return ( 
       <ImageBackground source={require('../../assets/images/backgroundImg.jpeg')} style={{width: '100%', height: '100%'}}>
@@ -81,6 +96,11 @@ import {NavigationActions} from 'react-navigation';
       <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'PendingCartList'})}>
       <Text style={styles.txtMain}>
       Pending Orders
+      </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> {AsyncStorage.removeItem('@distributorId:key'); this.props.navigation.navigate('Login');}}>
+      <Text style={styles.txtMain}>
+      Logout
       </Text>
       </TouchableOpacity>
   </View>

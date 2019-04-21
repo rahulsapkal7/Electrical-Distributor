@@ -113,7 +113,7 @@ loginCall() {
                                     // navigate('DistributorHomePage');
                                     navigate('ShopkeeperHomePage2');
                                 } else {
-                                    
+                                    AsyncStorage.setItem('@distributorId:key', response.data[0].UserID); 
                                     navigate('DistributorHomePage2');
                                     // navigate('ShopkeeperHomePage');
                                     

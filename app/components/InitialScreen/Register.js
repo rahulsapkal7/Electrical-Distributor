@@ -227,6 +227,9 @@ var validators = require('../../lib/validators').validators();
                 <TextInput style={commonStyles.editbox} placeholder="Propreitor Name" onChangeText={(text) => this.setState({PropreitorName: text})}
                                     placeholderTextColor="white"  
                                       underlineColorAndroid={'transparent'} ></TextInput>
+                                      <TextInput style={commonStyles.editbox} placeholder="Shop Name" onChangeText={(text) => this.setState({ShopName: text})}
+                                                          placeholderTextColor="white"  
+                                                            underlineColorAndroid={'transparent'} ></TextInput>
                                 
                                 <TextInput style={commonStyles.editbox} keyboardType="numeric"  placeholder="Primary Mobile No "  onChangeText={(text) => this.setState({PrimaryMobileNo: text})}
                                     placeholderTextColor="white" 
@@ -241,8 +244,11 @@ var validators = require('../../lib/validators').validators();
                                       <TextInput style={commonStyles.editbox} secureTextEntry={true} placeholder="ReEnter Password" onChangeText={(text) => this.setState({ReEnterPassword: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
-                <TextInput style={commonStyles.editbox} placeholder="Shop Name" onChangeText={(text) => this.setState({ShopName: text})}
-                                    placeholderTextColor="white"  
+                                      <TextInput style={commonStyles.editbox} placeholder="Aadhar No" onChangeText={(text) => this.setState({Aadhar_No: text})}
+                                    placeholderTextColor="white"   
+                                      underlineColorAndroid={'transparent'} ></TextInput>
+                                      <TextInput style={commonStyles.editbox} placeholder="GST No" onChangeText={(text) => this.setState({GST_No: text})}
+                                    placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
                                 
                               {/* <TextInput style={commonStyles.editbox} placeholder="Firm type" onChangeText={(text) => this.setState({Firmtype: text})}
@@ -263,21 +269,15 @@ var validators = require('../../lib/validators').validators();
                               {/* <TextInput style={commonStyles.editbox} placeholder="Timing" onChangeText={(text) => this.setState({Timing: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput> */}
+                                      <TextInput style={commonStyles.editbox} placeholder="PAN No" onChangeText={(text) => this.setState({PAN_No: text})}
+                                    placeholderTextColor="white"   
+                                      underlineColorAndroid={'transparent'} ></TextInput>
                               <TextInput style={commonStyles.editbox} placeholder="Email Id" onChangeText={(text) => this.setState({EmailId: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput>
                               {/* <TextInput style={commonStyles.editbox} placeholder="Turnover" onChangeText={(text) => this.setState({Turnover: text})}
                                     placeholderTextColor="white"   
                                       underlineColorAndroid={'transparent'} ></TextInput> */}
-                                      <TextInput style={commonStyles.editbox} placeholder="GST No" onChangeText={(text) => this.setState({GST_No: text})}
-                                    placeholderTextColor="white"   
-                                      underlineColorAndroid={'transparent'} ></TextInput>
-                                      <TextInput style={commonStyles.editbox} placeholder="PAN No" onChangeText={(text) => this.setState({PAN_No: text})}
-                                    placeholderTextColor="white"   
-                                      underlineColorAndroid={'transparent'} ></TextInput>
-                                      <TextInput style={commonStyles.editbox} placeholder="Aadhar No" onChangeText={(text) => this.setState({Aadhar_No: text})}
-                                    placeholderTextColor="white"   
-                                      underlineColorAndroid={'transparent'} ></TextInput>
                                           {/* <Picker  selectedValue={this.state.userType}
                                               mode="dropdown"
                                               style={commonStyles.editbox}

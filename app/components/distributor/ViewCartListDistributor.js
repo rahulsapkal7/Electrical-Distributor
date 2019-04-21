@@ -38,7 +38,7 @@ var ThisView = null;
         if (this.state.screenView == "CartList") {
            url = api() + 'ViewCartByAdmin.php';
         } else {
-          url = api() + 'ViewPendingCartOrderAdmin.php';
+          url = api() + 'DispatchByAdmin.php';
           
         }
         // const url = api() + 'ViewCartByAdmin.php';
@@ -76,7 +76,7 @@ var ThisView = null;
       renderItem=({item})=>{
         return(
 
-        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} onPress ={() => { console.log("on press ",item.UserID,item.CartNo); ThisView.props.navigation.navigate('ViewCartDetailDistributor', { CartUserID : item.UserID ,CartNo :item.CartNo, CartStatus : item.Status } )  }}
+        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} onPress ={() => { console.log("on press ",item.UserID,item.CartNo); ThisView.props.navigation.navigate('ViewCartDetailDistributor', { CartUserID : item.UserID ,CartNo :item.CartNo ,screenView : this.state.screenView } )  }}
         >
            
             <View style={styles.card_outer}>
