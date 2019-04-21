@@ -28,6 +28,7 @@ import BrandWiseOffersShopkeeper from '../shopkeeper/BrandWiseOffersShopkeeper.j
 import ProtonOffersTypes from '../shopkeeper/ProtonOffersTypes.js';
 import CashWiseOffersShopkeeper from '../shopkeeper/CashWiseOffersShopkeeper.js';
 import DealWiseOffersShopkeeper from '../shopkeeper/DealWiseOffersShopkeeper.js';
+import CompleteOrderDetails from '../shopkeeper/CompleteOrderDetails.js';
 
 
 import PDFExample from '../shopkeeper/PDFExample.js';
@@ -63,7 +64,6 @@ export const HomeStack = createStackNavigator({
     }
     
   },
-
   Register:{
     screen : Register,
     navigationOptions: {
@@ -236,6 +236,12 @@ export const HomeStack = createStackNavigator({
   },
   SearchProduct: {
     screen : SearchProduct,
+    navigationOptions: {
+      header: null
+    }
+  },
+  CompleteOrderDetails: {
+    screen : CompleteOrderDetails,
     navigationOptions: {
       header: null
     }
@@ -440,6 +446,12 @@ export const HomeStack = createStackNavigator({
         header: null
       }
     },
+    CompleteOrderDetails: {
+      screen : CompleteOrderDetails,
+      navigationOptions: {
+        header: null
+      }
+    },
     ViewCartListDistributor : {
       screen : ViewCartListDistributor,
       navigationOptions: {
@@ -635,6 +647,12 @@ export const LoginStack = createStackNavigator({
   },
   SearchProduct: {
     screen : SearchProduct,
+    navigationOptions: {
+      header: null
+    }
+  },
+  CompleteOrderDetails: {
+    screen : CompleteOrderDetails,
     navigationOptions: {
       header: null
     }

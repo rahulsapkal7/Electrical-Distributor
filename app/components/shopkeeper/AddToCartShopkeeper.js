@@ -255,9 +255,9 @@ var ThisView = null;
         
        
       }
-      GoToCart = (item,index) =>{
-        console.log("on press GoToCart index",index);
-        console.log("on press GoToCart item",item);
+      GoToCart = () =>{
+        // console.log("on press GoToCart index",index);
+        // console.log("on press GoToCart item",item);
         console.log("on press GoToCart item",this.state.addToCartData);
         
         this.props.cartData(this.state.addToCartData);
@@ -372,7 +372,7 @@ var ThisView = null;
               subtractQty={() => this.subtractQty(item, index)}
               addQty={() => this.addQty(item, index)}
               addToCart = {() => this.addToCart(item,index)}
-              GoToCart = {() => this.GoToCart(item,index)}
+              GoToCart = {() => this.GoToCart()}
             />
            
           )}

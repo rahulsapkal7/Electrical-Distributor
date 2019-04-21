@@ -1,13 +1,31 @@
 
-import { StyleSheet, Dimensions, View } from 'react-native';
+import { StyleSheet, Dimensions, BackHandler,View } from 'react-native';
 import React, { Component } from 'react';
- 
+import {NavigationActions} from 'react-navigation';
+import Header from '../../common/header';
+
 import Pdf from 'react-native-pdf';
  
 export default class PDFExample extends Component {
+    
+  constructor(props) {
+    super(props);
+
+    console.log('inside order history');
+    // this.params = this.props.navigation.state.params;
+    
+
+    this.state = {
+        pdfURL : this.props.navigation.state.params.pdfURL,  
+    } 
+   
+  }
+  
+
+
     render() {
         // const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
-        const source = {uri:'https://slicedinvoices.com/pdf/wordpress-pdf-invoice-plugin-sample.pdf',cache:true};
+        const source = {uri:this.state.pdfURL,cache:true};
         
         //const source = require('./test.pdf');  // ios only
         //const source = {uri:'bundle-assets://test.pdf'};
@@ -16,7 +34,16 @@ export default class PDFExample extends Component {
         //const source = {uri:"data:application/pdf;base64,..."};
  
         return (
-            <View style={styles.container}>
+            <View style={styles.parentcontainer}>
+             <Header
+                title={'Purchase Order'}
+                back={() => {
+                this
+                  .props
+                  .navigation
+                  .goBack(null)
+              }}/>
+               <View style={styles.container}>
                 <Pdf
                     source={source}
                     onLoadComplete={(numberOfPages,filePath)=>{
@@ -30,6 +57,7 @@ export default class PDFExample extends Component {
                     }}
                     style={styles.pdf}/>
             </View>
+            </View>
         )
   }
 }
@@ -41,6 +69,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 25,
     },
+    parentcontainer: { 
+        flexDirection: 'column', 
+        height: '100%',  
+      },
     pdf: {
         flex:1,
         width:Dimensions.get('window').width,

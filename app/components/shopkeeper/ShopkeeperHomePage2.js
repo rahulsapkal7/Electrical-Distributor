@@ -29,7 +29,8 @@ import {  Icon } from 'native-base';
       myCartCount : 0,
       productSearchText : '',
       ImageSliderData : [],
-      ShopkeeperName : 'Welcome Rahul'
+      ShopkeeperName : 'Welcome',
+      screenName : "ShopkeeperHomePage2"
     }
     this.toggleMenu = this
     .toggleMenu
@@ -63,7 +64,19 @@ import {  Icon } from 'native-base';
             //   this.setState({isLoading: false});
             // }, 5);
           })
-
+          AsyncStorage
+          .getItem("@shopkeeperName:key")
+          .then((value) => {
+            console.log("value --> ",value);
+            if (value != null) {}
+            this.setState({ShopkeeperName: value});
+            
+            console.log('Globals.cusId://' + value);
+            // setTimeout(() => {
+            //   this.setState({isLoading: false});
+            // }, 5);
+          })
+          
           AsyncStorage
           .getItem("@shopkeeperCartCount")
           .then((value) => {
@@ -82,12 +95,19 @@ import {  Icon } from 'native-base';
   }
   
 componentWillUnmount() {
+  console.log('inside will unmount method ');
+ 
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
 }
 
 handleBackButtonClick() {
-  console.log("android back press");
-  BackHandler.exitApp();
+  
+  console.log('this.props.navigation.state.routeName -->',this.props.navigation)
+
+    console.log("android back press",this.state.screenName);
+    BackHandler.exitApp();
+  
+ 
   // return false;
   // this.exitApp();
 }
@@ -256,6 +276,7 @@ updateMenuState(isOpen) {
           , { menuName: 'Buy' ,backgroundImg : require('../../assets/images/Buy.png') }]}
           renderItem={this._renderItemBG}
           horizontal={true}
+          
         ItemSeparatorComponent={() => <View style={{margin: 4}}/>}
         />
         {/* <TouchableWithoutFeedback onPress={ () =>  this.props.navigation.navigate('OrderHistoryShopkeeper')}>

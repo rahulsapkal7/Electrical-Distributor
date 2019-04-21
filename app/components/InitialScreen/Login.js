@@ -109,7 +109,7 @@ loginCall() {
                                 if (response.data[0].UserType == "Customer") {
                                     ThisView.props.UserData(response.data[0].UserID);
                                     AsyncStorage.setItem('@shopkeeperId:key', response.data[0].UserID); 
-                                    // AsyncStorage.setItem('@shopkeeperName', response.data[0].PropreitorName); 
+                                     AsyncStorage.setItem('@shopkeeperName:key', response.data[0].PropreitorName); 
                                     // navigate('DistributorHomePage');
                                     navigate('ShopkeeperHomePage2');
                                 } else {

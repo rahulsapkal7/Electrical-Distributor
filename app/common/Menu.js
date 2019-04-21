@@ -181,6 +181,7 @@ this.props.NavigationToScreen(screen)
         <ScrollView  style={styles.menu}>
             <View style={styles.avatarContainer}>
                 {/* <Image style={styles.profileImg}  source={a}/> */}
+                <Text style={styles.name}>Welcome</Text>
                 <Text style={styles.name}>{this.props.Name}</Text>
             </View>
             <View style={styles.horizontalLine}></View>

@@ -38,9 +38,7 @@ class ViewCartDetailDistributor extends Component {
   chooseFile = () => {
     var options = {
       title: 'Select Image',
-      customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-      ],
+     
       storageOptions: {
         skipBackup: true,
         path: 'images',

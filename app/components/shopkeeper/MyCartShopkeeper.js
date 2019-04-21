@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, ListItem,Text, View,TouchableOpacity,Image } from 'react-native';
+import { AppRegistry, FlatList, AsyncStorage,StyleSheet,ScrollView, Alert, ListItem,Text, View,TouchableOpacity,Image } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 // import Header from '../../common/header';
@@ -55,21 +55,22 @@ var ThisView = null;
     
    
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      MyCartData: nextProps.cartData,
-    });
-    console.log("inside componentWillReceiveProps ",JSON.stringify(this.state) )
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     MyCartData: nextProps.cartData,
+  //   });
+  //   console.log("inside componentWillReceiveProps ",JSON.stringify(this.state) )
+  // }
 
   componentDidMount() {
        console.log("inside componentDidMount this.state.MyCartData ",this.state.MyCartData);
+       this.ViewCartData();
       //  this.props.CartCountData(this.state.addToCartData.length);
       //  console.log("after update cart count ",this.props.CartCountData);
       }
       
       componentWillMount () {
-        this.ViewCartData();
+        // this.ViewCartData();
       }
       ViewCartData = () =>{
         const url = api() + 'ViewCart.php';
@@ -294,7 +295,7 @@ var ThisView = null;
             />
            
           )}
-          keyExtractor={item => item.ProductTableID.toString()}
+          keyExtractor={item => item.OrderID.toString()}
         />
 
         <TouchableOpacity onPress= {()=> this.placeOrder()} style={commonStyles.btnBackground}>
