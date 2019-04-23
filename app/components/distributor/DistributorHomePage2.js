@@ -57,48 +57,48 @@ componentWillUnmount() {
       <View style={styles.verticalContainer}>
 
       
-           <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('PendingOrdersDistributor')}>
+           <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('RegistrationOptions')}>
       <Text style={styles.txtMain}>
       Registrations
       </Text>
       </TouchableOpacity>  
   
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('PendingOrdersDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('CommingSoonDistributor')}>
       <Text style={styles.txtMain}>
       Add Product Images
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('PendingOrdersDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('DisplayProductsDistributor')}>
       <Text style={styles.txtMain}>
       Product Display
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('PendingOrdersDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('CommingSoonDistributor')}>
       <Text style={styles.txtMain}>
       Orders
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('PendingOrdersDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('CommingSoonDistributor')}>
       <Text style={styles.txtMain}>
       Upload  Offer Images
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('PendingOrdersDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('CommingSoonDistributor')}>
       <Text style={styles.txtMain}>
       Upload  scroller Images
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'CartList'})}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> { BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick); this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'CartList'}) }}>
       <Text style={styles.txtMain}>
       View Cart List
       </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'PendingCartList'})}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> { BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick); this.props.navigation.navigate('ViewCartListDistributor',{screenView : 'PendingCartList'})} }>
       <Text style={styles.txtMain}>
       Pending Orders
       </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> {AsyncStorage.removeItem('@distributorId:key'); this.props.navigation.navigate('Login');}}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> {BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick); AsyncStorage.removeItem('@distributorId:key'); this.props.navigation.navigate('Login');}}>
       <Text style={styles.txtMain}>
       Logout
       </Text>

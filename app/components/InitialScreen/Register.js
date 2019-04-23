@@ -142,7 +142,9 @@ var validators = require('../../lib/validators').validators();
     // }else if(this.state.Aadhar_No === ''){
     //   Alert.alert('Login', 'Enter a valid mobile number');
     }else{
-      const url = api() + 'Reg1.php';
+      // const url = api() + 'Reg1.php';
+      const url = api() + 'Reg.php';
+      
       console.log(url);
      
      this.setState({loading: true});

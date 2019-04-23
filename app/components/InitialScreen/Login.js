@@ -18,6 +18,7 @@ import {
     AsyncStorage,
     View,
     Image,
+    BackHandler,
     ActivityIndicator,
     TouchableOpacity,Picker
 } from 'react-native';
@@ -43,6 +44,7 @@ var validators = require('../../lib/validators').validators();
         this.OpenRegister = this
         .OpenRegister
         .bind(this);
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
         
         
     this.state = {
@@ -54,6 +56,35 @@ var validators = require('../../lib/validators').validators();
         login1: {}
     }
 }
+componentDidMount (){
+console.log("inside componentDidMount");
+BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
+}
+componentWillUnmount() {
+    console.log('inside will unmount method ');
+   
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    Alert.alert(
+      'Exit App',
+      'Exiting the application?', [{
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+      }, {
+          text: 'OK',
+          onPress: () => BackHandler.exitApp()
+      }, ], {
+          cancelable: false
+      }
+   )
+   return true;
+  
+  }
+
 loginCall() {
     const {navigate} = this.props.navigation;
     // AsyncStorage.setItem('@UserId:key', "2");
@@ -111,9 +142,11 @@ loginCall() {
                                     AsyncStorage.setItem('@shopkeeperId:key', response.data[0].UserID); 
                                      AsyncStorage.setItem('@shopkeeperName:key', response.data[0].PropreitorName); 
                                     // navigate('DistributorHomePage');
+                                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
                                     navigate('ShopkeeperHomePage2');
                                 } else {
                                     AsyncStorage.setItem('@distributorId:key', response.data[0].UserID); 
+                                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
                                     navigate('DistributorHomePage2');
                                     // navigate('ShopkeeperHomePage');
                                     
@@ -133,6 +166,7 @@ loginCall() {
 
 OpenRegister() {
   console.log("on click register1");
+//   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   this.props.navigation.navigate('Register');
       
 }

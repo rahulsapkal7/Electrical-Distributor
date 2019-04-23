@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native';
+import { AppRegistry, FlatList,TextInput, Alert,StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native';
 // import Cards from '../HomeScreen/Cards.js';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -16,8 +16,9 @@ class VerifiedCustomers extends Component {
     super(props);
     console.log('inside verified customer distributor');
     this.state = {
-      // selectedArea : this.props.navigation.state.params.selectedArea,
+      type : this.props.navigation.state.params.type,
       loading : false,
+      reason : '',
       StoreData : []
     }
     console.log("props are --> ",JSON.stringify(props));
@@ -28,26 +29,36 @@ class VerifiedCustomers extends Component {
       }
       getVerifiedCustomers = () =>{
         // const url = api() + 'ApprovedCustList.php';
-        var url = "http://elec.mycit.co.in/PHP/webservices/ApprovedCustList.php";
+        var url = null;
+        if (this.state.type == "Approved") {
+          url =  api() + "ApprovedCustList.php";
+        } else if(this.state.type == "Rejected") {
+          url =   api() +"RejectedCustList.php";
+        }else if(this.state.type == "Pending") {
+          url =   api() +"PendingCustList.php";
+        }
+       
          console.log(url);
         
         this.setState({loading: true});
     
         fetch(url,{method: 'post'})
-            // .then(response => response.json())
+            .then(response => response.json())
             .then(res => {
               console.log("response is",res);
               
               console.log("response is",JSON.stringify(res));
               if(res.status){
-
-              }
                 this.setState({
                   StoreData: res.data,
                   loading : false
-                    // error: res.error || null,                   
-                    // refreshing: false
                 });
+              }else{
+                Alert.alert('Verified Customer', "Something went wrong");
+                this.setState({loading: false});
+                
+              }
+                
             })
             .catch(error => {
     
@@ -56,44 +67,144 @@ class VerifiedCustomers extends Component {
             });
     
       }
+      AdminApprovalReg (registerType,regId){
+        console.log('register tpye is ',registerType);
+        console.log('register regId is ',regId);
+        
+        if (registerType == 'reject' && (this.state.reason === undefined || this.state.reason === '' )) {
+            Alert.alert('Pending Customer', 'Please enter Reason for rejection');
+        } else {
+          var  url =  api() + "AdminApprovalReg.php";
+           console.log(url);
+          this.setState({loading: true});
+          var data = new FormData()
+          data.append('UserID', regId ),
+          data.append('RejectionReason', registerType == 'reject' ? this.state.reason : "" ),
+          data.append('Status', registerType == 'reject' ? "Rejected" : "Approved" ),
+          console.log("inside AdminApprovalReg data is", data);
+          fetch(url,{method: 'post',body:data})
+              .then(response => response.json())
+              .then(res => {
+                console.log("response is",res);
+                
+                console.log("response is",JSON.stringify(res));
+                if(res.status){
+                  this.setState({
+                    
+                    loading : false
+                  });
+                  Alert.alert('View Cart', res.message,[{text: 'OK', 
+                  onPress: () => {
+                      console.log('OK Pressed');
+                      this
+                      .props
+                      .navigation
+                      .goBack(null)
+                      // this.textInput.clear()
+                      // this.getVerifiedCustomers();
+                     }}]
+                  , {cancelable: false},);
+                
+                }else{
+                  Alert.alert('Verified Customer', "Something went wrong");
+                  this.setState({loading: false});
+                }
+                  
+              })
+              .catch(error => {
+      
+                  console.log('error:' + (error));
+                  this.setState({error, loading: false});
+              });
 
+        }
+      }
 renderItem=({item})=>{
         return(
-        <TouchableOpacity style={{ flex:1,flexDirection:'column',marginBottom:3}} 
-        >
+          <View style={styles.productParent} >
+          
+               
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               Shopkeeper name : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.PropreitorName }
+            </Text>
+            </View>
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               Shop Name : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.ShopName }
+            </Text>
+            </View>
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               Mobile No : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.PrimaryMobileNo }
+            </Text>
+            </View>
+    
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               Email Id : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.EMailID }
+            </Text>
+            </View>
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               Address : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.Address1 }
+            </Text>
+            </View>
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               GST No : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.GSTNo }
+            </Text>
+            </View>
+    
+            <View style={styles.horizontal_view}>
+               <Text style={styles.txtStyle_fourteen}>
+               PAN No : 
+              </Text>
+            <Text style={styles.txtStyle_sixteen}>
+            {item.PANNo }
+            </Text>
+            </View>
+           {this.state.type == "Pending"  ? 
+           <View style={styles.vertical_view}>
+           <TextInput style={styles.editbox} placeholder="Reason" onChangeText={(text) => this.setState({reason: text})}
+                           ref={input => { this.textInput = input }}   placeholderTextColor="white"  
+                                                            underlineColorAndroid={'transparent'} ></TextInput>
+           <View style={styles.horizontal_view}>
+      <TouchableOpacity style={styles.btnBackground} onPress={() => this.AdminApprovalReg('accept',item.UserID)} >
+                    <Text style={styles.txtStyle_sixteen}>Accept</Text>
+                </TouchableOpacity>
+                 <TouchableOpacity style={styles.btnBackground} onPress={() => this.AdminApprovalReg('reject',item.UserID)} >
+
+                    <Text style={styles.txtStyle_sixteen}>Reject</Text>
+                </TouchableOpacity>
+                </View>
+                </View>
+           : null} 
            
-            <View style={styles.card_outer}>
+            
+            
+        </View> 
 
-            <View style={styles.shopkeeperInfo}>
-                 
-                <View style={styles.horizontal_view}>
 
-        <Text style={styles.txtStyle_fourteen}>
-                    Shopkeeper name : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.skName}
-                </Text>
-                </View>
-
-<View style={styles.horizontal_view}>
-
-        <Text style={styles.txtStyle_fourteen}>
-                    Shop name : 
-                </Text>
-                <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.shopName}
-                </Text>
-                </View> 
-                </View>
-
-                 <View style={styles.icon}>
- <Image style={{ width: 20, height: 20 }}
-                    source={require('../../assets/images/right_arrow.png')}></Image>
-                 </View>
-                 
-            </View> 
-        </TouchableOpacity>
+       
             )
     }
 
@@ -103,7 +214,7 @@ renderItem=({item})=>{
     <View style={styles.parentcontainer}>
    
           <Header
-                title={'Verified Customers'}
+                title=  {this.state.type == "Approved" ? 'Approved Customers' : (this.state.type == "Rejected" ? 'Rejected Customers' : 'Pending Customers')  }
                 back={() => {
                 this
                   .props
@@ -111,14 +222,10 @@ renderItem=({item})=>{
                   .goBack(null)
               }}/>
       <View style={styles.container}>
-      {/* <Loader visible={this.state.loading}/> */}
+    
+      <Loader visible={this.state.loading}/>
         <FlatList
-          data={[
-            {skName: 'Devin',shopName: 'Devin'},
-            {skName: 'Jackson',shopName: 'Devin'},
-            {skName: 'James',shopName: 'Devin'},
-            {skName: 'Joel',shopName: 'Devin'}, 
-          ]}
+           data={this.state.StoreData}
           renderItem={this.renderItem}
         />
       </View>
@@ -129,6 +236,17 @@ renderItem=({item})=>{
 }
 
 const styles = StyleSheet.create({
+  editbox: {
+    width: 300,
+    height: 40, 
+    borderRadius: 5,
+    borderColor: 'white',
+    borderWidth:1,
+    paddingHorizontal: 10,
+    color: 'white',
+    marginVertical: 10,
+    marginBottom:10
+},
   parentcontainer: { 
     flexDirection: 'column', 
     height: '100%',  
@@ -182,6 +300,9 @@ const styles = StyleSheet.create({
   horizontal_view: { 
     flexDirection: 'row', 
   },
+  vertical_view: { 
+    flexDirection: 'column', 
+  },
   txtStyle_fourteen: {  
     fontSize: 14,
     color:'white'
@@ -213,6 +334,21 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection:'row',
         height: '80%', 
+  },
+  productParent:{
+    flex:1,
+    flexDirection: 'column', 
+    backgroundColor: '#4db6ac',
+    // alignItems: 'center',
+    // justifyContent: 'center', 
+    borderRadius:2,
+    borderColor: 'red',
+    margin : 10,
+    padding : 15,
+    borderWidth:1,
+    borderRadius:2,
+    borderColor: '#ddd',
+    
   },
 })
  

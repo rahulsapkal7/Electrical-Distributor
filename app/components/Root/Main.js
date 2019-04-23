@@ -54,6 +54,12 @@ import SearchProduct from '../shopkeeper/SearchProduct.js';
 
 import ViewCartListDistributor from '../distributor/ViewCartListDistributor.js';
 import ViewCartDetailDistributor from '../distributor/ViewCartDetailDistributor.js';
+import CommingSoonDistributor from '../distributor/CommingSoonDistributor.js';
+import RegistrationOptions from '../distributor/RegistrationOptions.js';
+import DisplayProductsDistributor from '../distributor/DisplayProductsDistributor.js';
+
+
+
 
 
 export const HomeStack = createStackNavigator({
@@ -254,6 +260,24 @@ export const HomeStack = createStackNavigator({
   },
   ViewCartDetailDistributor : {
     screen : ViewCartDetailDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  CommingSoonDistributor: {
+    screen : CommingSoonDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  RegistrationOptions: {
+    screen : RegistrationOptions,
+    navigationOptions: {
+      header: null
+    }
+  },
+  DisplayProductsDistributor :  {
+    screen : DisplayProductsDistributor,
     navigationOptions: {
       header: null
     }
@@ -464,6 +488,24 @@ export const HomeStack = createStackNavigator({
         header: null
       }
     },
+    CommingSoonDistributor: {
+      screen : CommingSoonDistributor,
+      navigationOptions: {
+        header: null
+      }
+    },
+    RegistrationOptions: {
+      screen : RegistrationOptions,
+      navigationOptions: {
+        header: null
+      }
+    },
+    DisplayProductsDistributor :  {
+      screen : DisplayProductsDistributor,
+      navigationOptions: {
+        header: null
+      }
+    },
     // },{ initialRouteName: 'Login' })
     },{ initialRouteName: 'DistributorHomePage2' })
 
@@ -669,6 +711,24 @@ export const LoginStack = createStackNavigator({
       header: null
     }
   },
+  CommingSoonDistributor: {
+    screen : CommingSoonDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  RegistrationOptions: {
+    screen : RegistrationOptions,
+    navigationOptions: {
+      header: null
+    }
+  },
+  DisplayProductsDistributor :  {
+    screen : DisplayProductsDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
   },{ initialRouteName: 'Login' })
   // },{ initialRouteName: 'ShopkeeperHomePage2' })
   var UserId = ''; 
@@ -744,7 +804,8 @@ class Main extends Component {
     }
   }
   }
-
+  // inside back click function
+// { const { dispatch, nav } = this.props const stack = nav.routes[0]; if (stack.routes.length === 1) { Alert.alert( 'Exit App', 'Do you want to exit?', [ { text: 'No', onPress: () => { } }, { text: 'Yes', onPress: () => BackHandler.exitApp() }, ], { cancelable: false }) } dispatch({ type: 'Navigation/BACK' }) return true }
 
   const mapStateToProps = (state, ownProps) => {
   // // console.log('state:' + JSON.stringify(state));

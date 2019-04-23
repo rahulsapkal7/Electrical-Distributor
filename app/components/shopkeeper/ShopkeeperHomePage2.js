@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet,AsyncStorage,Alert,BackHandler, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
+import {Platform, StyleSheet,AsyncStorage,NetInfo,Alert,BackHandler, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
 // import Cards from "./Cards.js"; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -102,21 +102,41 @@ componentWillUnmount() {
 
 handleBackButtonClick() {
   
-  console.log('this.props.navigation.state.routeName -->',this.props.navigation)
+  // console.log('this.props.navigation.state.routeName -->',this.props.navigation)
 
-    console.log("android back press",this.state.screenName);
-    BackHandler.exitApp();
-  
- 
-  // return false;
-  // this.exitApp();
+  //   console.log("android back press",this.state.screenName);
+  //   BackHandler.exitApp();
+  Alert.alert(
+    'Exit App',
+    'Exiting the application?', [{
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+    }, {
+        text: 'OK',
+        onPress: () => BackHandler.exitApp()
+    }, ], {
+        cancelable: false
+    }
+ )
+ return true;
+
+
 }
 
   componentDidMount() {
     // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     const url = api() + 'ImageSlideShow.php';
     console.log(url);
-   
+    
+    NetInfo.getConnectionInfo().then((connectionInfo) => {
+      console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+        if(connectionInfo.type === "none"){
+          Alert.alert('PROTON',"Please check your Internet Connection");
+        }
+    
+
+    });
    this.setState({loading: true});
   
    
@@ -177,6 +197,7 @@ handleBackButtonClick() {
     );
   };
   actionOnRow(item) {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
     if(item.menuName=='Alerts'){
       this.props.navigation.navigate('AlertsPageShopkeeper')
     }else if(item.menuName=='My profile'){
@@ -221,6 +242,7 @@ searchProduct (){
           this.setState({
             productSearchText : ''
           })
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
           this.props.navigation.navigate('AddToCartShopkeeper', { data : {BrandCategoryTableID : '' , SubCategoryTableID : '', searchProductData : res.data} })
            
          }else{
@@ -240,8 +262,16 @@ updateMenuState(isOpen) {
 }
 
   render() {
-    var menu = <Menu Name = {this.state.ShopkeeperName} NavigationToScreen={(screen) => {this.props.navigation.navigate(screen);this.setState({isOpen : false})}}  
-     Logout = {()=>{ AsyncStorage.removeItem('@shopkeeperId:key'); this.setState({isOpen : false}) ;this.props.navigation.navigate('Login'); }}
+    var menu = <Menu Name = {this.state.ShopkeeperName} NavigationToScreen={(screen) => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+      this.props.navigation.navigate(screen);
+      this.setState({isOpen : false})
+      }}  
+     Logout = {()=>{
+        AsyncStorage.removeItem('@shopkeeperId:key');
+         this.setState({isOpen : false}) ;
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+         this.props.navigation.navigate('Login'); }}
      />;
     
     return (
@@ -256,9 +286,13 @@ updateMenuState(isOpen) {
                         console.log("Open Menu",this.state.isOpen) }}  
                 title={'PROTON ENTERPRISE'} 
                 cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
-                GoToCart = {() =>  this.props.navigation.navigate('MyCartShopkeeper')}
+                GoToCart = {() =>  {
+                 BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);                  
+                  this.props.navigation.navigate('MyCartShopkeeper')}}
                 showSearch = {true}
-                gotoSearchScreens = {() => this.props.navigation.navigate('SearchProduct') }
+                gotoSearchScreens = {() => {
+                  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+                  this.props.navigation.navigate('SearchProduct') }}
                 />
                   <Loader visible={this.state.loading}/>
                   {/* <View style={styles.searchcontainer}> 
