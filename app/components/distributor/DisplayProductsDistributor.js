@@ -66,7 +66,6 @@ var ThisView = null;
                   loading : false
                 });
                 const ProductData = [...this.state.ProductData];
-                // MyCartData[index].AddedToCartFlag = true;
                 this.setState({ ProductData })
               }else{
                 Alert.alert('Add To Cart', "Something went wrong");
@@ -82,75 +81,126 @@ var ThisView = null;
       }
       
       listItem = ({item, index}) => (
-        <View style={styles.productParent} >
-        
+        <View style={styles.card_outer}>
+        <View style={styles.horizontal_view}>
+        <View style={styles.detailView}>
+         <View style={styles.horizontal_view}>
+      <Text style={styles.txtStyle_fourteen}>
+      Brand : 
+              </Text>
+              <Text style={styles.txtStyle_sixteen}>
+                  {item.BrandName}
+              </Text>
+              </View>
+              <View style={styles.horizontal_view}>
+      <Text style={styles.txtStyle_fourteen}>
+      Category : 
+              </Text>
+              <Text style={styles.txtStyle_sixteen}>
+                  {item.BrandCategoryName}
+              </Text>
+              </View>
              
-          <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             Brand Category Name : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.BrandCategoryName }
-          </Text>
-          </View>
-          <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             Sub Category Name : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.SubCategoryName }
-          </Text>
-          </View>
-          <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             Product Code : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.ProductCode }
-          </Text>
-          </View>
-  
-          {/* <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             Power W : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.PowerW }
-          </Text>
-          </View>
-          <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             Colour : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.Colour }
-          </Text>
-          </View> */}
-          <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             Product Desc : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.ProductDes }
-          </Text>
-          </View>
-  
-          <View style={styles.horizontal_view}>
-             <Text style={styles.txtStyle_fourteen}>
-             MRP : 
-            </Text>
-          <Text style={styles.txtStyle_sixteen}>
-          {item.MRP }
-          </Text>
-          </View>
-           
-          <View style={{ width : '100%',alignItems: 'center',justifyContent: 'center'}} >
-          <Switch
-            onValueChange={(value) => this.setSwitchValue(value, index,item.ProductCode)}
+
+              <View style={styles.horizontal_view}>
+      <Text style={styles.txtStyle_fourteen}>
+      Sub Category : 
+              </Text>
+              <Text style={styles.txtStyle_sixteen}>
+                  {item.SubCategoryName}
+              </Text>
+              </View>
+              <View style={styles.horizontal_view}>
+      <Text style={styles.txtStyle_fourteen}>
+      Product Price : 
+              </Text>
+              <Text style={styles.txtStyle_sixteen}>
+                  {item.MRP}
+              </Text>
+              </View>
+              <View style={styles.horizontal_view}>
+      <Text style={styles.txtStyle_fourteen}>
+      Product Code : 
+              </Text>
+              <Text style={styles.txtStyle_sixteen}>
+                  {item.ProductCode}
+              </Text>
+              </View>
+</View>
+<View style={styles.imageView}>
+<View style={{ width : '100%',height:"20%" , marginBottom:10}} >
+          <Switch //style={{backgroundColor: '#FF0000', borderRadius: 17}}
+           trackColor={{true: 'red', false: 'grey'}}
+             onValueChange={(value) => this.setSwitchValue(value, index,item.ProductCode)}
            value = {(item.Display == "Yes" ? true : false ) }/>
          
+        </View> 
+<Image
+            source={{ uri: item.SubCategoryImage }}
+            style={{ width: "90%", height:"70%" }}
+            
+          />
+
+</View>
+</View>
+
+
+            
+             
+
           </View> 
-      </View> 
+      //   <View style={styles.productParent} >
+        
+             
+      //     <View style={styles.horizontal_view}>
+      //        <Text style={styles.txtStyle_fourteen}>
+      //        Brand Category Name : 
+      //       </Text>
+      //     <Text style={styles.txtStyle_sixteen}>
+      //     {item.BrandCategoryName }
+      //     </Text>
+      //     </View>
+      //     <View style={styles.horizontal_view}>
+      //        <Text style={styles.txtStyle_fourteen}>
+      //        Sub Category Name : 
+      //       </Text>
+      //     <Text style={styles.txtStyle_sixteen}>
+      //     {item.SubCategoryName }
+      //     </Text>
+      //     </View>
+      //     <View style={styles.horizontal_view}>
+      //        <Text style={styles.txtStyle_fourteen}>
+      //        Product Code : 
+      //       </Text>
+      //     <Text style={styles.txtStyle_sixteen}>
+      //     {item.ProductCode }
+      //     </Text>
+      //     </View>
+      //     <View style={styles.horizontal_view}>
+      //        <Text style={styles.txtStyle_fourteen}>
+      //        Product Desc : 
+      //       </Text>
+      //     <Text style={styles.txtStyle_sixteen}>
+      //     {item.ProductDes }
+      //     </Text>
+      //     </View>
+  
+      //     <View style={styles.horizontal_view}>
+      //        <Text style={styles.txtStyle_fourteen}>
+      //        MRP : 
+      //       </Text>
+      //     <Text style={styles.txtStyle_sixteen}>
+      //     {item.MRP }
+      //     </Text>
+      //     </View>
+           
+      //     <View style={{ width : '100%',alignItems: 'center',justifyContent: 'center'}} >
+      //     <Switch
+      //       onValueChange={(value) => this.setSwitchValue(value, index,item.ProductCode)}
+      //      value = {(item.Display == "Yes" ? true : false ) }/>
+         
+      //     </View> 
+      // </View> 
       )
 
      
@@ -350,18 +400,21 @@ const styles = StyleSheet.create({
   },
   horizontal_view1: { 
     flexDirection: 'row', 
+    flex : 1
     
-    paddingTop:20,
+   
   },
   
   txtStyle_fourteen: {  
     fontSize: 14,
-    color:'white'
+    color:'white',
+    flex: 1, flexWrap: 'wrap'
   },
   txtStyle_sixteen: {  
     fontSize: 16,
     color:'white',
     fontWeight:'500',
+    flex: 1, flexWrap: 'wrap'
     
   },
   txtStyle_sixteenQty : {
@@ -392,6 +445,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection:'column',
         // height: '80%', 
+  },
+  detailView : { 
+    width : "70%"
+  },
+  imageView : { 
+    width : "30%"
   },
 })
  

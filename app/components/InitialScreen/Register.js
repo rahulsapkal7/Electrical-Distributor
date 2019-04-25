@@ -179,9 +179,12 @@ var validators = require('../../lib/validators').validators();
            console.log("response is",JSON.stringify(res));
         
            if(res.status){
+           this.setState({loading: false});
+     
             Alert.alert('Register', res.message,[{text: 'OK', 
             onPress: () => {
                 console.log('OK Pressed');
+
                 this.props.navigation.navigate('OtpScreen');
                 // this.props.navigation.goBack(null);
               }

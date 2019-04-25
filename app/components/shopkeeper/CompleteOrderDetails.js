@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet,TextInput, Text,Alert, ScrollView,View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList,Image, StyleSheet,TextInput, Text,Alert, ScrollView,View,TouchableOpacity } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import commonStyles from '../../common/commonStyle';
@@ -30,8 +30,9 @@ class CompleteOrderDetails extends Component {
     //   endDate : 'End Date',
       loading : false,
       StoreData : [],
-      mTotalAmount:0,
-      mFilePathOfInvoice:''
+      cartTotal:0,
+      mFilePathOfInvoice:'',
+      
     //   orderHistoryList : [],
     //   orderSearchText : ''
     }
@@ -77,76 +78,78 @@ class CompleteOrderDetails extends Component {
 
 renderItem=({item})=>{
 
-        // this.state.mTotalAmount=this.state.mTotalAmount+item.Amount;
-        // console.warn(this.state.mTotalAmount);
+        
 
         return(
-        <TouchableOpacity style={{ flex:1,marginBottom:3}}  
+        <TouchableOpacity style={{ flex:1}}  
         >
-           
-            <View style={styles.card_outer}>
-                 
-                <View style={styles.horizontal_view}>
-
-        {/* <Text style={styles.txtStyle_fourteen}>
-        Cart no : 
-                </Text> */}
-                <Text style={styles.txtStyle_fourteen}>
-                    {' '+item.CartNo+' ('+item.Quantity+')'}
+          <View style={styles.card_outer}>
+          <View style={styles.horizontal_view}>
+          <View style={styles.detailView}>
+           <View style={styles.horizontal_view}>
+        <Text style={styles.txtStyle_fourteen}>
+        Brand : 
                 </Text>
-
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.Amount}
+                    {item.BrandName}
                 </Text>
                 </View>
+                <View style={styles.horizontal_view}>
+        <Text style={styles.txtStyle_fourteen}>
+        Category : 
+                </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                    {item.BrandCategoryName}
+                </Text>
+                </View>
+               
 
-{/* <View style={styles.horizontal_view}>
-
+                <View style={styles.horizontal_view}>
         <Text style={styles.txtStyle_fourteen}>
         Quantity : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' ('+item.Quantity}
+                    {item.Quantity}
                 </Text>
-                </View> */}
-
-                {/* <View style={styles.horizontal_view}>
-
+                </View>
+                <View style={styles.horizontal_view}>
+        <Text style={styles.txtStyle_fourteen}>
+        Product Price : 
+                </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                    {item.ProductPrice}
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
         <Text style={styles.txtStyle_fourteen}>
         Amount : 
                 </Text>
                 <Text style={styles.txtStyle_sixteen}>
-                    {' '+item.Amount}
+                    {item.Amount}
+                </Text>
+                </View>
+</View>
+<View style={styles.imageView}>
+<Image
+              source={{ uri: item.SubCategoryImage }}
+              style={{ width: "90%", height:"90%" }}
+              
+            />
+
+</View>
+</View>
+
+
+                {/* <View style={styles.horizontal_view}>
+        <Text style={styles.txtStyle_fourteen}>
+        Product Description : 
+                </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                    {item.ProductDes}
                 </Text>
                 </View> */}
+               
 
-                {/* <View style={styles.horizontal_view}>
-
-<Text style={styles.txtStyle_fourteen}>
-Date : 
-        </Text>
-        <Text style={styles.txtStyle_sixteen}>
-            {' '+item.OrderDate}
-        </Text>
-        </View> */}
-
-{/* <View style={styles.horizontal_view}>
-
-<Text style={styles.txtStyle_fourteen}>
-Order id : 
-</Text>
-<Text style={styles.txtStyle_sixteen}>
-{' '+item.OrderID}
-</Text>
-</View> */}
-
-                {/* <View style={styles.horizontal_view}>
-      
-      <TouchableOpacity style={styles.btnBackground1}
-      onPress= {()=> this.showPDF()}>
-          <Text style={commonStyles.textbtn}>View invoice</Text>
-      </TouchableOpacity> 
-        </View> */}
             </View> 
         </TouchableOpacity>
             )
@@ -182,11 +185,18 @@ Order id :
       this.setState({loading: false});
       
             if(res.status){
+              var Total = 0 ;
+              var result = res.data.map(function(obj) {
+                 Total = Total + parseInt(obj.Amount) ;
+              });
+              console.log("Total of cart is",Total)
               this.setState({
                 StoreData: res.data,
                 orderHistoryList : res.data,
-                mFilePathOfInvoice:res.result.file_path
+                mFilePathOfInvoice:res.result.file_path,
+                cartTotal : Total
               });
+             
             }else{
               Alert.alert('Order History', "Something went wrong");
             }
@@ -216,42 +226,7 @@ Order id :
                 <ScrollView contentContainerStyle={{
                 width: window.width
               }}>
-              {/* <View style={styles.filtercontainer}> 
-               <TouchableOpacity style={{paddingLeft:10}} onPress={this._showDateTimePicker}>
-               <TextInput style={styles.editbox} value={this.state.startDate}  editable={false}
-                ></TextInput>
-
-        </TouchableOpacity>
-        <TouchableOpacity style={{paddingLeft:10}} onPress={this._showEndDatePicker}>
-               <TextInput style={styles.editbox} value={this.state.endDate}  editable={false}
-                ></TextInput>
-
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnBackground}
-      onPress= {()=> this.clearDate()}>
-          <Text style={commonStyles.textbtn}>Clear</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.searchBackcontainer} onPress={() => this.filterDataOnDate()}>
-                  <Icon name='search'  style={{ color: "black" }} />
-                   </TouchableOpacity>
-        <DateTimePicker
-          isVisible={this.state.isDateTimePickerVisible}
-          onConfirm={this._handleDatePicked}
-          onCancel={this._hideDateTimePicker}
-        />
-        <DateTimePicker
-          isVisible={this.state.isEndDatePickerVisible}
-          onConfirm={this._handleEndDatePicked}
-          onCancel={this._hideEndDateTimePicker}
-        />
-              </View> */}
-              {/* <View style={styles.searchContainer}> 
-                  <TextInput style={styles.searchEditbox} placeholder={'Please enter order details'} placeholderTextColor={'#ddd'} onChangeText={(text) => this.setState({orderSearchText: text})} 
-                ></TextInput>
-                 
-               
-                  </View> */}
+           
       <View style={styles.container}>
       <FlatList
          
@@ -260,14 +235,26 @@ Order id :
           numColumns={1}
         />
 
-         <View style={styles.horizontal_view}>
+       
+       
+       <View style={styles.card_outer}>
+       <View style={styles.horizontal_view}>
+        <Text style={styles.txtStyle_fourteen_width}>
+        Total : 
+                </Text>
+                <Text style={styles.txtStyle_sixteen_width}>
+                    {this.state.cartTotal}
+                </Text>
+                </View>
+
       
+        </View>
       <TouchableOpacity style={styles.btnBackground1}
       onPress= {()=> this.showPDF()}>
           <Text style={commonStyles.textbtn}>View invoice</Text>
       </TouchableOpacity> 
         </View>
-      </View>
+     
      
       </ScrollView>
       </View>
@@ -276,66 +263,13 @@ Order id :
 }
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    flexDirection: 'row',
-    height: 50,
-    paddingLeft : 10,
-    width: '100%',
-    paddingTop : 10
-    // backgroundColor: '#7dca20',
-    // alignItems: 'center',
-    // borderColor : "yellow",     borderWidth : 1,
-  },
-  searchEditbox: {
-    width: 300,
-    height: 40, 
-    borderRadius: 5,
-    borderColor: 'black',
-    borderWidth:1,
-    paddingHorizontal: 10,
-    color: 'black',
-    marginVertical: 10,
-    marginBottom:15
-},
-searchBackcontainer: {
-  width: '15%',
-  height: 40,
-  marginVertical: 10,
-  marginBottom:15,
-  paddingHorizontal: 10, 
-  // alignItems: 'center'
-  
-},
+ 
   parentcontainer: { 
     flexDirection: 'column', 
     height: '100%',  
   },
 
-  btnBackground: {
-     backgroundColor:'skyblue',
-     borderRadius: 5,
-     width: 100,
-     height: 40, 
-    //  paddingHorizontal: 10,
-    //  marginVertical: 10,
-    //  margin : 10
-    paddingVertical: 10,
-    marginVertical: 10,
-    marginHorizontal:10,
-     marginBottom:15,
-     marginLeft:10
- },
- editbox: {
-  width: 100,
-  height: 40, 
-  borderRadius: 5,
-  borderColor: 'black',
-  borderWidth:1,
-  paddingHorizontal: 10,
-  color: 'black',
-  marginVertical: 10,
-  marginBottom:15
-},
+
 
   container: {
    flex: 1,
@@ -384,15 +318,34 @@ searchBackcontainer: {
   horizontal_view: { 
     flexDirection: 'row', 
   },
+  verticle_view: { 
+    flexDirection: 'column', 
+  },
+  detailView : { 
+    width : "70%"
+  },
+  imageView : { 
+    width : "30%"
+  },
   txtStyle_fourteen: {  
     fontSize: 14,
     color:'white',
-    width:'70%'
+   
+  },
+  txtStyle_fourteen_width: {  
+    fontSize: 22,
+    color:'white',
+    width : "70%"
+  },
+  txtStyle_sixteen_width: {  
+    fontSize: 26,
+    color:'white',
+    width : "30%"
   },
   txtStyle_sixteen: {  
     fontSize: 16,
     color:'white',
-    width:'30%'
+   
   },
   txtStyle_eighteen: {  
     fontSize: 18,
@@ -415,7 +368,7 @@ searchBackcontainer: {
         marginRight: 5, 
         marginTop: 10,
         // flexDirection:'column',
-        height: '80%', 
+        height: '100%', 
   },
 })
  
