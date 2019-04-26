@@ -57,6 +57,8 @@ import ViewCartDetailDistributor from '../distributor/ViewCartDetailDistributor.
 import CommingSoonDistributor from '../distributor/CommingSoonDistributor.js';
 import RegistrationOptions from '../distributor/RegistrationOptions.js';
 import DisplayProductsDistributor from '../distributor/DisplayProductsDistributor.js';
+import UploadOfferImagesDistributor from '../distributor/UploadOfferImagesDistributor.js';
+import ViewOfferImageByDistributor from '../distributor/ViewOfferImageByDistributor.js';
 
 
 
@@ -278,6 +280,18 @@ export const HomeStack = createStackNavigator({
   },
   DisplayProductsDistributor :  {
     screen : DisplayProductsDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  UploadOfferImagesDistributor :  {
+    screen : UploadOfferImagesDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewOfferImageByDistributor :  {
+    screen : ViewOfferImageByDistributor,
     navigationOptions: {
       header: null
     }
@@ -506,6 +520,18 @@ export const HomeStack = createStackNavigator({
         header: null
       }
     },
+    UploadOfferImagesDistributor :  {
+      screen : UploadOfferImagesDistributor,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ViewOfferImageByDistributor :  {
+      screen : ViewOfferImageByDistributor,
+      navigationOptions: {
+        header: null
+      }
+    },
     // },{ initialRouteName: 'Login' })
     },{ initialRouteName: 'DistributorHomePage2' })
 
@@ -725,6 +751,18 @@ export const LoginStack = createStackNavigator({
   },
   DisplayProductsDistributor :  {
     screen : DisplayProductsDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  UploadOfferImagesDistributor :  {
+    screen : UploadOfferImagesDistributor,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewOfferImageByDistributor :  {
+    screen : ViewOfferImageByDistributor,
     navigationOptions: {
       header: null
     }

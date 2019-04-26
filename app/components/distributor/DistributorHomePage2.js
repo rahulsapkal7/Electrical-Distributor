@@ -78,12 +78,12 @@ componentWillUnmount() {
       Orders
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('CommingSoonDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewOfferImageByDistributor',{screenView : 'OfferImage'})}>
       <Text style={styles.txtMain}>
       Upload  Offer Images
       </Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('CommingSoonDistributor')}>
+      <TouchableOpacity style={styles.containerStyle}  onPress = {()=> this.props.navigation.navigate('ViewOfferImageByDistributor',{screenView : 'ScrollerImage'})}>
       <Text style={styles.txtMain}>
       Upload  scroller Images
       </Text>
