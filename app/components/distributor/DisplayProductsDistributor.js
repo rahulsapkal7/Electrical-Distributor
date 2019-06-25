@@ -68,7 +68,7 @@ var ThisView = null;
                 const ProductData = [...this.state.ProductData];
                 this.setState({ ProductData })
               }else{
-                Alert.alert('Add To Cart', "Something went wrong");
+                Alert.alert('Display Products', "Something went wrong");
               }
                 
             })

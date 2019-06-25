@@ -93,7 +93,7 @@ class VerifiedCustomers extends Component {
                     
                     loading : false
                   });
-                  Alert.alert('View Cart', res.message,[{text: 'OK', 
+                  Alert.alert('Pending Customer', res.message,[{text: 'OK', 
                   onPress: () => {
                       console.log('OK Pressed');
                       this

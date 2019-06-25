@@ -53,12 +53,22 @@ var validators = require('../../lib/validators').validators();
         password: '',
         loading: false,
         userType: "Customer",
+        fcm_id : "",
         login1: {}
     }
 }
 componentDidMount (){
 console.log("inside componentDidMount");
 BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+AsyncStorage
+.getItem("fcm_id")
+.then((value) => {
+  console.log("value --> ",value);
+  this.setState({fcm_id: value});
+ 
+  // Globals.cusId = value;
+  
+})
 
 }
 componentWillUnmount() {
@@ -108,10 +118,11 @@ loginCall() {
                 // } else {
                 //     url = api() + 'AdminLogin.php';
                 // }
-                  const url = api() + 'CustLogin.php';
+                  const url = api() + 'CustLoginNew.php';
                         var data = new FormData()
                         data.append('PrimaryMobileNo', this.state.mobile ),
                         data.append('Password', this.state.password),
+                        data.append('FcmToken', this.state.fcm_id),
                         // data.append('UserType', "Customer"),
                         // data.append('MobileNumber', "0123456789"),
                         // data.append('Password', "pass1"),
@@ -119,7 +130,7 @@ loginCall() {
                         // data.append('MobileNumber', "1234567890"),
                         // data.append('Password', "password"),
                         // data.append('UserType', "Admin"),
-                        console.log("Data is --> ",JSON.stringify(data));
+                        console.log("Data is Login--> ",JSON.stringify(data));
                         this.setState({loading: true});
                         var ThisView = this;
                         fetch(url, {

@@ -138,7 +138,7 @@ var ThisView = null;
         console.log("on press subtractQty",this.state.MyCartData[index].Quantity);
         
         if (this.state.MyCartData[index].Quantity == 0) {
-          Alert.alert('Buy Product', "Below 0 not allow");
+          Alert.alert('My Cart', "Below 0 not allow");
         } else {
           const MyCartData = [...this.state.MyCartData];
           MyCartData[index].Quantity = parseInt(MyCartData[index].Quantity) - 1 ;
@@ -227,9 +227,11 @@ var ThisView = null;
             .then(res => {
               console.log("response is inside alerts page ",JSON.stringify(res));
               if(res.status){
-                Alert.alert('My Profile', res.message,[{text: 'OK', 
+                Alert.alert('My Cart', res.message,[{text: 'OK', 
                 onPress: () => {
                     console.log('OK Pressed');
+                    this.props.CartCountData(0);
+
                     this.props.navigation.navigate('ShopkeeperHomePage2');
                     // this.props.navigation.goBack(null)
                   }}]

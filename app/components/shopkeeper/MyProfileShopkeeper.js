@@ -57,11 +57,11 @@ class MyProfileShopkeeper extends Component {
       }
       saveProfile(){
         if (this.state.PropreitorName === undefined || (!validators.RegularExpressionName(this.state.PropreitorName))) {
-            Alert.alert('Register', 'Enter a valid Name');
+            Alert.alert('My Profile', 'Enter a valid Name');
           }else if(this.state.PrimaryMobileNo === undefined || (!validators.RegularExpressionMobileNumber(this.state.PrimaryMobileNo))  ){
-            Alert.alert('Register', 'Enter a valid primary mobile number');
+            Alert.alert('My Profile', 'Enter a valid primary mobile number');
           }else if(this.state.AltMobileNo === undefined || (!validators.RegularExpressionMobileNumber(this.state.AltMobileNo))){
-            Alert.alert('Register', 'Enter a valid alternative mobile number');
+            Alert.alert('My Profile', 'Enter a valid alternative mobile number');
           }
         //   else if(this.state.Password === undefined || (!validators.RegularExpressionPassword(this.state.Password))){
         //     Alert.alert('Register',"Your password should contain \n Minimum 7 characters including atleast 1 number");
@@ -69,29 +69,29 @@ class MyProfileShopkeeper extends Component {
         //     Alert.alert('Register',"Password does not matched");
         //   }
           else if(this.state.ShopName === undefined){
-            Alert.alert('Register', 'Enter a valid shopName');
+            Alert.alert('My Profile', 'Enter a valid shopName');
           }else if(this.state.FirmType === undefined){
-            Alert.alert('Register', 'Enter a valid FirmType');
+            Alert.alert('My Profile', 'Enter a valid FirmType');
           }
           // else if(this.state.Status === undefined){
           //   Alert.alert('Register', 'Enter a valid Status');
           // }
           else if(this.state.Address1 === undefined){
-            Alert.alert('Register', 'Enter a valid first Address');
+            Alert.alert('My Profile', 'Enter a valid first Address');
           }else if(this.state.Address2 === undefined){
-            Alert.alert('Register', 'Enter a valid second Address');
+            Alert.alert('My Profile', 'Enter a valid second Address');
           }else if(this.state.Landmark === undefined){
-            Alert.alert('Register', 'Enter a valid Landmark');
+            Alert.alert('My Profile', 'Enter a valid Landmark');
           }else if(this.state.Timing === undefined){
-            Alert.alert('Register', 'Enter a valid Timing');
+            Alert.alert('My Profile', 'Enter a valid Timing');
           }else if(this.state.EmailId === undefined || (!validators.RegularExpressionEmail(this.state.EmailId))){
-            Alert.alert('Register', 'Enter a valid EmailId');
+            Alert.alert('My Profile', 'Enter a valid EmailId');
           }else if(this.state.Turnover === undefined){
-            Alert.alert('Register', 'Enter a valid Turnover');
+            Alert.alert('My Profile', 'Enter a valid Turnover');
           }else if(this.state.GST_No === undefined){
-            Alert.alert('Register', 'Enter a valid GST Number');
+            Alert.alert('My Profile', 'Enter a valid GST Number');
           }else if(this.state.PAN_No === undefined){
-            Alert.alert('Register', 'Enter a valid PAN Number');
+            Alert.alert('My Profile', 'Enter a valid PAN Number');
           // }else if(this.state.Aadhar_No === ''){
           //   Alert.alert('Login', 'Enter a valid mobile number');
           }else{

@@ -14,7 +14,9 @@ import {connect} from 'react-redux';
 
 import {UserData} from '../../redux/actions/UserData_action';
 import {NavigationActions} from 'react-navigation';
-
+import { registerKilledListener, registerAppListener } from "../../../Listeners";
+import FCM,{NotificationActionType} from 'react-native-fcm';
+registerKilledListener();
  class DistributorHomePage extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,7 @@ import {NavigationActions} from 'react-navigation';
       lastname: '',
     }
   }
-
+ 
   componentWillMount() {
       AsyncStorage
           .getItem("@distributorId:key")
@@ -34,7 +36,19 @@ import {NavigationActions} from 'react-navigation';
             console.log('Globals.cusId://' + value);
             
           })
-          
+          registerAppListener(this.props.navigation);
+          FCM.getInitialNotification().then(notif => {
+            this.setState({
+              initNotif: notif
+            });
+            if (notif && data.AlertType === 'navigate') {
+              setTimeout(() => {
+                console.log("Navigate to VerifiedCustomers from distributor.js" );
+                this.props.navigation.navigate("VerifiedCustomers");
+              }, 500);
+            }
+          });
+        
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
           
   }

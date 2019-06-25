@@ -17,7 +17,9 @@ import ImageSlider from 'react-native-image-slider';
 import SideMenu from 'react-native-side-menu';
 import Menu from '../../common/Menu.js';
 import {  Icon } from 'native-base';
-
+import { registerKilledListener, registerAppListener } from "../../../Listeners";
+import FCM,{NotificationActionType} from 'react-native-fcm';
+registerKilledListener();
  class ShopkeeperHomePage2 extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +91,18 @@ import {  Icon } from 'native-base';
             console.log('Globals.shopkeeperCartCount://' + value);
            
           })
-          
+          registerAppListener(this.props.navigation);
+          FCM.getInitialNotification().then(notif => {
+            this.setState({
+              initNotif: notif
+            });
+            if (notif && data.AlertType === 'navigate') {
+              setTimeout(() => {
+                console.log("Navigate to VerifiedCustomers from distributor.js" );
+                this.props.navigation.navigate("VerifiedCustomers");
+              }, 500);
+            }
+          });
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
           
   }
