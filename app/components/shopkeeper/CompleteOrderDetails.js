@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList,Image, StyleSheet,TextInput, Text,Alert, ScrollView,View,TouchableOpacity } from 'react-native';
+import { AppRegistry, FlatList,Image, StyleSheet,TextInput, Text,Alert, ScrollView,View,TouchableOpacity,Modal } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import commonStyles from '../../common/commonStyle';
@@ -12,6 +12,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {  Icon } from 'native-base';
 import {_} from 'underscore';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 class CompleteOrderDetails extends Component {
 
@@ -31,7 +32,10 @@ class CompleteOrderDetails extends Component {
       loading : false,
       StoreData : [],
       cartTotal:0,
+      showLR : false,
       mFilePathOfInvoice:'',
+      isImageViewVisible : false,
+      showImage : '',
       
     //   orderHistoryList : [],
     //   orderSearchText : ''
@@ -189,7 +193,17 @@ renderItem=({item})=>{
               var result = res.data.map(function(obj) {
                  Total = Total + parseInt(obj.Amount) ;
               });
-              console.log("Total of cart is",Total)
+              console.log("Total of cart is",Total);
+              if (res.LRImage.length == 0 ) {
+                this.setState({showLR: false});
+                
+              } else {
+                this.setState({showLR: true});
+                this.setState({showImage: res.LRImage[0].LRImage});
+                console.log("showImage is -->",res.LRImage[0].LRImage);
+                
+                
+              }
               this.setState({
                 StoreData: res.data,
                 orderHistoryList : res.data,
@@ -249,10 +263,30 @@ renderItem=({item})=>{
 
       
         </View>
-      <TouchableOpacity style={styles.btnBackground1}
+        { this.state.showLR ?  
+         
+          <View style={styles.horizontal_view}>
+                <TouchableOpacity style={styles.btnBackground1}
       onPress= {()=> this.showPDF()}>
           <Text style={commonStyles.textbtn}>View invoice</Text>
       </TouchableOpacity> 
+                <TouchableOpacity style={styles.btnBackground1}
+                 onPress={() => this.setState({ isImageViewVisible: true })}>
+                    <Text style={commonStyles.textbtn}>View LR Image</Text>
+                </TouchableOpacity> 
+                </View>
+                :
+                <TouchableOpacity style={styles.btnBackground1}
+          onPress= {()=> this.showPDF()}>
+              <Text style={commonStyles.textbtn}>View invoice</Text>
+          </TouchableOpacity> 
+          
+             
+                 }
+                 <Modal visible={this.state.isImageViewVisible} transparent={true} onRequestClose={() => this.setState({ isImageViewVisible: false })} >
+          <ImageViewer  imageUrls={[{url : this.state.showImage}]}/>
+         
+      </Modal>
         </View>
      
      
@@ -363,7 +397,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginBottom:10,
         marginLeft: 5,
-        backgroundColor:'#4db6ac',
+        backgroundColor:'#FFB367',
         flex: 1,        
         marginRight: 5, 
         marginTop: 10,

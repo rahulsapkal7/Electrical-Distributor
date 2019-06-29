@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   productParent:{
     flex:1,
     flexDirection: 'column', 
-    backgroundColor: '#4db6ac',
+    backgroundColor: '#FFB367',
     alignItems: 'center',
     justifyContent: 'center', 
     // borderRadius:2,
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginBottom:10,
         marginLeft: 5,
-        backgroundColor:'#4db6ac',
+        backgroundColor:'#FFB367',
         flex: 1,        
         marginRight: 5, 
         marginTop: 10,

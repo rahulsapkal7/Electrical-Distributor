@@ -62,7 +62,7 @@ class ProtonOffersTypes extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
-        backgroundColor: '#4db6ac'
+        backgroundColor: '#FFB367'
     },
     mainView : {
         flex:1,

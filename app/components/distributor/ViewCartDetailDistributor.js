@@ -173,7 +173,9 @@ Date :
       console.log('inside DispatchOrder',this.state.CartUserID);
       console.log('inside CartNo --> ',this.state.CartNo);
       console.log('inside filePath --> ',this.state.filePath);
-      if (this.state.showImage == false) {
+      // if (this.state.showImage == false) {
+      if (false) {
+        
         Alert.alert('View Cart', "Please Upload image first");
       } else {
         Alert.alert(
@@ -397,7 +399,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginBottom:10,
         marginLeft: 5,
-        backgroundColor:'#4db6ac',
+        backgroundColor:'#FFB367',
         flex: 1,        
         marginRight: 5, 
         marginTop: 10,

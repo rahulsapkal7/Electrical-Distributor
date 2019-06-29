@@ -130,7 +130,7 @@ var ThisView = null;
 <View style={styles.imageView}>
 <View style={{ width : '100%',height:"20%" , marginBottom:10}} >
           <Switch //style={{backgroundColor: '#FF0000', borderRadius: 17}}
-           trackColor={{true: 'red', false: 'grey'}}
+           trackColor={{true: 'green', false: 'grey'}}
              onValueChange={(value) => this.setSwitchValue(value, index,item.ProductCode)}
            value = {(item.Display == "Yes" ? true : false ) }/>
          
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   productParent:{
     flex:1,
     flexDirection: 'column', 
-    backgroundColor: '#4db6ac',
+    backgroundColor: '#FFB367',
     // alignItems: 'center',
     // justifyContent: 'center', 
     borderRadius:2,
@@ -439,7 +439,8 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginBottom:10,
         marginLeft: 5,
-        backgroundColor:'#4db6ac',
+        // backgroundColor:'#FFB367',
+        backgroundColor:'#FFB367',
         flex: 1,        
         marginRight: 5, 
         marginTop: 10,

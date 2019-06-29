@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
   productParent:{
     flex:1,
     flexDirection: 'column', 
-    backgroundColor: '#4db6ac',
+    backgroundColor: '#FFB367',
     // alignItems: 'center',
     // justifyContent: 'center', 
     borderRadius:2,
