@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet,ScrollView, Alert, ListItem,Text, View,TouchableOpacity,Image } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet,TextInput,ScrollView, Alert, ListItem,Text, View,TouchableOpacity,Image } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 // import Header from '../../common/header';
@@ -69,6 +69,7 @@ var ThisView = null;
          var result = searchProductData.map(function(obj) {
            var data = Object.assign({}, obj);
            data.Qty = 0;
+           data.Total = 0;
            data.AddedToCartFlag = false;
            return data;
          })
@@ -107,6 +108,8 @@ var ThisView = null;
                 var result = res.data.map(function(obj) {
                   var data = Object.assign({}, obj);
                   data.Qty = 0;
+                  data.Total = 0;
+                  
                   data.AddedToCartFlag = false;
                   return data;
                 })
@@ -143,6 +146,21 @@ var ThisView = null;
           Alert.alert('Add To Cart', "To change quantity click below Go to Cart button");
         }
       }
+      changeQty = (item,index,text) =>{
+        console.log("inside changeQty --> ",text)
+        if (item.AddedToCartFlag == false) {
+        console.log("on press addQty index",index);
+        console.log("on press addQty item",item);
+        const ProductData = [...this.state.ProductData];
+        ProductData[index].Qty += 1;
+        this.setState({ ProductData });
+       
+          console.log("on press addQty",this.state.ProductData[index]);
+          console.log("on press addQty",this.state.ProductData);
+        }else{
+          Alert.alert('Add To Cart', "To change quantity click below Go to Cart button");
+        }
+      }
       subtractQty = (item,index) =>{
         console.log("on press subtractQty index",index);
         console.log("on press subtractQty item",item);
@@ -164,6 +182,10 @@ var ThisView = null;
       }
 
       addToCart = (item,index) =>{
+        // const re = /^[0-9\b]+$/;
+        // var qty = parseInt(item.Qty);
+
+      
         if (item.AddedToCartFlag == false) {
           console.log("on press addToCart index",index);
           console.log("on press addToCart item",item);
@@ -366,15 +388,124 @@ var ThisView = null;
 
  <FlatList
         data={this.state.ProductData}
+        extraData={this.state}
           renderItem={({ item, index }) => (
-            <ListItemData
-              item={item}
-              subtractQty={() => this.subtractQty(item, index)}
-              addQty={() => this.addQty(item, index)}
-              addToCart = {() => this.addToCart(item,index)}
-              GoToCart = {() => this.GoToCart()}
-            />
-           
+            // <ListItemData
+            //   item={item}
+            //   index = {index}
+            //   subtractQty={() => this.subtractQty(item, index)}
+            //   addQty={() => this.addQty(item, index)}
+            //   addToCart = {() => this.addToCart(item,index)}
+            //   GoToCart = {() => this.GoToCart()}
+            // />
+            <View style={styles.productParent} >
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Brand Category Name : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.BrandCategoryName }
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Sub Category Name : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.SubCategoryName }
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Product Code : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.ProductCode }
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Power W : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.PowerW }
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Colour : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.Colour }
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Product Desc : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.ProductDes }
+                </Text>
+                </View>
+
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  CP : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                {item.MRP }
+                </Text>
+                </View>
+                <View style={styles.horizontal_view}>
+                <TextInput style={styles.qtyBox} placeholder="Enter Quantity" 
+                                            placeholderTextColor="white"    keyboardType="numeric"
+                                              onChangeText={(text) => { 
+                                              console.log("after change qty is--> ",text);
+                                              console.log("item before update is",item);
+                                              const re = /^[0-9\b]+$/;
+                                              console.log("test is--> ",re.test(text));
+                                              if (text === '' || re.test(text)) {
+                                                // var text = e.target.value;
+                                                let { ProductData } = this.state;
+                                              ProductData[index].Qty = text;
+                                              ProductData[index].Total = text * ProductData[index].MRP;
+                                              item.Total = text * item.MRP;
+                                              this.setState({
+                                                ProductData,
+                                              });
+                                              console.log("item after update is",item);
+                                                  }
+                                                  else{
+                                                    Alert.alert('Add To Cart', "Please enter only Numbers");
+                                                  }
+                                              
+                                              }}
+                                              // value={this.state.ProductData[index]}
+                                              underlineColorAndroid={'transparent'} ></TextInput>
+                </View>
+                <View style={styles.horizontal_view}>
+                  <Text style={styles.txtStyle_fourteen}>
+                  Total : 
+                  </Text>
+                <Text style={styles.txtStyle_sixteen}>
+                { item.Total }
+                </Text>
+                </View>
+                <View style={{ width : '100%',alignItems: 'center',justifyContent: 'center'}} >
+                { item.AddedToCartFlag == false ?
+                  <TouchableOpacity style={styles.btnBackground} onPress={() => this.addToCart(item,index)} 
+                >
+                    <Text style={styles.txtStyle_fourteen}>Add to Cart</Text>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity style={styles.blueBtnBackground} onPress={() => this.GoToCart(item)} 
+                >
+                    <Text style={styles.txtStyle_fourteen}>Go to Cart</Text>
+                </TouchableOpacity>
+                  }
+              
+                </View> 
+         </View> 
           )}
           keyExtractor={item => item.ProductTableID.toString()}
         />
@@ -387,7 +518,10 @@ var ThisView = null;
 class ListItemData extends React.Component {
   render() {
     const { item } = this.props;
-
+    const { index } = this.props;
+    console.log("index is-->",index);
+    console.log("item is-->",item);
+    
     return (
       <View style={styles.productParent} >
       
@@ -444,17 +578,17 @@ class ListItemData extends React.Component {
 
         <View style={styles.horizontal_view}>
            <Text style={styles.txtStyle_fourteen}>
-           MRP : 
+           CP : 
           </Text>
         <Text style={styles.txtStyle_sixteen}>
         {item.MRP }
         </Text>
         </View>
          <View style={styles.horizontal_view}>
-       <Text style={styles.txtStyle_fourteen}>
+       {/* <Text style={styles.txtStyle_fourteen}>
            Quantity :     
-          </Text>
-        <TouchableOpacity style={styles.btnBackgroundAdd} onPress={ this.props.subtractQty} >
+          </Text> */}
+        {/* <TouchableOpacity style={styles.btnBackgroundAdd} onPress={ this.props.subtractQty} >
             <Text style={styles.txtStyle_fourteen}>-</Text>
         </TouchableOpacity>
         <Text style={styles.txtStyle_sixteenQty} >
@@ -463,14 +597,34 @@ class ListItemData extends React.Component {
         <TouchableOpacity style={styles.btnBackgroundSub} onPress={ this.props.addQty} >
 
             <Text style={styles.txtStyle_fourteen}>+</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <TextInput style={styles.qtyBox} placeholder="Enter Quantity" 
+                                    placeholderTextColor="white"    keyboardType="numeric"
+                                      onChangeText={(text) => { console.log("after change qty is--> ",text);
+                                      console.log("item before update is",item);
+                                      // this.changeQty(item,index,text)
+                                      let { ProductData } = this.state;
+                                      ProductData[index].Qty = text;
+                                      this.setState({
+                                        ProductData,
+                                      });
+                                      // const ProductData = [...this.state.ProductData];
+                                      // console.log("ProductData is 1",ProductData);
+                                      
+                                      // ProductData[index].Qty = 1;
+                                      // this.setState({ ProductData });
+                                     item.Qty = text;
+                                     item.Total = item.MRP * item.Qty
+                                      console.log("item after update is",item);
+                                      }}
+                                      underlineColorAndroid={'transparent'} ></TextInput>
         </View>
         <View style={styles.horizontal_view}>
            <Text style={styles.txtStyle_fourteen}>
            Total : 
           </Text>
         <Text style={styles.txtStyle_sixteen}>
-        { (item.MRP) * (item.Qty) }
+        { item.Total }
         </Text>
         </View>
         <View style={{ width : '100%',alignItems: 'center',justifyContent: 'center'}} >
@@ -617,13 +771,14 @@ const styles = StyleSheet.create({
   
   txtStyle_fourteen: {  
     fontSize: 14,
-    color:'white'
+    color:'white',
+    
   },
   txtStyle_sixteen: {  
     fontSize: 16,
     color:'white',
     fontWeight:'500',
-    
+    paddingLeft:10
   },
   txtStyle_sixteenQty : {
     fontSize: 16,
@@ -654,6 +809,17 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         // height: '80%', 
   },
+  qtyBox: {
+    width: 200,
+    height: 35, 
+    borderRadius: 1,
+    borderColor: 'white',
+    borderWidth:1,
+    color: 'white',
+    
+
+   
+},
 })
  
 const mapStateToProps = (state, ownProps) => {

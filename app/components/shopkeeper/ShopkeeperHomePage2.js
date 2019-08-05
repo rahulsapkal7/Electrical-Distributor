@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet,AsyncStorage,NetInfo,Alert,BackHandler, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback} from 'react-native'; 
+import {Platform, StyleSheet,AsyncStorage,NetInfo,Alert,BackHandler, ImageBackground,TextInput,Text, View,ScrollView,Button,ToolbarAndroid,Image,TouchableOpacity,FlatList,TouchableWithoutFeedback,Linking} from 'react-native'; 
 // import Cards from "./Cards.js"; 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../../common/header';
-import Home_header from '../../common/home_header';
+import Home_NewHeader from '../../common/home_NewHeader';
 import { Swiper, TitleBar, TabBar } from 'react-native-awesome-viewpager';
 import {UserData  } from '../../redux/actions/UserData_action';
 import {cartData } from '../../redux/actions/getCart_action';
@@ -138,6 +138,18 @@ handleBackButtonClick() {
 }
 
   componentDidMount() {
+    AsyncStorage
+    .getItem("@shopkeeperName:key")
+    .then((value) => {
+      console.log("value --> ",value);
+      if (value != null) {}
+      this.setState({ShopkeeperName: value});
+      
+      console.log('Globals.cusId://' + value);
+      // setTimeout(() => {
+      //   this.setState({isLoading: false});
+      // }, 5);
+    })
     // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     const url = api() + 'ImageSlideShow.php';
     console.log(url);
@@ -281,6 +293,7 @@ updateMenuState(isOpen) {
       this.setState({isOpen : false})
       }}  
      Logout = {()=>{
+       console.log("onpress logout");
         AsyncStorage.removeItem('@shopkeeperId:key');
          this.setState({isOpen : false}) ;
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -295,7 +308,7 @@ updateMenuState(isOpen) {
       onChange={isOpen => this.updateMenuState(isOpen)}>
      
         <View style={styles.container}>
-         <Home_header  menu = { () => {  this.toggleMenu() ;
+         <Home_NewHeader  menu = { () => {  this.toggleMenu() ;
                         console.log("Open Menu",this.state.isOpen) }}  
                 title={'PROTON ENTERPRISE'} 
                 cartCount = { this.props.CartCount && this.props.CartCount > 0 ? this.props.CartCount : 0  }
@@ -303,6 +316,13 @@ updateMenuState(isOpen) {
                  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);                  
                   this.props.navigation.navigate('MyCartShopkeeper')}}
                 showSearch = {true}
+                opneCall ={() => {
+                  let phoneNumber = '';
+                  phoneNumber = 'tel:${8291090492}';
+                  console.log("call is pressed");
+                  // Linking.openURL(phoneNumber);
+                  Linking.openURL('whatsapp://send?text=hello&phone=918291090492')
+                }}
                 gotoSearchScreens = {() => {
                   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
                   this.props.navigation.navigate('SearchProduct') }}
@@ -375,33 +395,69 @@ updateMenuState(isOpen) {
           </Swiper > */}
                </View>
                <View style={styles.thirdContainer}>
-
+               <View style={styles.footerFirst}>
+                          <View style={styles.footerTextContainar}>
+                                <Text style={styles.bigWhite}>OPPLE</Text>
+                          </View>
+                          <View
+                          style={{
+                            height: 50,
+                                  width: 3,
+                                  backgroundColor: '#4183DA'
+                          }}
+                        />
+                          <View style={styles.footerTextContainar}>
+                              <Text style={styles.bigWhite}>SVAROCHI</Text>
+                          </View>
+                 </View>
+                <View style={styles.footerSecond}>
+                <Text style={styles.footerLogo}>CRESCENT ELECTRONICS</Text>
+                </View>
+              
                {/* <Image source={require('../../assets/homeLogo/Cresent.png')} style={styles.backgroundLogoImage}>
                  
-                 </Image>
-<Image source={require('../../assets/homeLogo/GM.png')} style={styles.backgroundLogoImage}>
-  
-  </Image>
-<Image source={require('../../assets/homeLogo/Magic.png')} style={styles.backgroundLogoImage}>
-  
-  </Image> */}
+                 </Image> */}
+                        {/*<Image source={require('../../assets/homeLogo/GM.png')} style={styles.backgroundLogoImage}>
+                          
+                          </Image>
+                        <Image source={require('../../assets/homeLogo/Magic.png')} style={styles.backgroundLogoImage}>
+                          
+                          </Image> */}
+{/* RAHUL COMMENT */}
+                          {/* <Image source={require('../../assets/homeLogo/crescent.png')} style={styles.backgroundLogoImage}>
+                          
+                          </Image>
 
-<Image source={require('../../assets/homeLogo/Ople.png')} style={styles.backgroundLogoImage}>
-  
-  </Image>
-
-  {/* <View style={styles.horizontalLine}></View> */}
-  <View
-  style={{
-    height: 100,
-          width: 3,
-          backgroundColor: '#4183DA'
-  }}
-/>
-<Image source={require('../../assets/homeLogo/Svarochi.png')} style={styles.backgroundLogoImage}>
-  
-  </Image>
-
+                          <View
+                          style={{
+                            height: 100,
+                                  width: 3,
+                                  backgroundColor: '#4183DA'
+                          }}
+                        />
+                        <View
+                          style={{
+                            height: 100,
+                            width:100,  
+                            flex: 1,
+                            justifyContent:'center',
+                            alignItems:'center',
+                            // width:100,
+                            // height:50,
+                            // margin:10,
+                                
+                          }}
+                        >
+                        <Image source={require('../../assets/homeLogo/Svarochi.png')} style={styles.rightLogoImage}>
+                          
+                          </Image>
+                          <Image source={require('../../assets/homeLogo/Ople.png')} style={styles.rightLogoImage}>
+                          
+                          </Image>
+                          
+                          </View> */}
+{/* RAHUL COMMENT */}
+                          
                </View>
         </View>
         </SideMenu>
@@ -422,6 +478,26 @@ const styles = StyleSheet.create({
       height:window.height,
       width:1, 
   },
+  bigWhite: {
+    color: '#126ABB',
+    fontWeight: 'bold',
+    fontSize: 35,  
+    // marginTop : 40,      
+},
+footerLogo : {
+  color: '#126ABB',
+  fontWeight: 'bold',
+  fontSize: 25,  
+  // marginTop : 40,      
+},
+footerTextContainar : {
+  // height : 100,
+  // marginTop:10,   
+  // marginBottom: 20,  
+  width:"50%",   
+  justifyContent: 'center',
+  alignItems :'center',
+},
   firstContainer:{
       flex:2,
       justifyContent: 'center',
@@ -436,10 +512,25 @@ const styles = StyleSheet.create({
   },
   thirdContainer:{
       flex:2, 
-      flexDirection:'row',
-      alignItems: 'center',
-      justifyContent: 'center',
+      // flexDirection:'row',
+     
+      // alignItems: 'center',
+      // justifyContent: 'center',
   },
+  footerFirst:{
+    // flex:2, 
+    flexDirection:'row',
+   height:"50%"
+    // alignItems: 'center',
+    // justifyContent: 'center',
+},
+footerSecond:{
+  // flex:2, 
+  // flexDirection:'row',
+  height:"50%",
+  alignItems: 'center',
+  justifyContent: 'center',
+},
   verticalContainer:{
       justifyContent:'center',
       alignItems:'center',
@@ -498,6 +589,18 @@ const styles = StyleSheet.create({
       height:100,
       margin:10,
       resizeMode: 'stretch', // or 'stretch'
+  },
+  rightLogoImage: {
+    flex: 1,
+    width:120,
+    height:50,
+    // margin:10,
+    
+    resizeMode: 'stretch', // or 'stretch'
+},
+  ColumnLogoImage:{
+    height:100,
+    resizeMode: 'stretch',
   },
   btnBackground: {
       backgroundColor: '#1c313a',

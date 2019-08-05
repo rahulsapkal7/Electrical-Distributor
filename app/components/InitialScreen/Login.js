@@ -221,13 +221,13 @@ OpenRegister() {
   <Picker.Item label="Customer" value="Customer" />
   <Picker.Item label="Distributor" value="Admin" />
 </Picker> */}
-                              <TouchableOpacity
+                              <View
                                   style={{
                                   alignItems: 'center',
-                                  height: 25
+                                  height: 20
                                      }}>
-                                  <Text style={commonStyles.TxtFont}>Forgot Password ?</Text>
-                              </TouchableOpacity>
+                                  <Text style={styles.SupportTxtFont}>For support please contact on 8291090492 number</Text>
+                              </View>
       
                               <TouchableOpacity onPress= {()=> this.loginCall()} style={commonStyles.btnBackground}>
                                   <Text style={commonStyles.textbtn}>LOGIN</Text>
@@ -239,10 +239,18 @@ OpenRegister() {
                                   style={{
                                   alignItems: 'center',
                                   height: 25,
-                                  marginTop: 15
+                                  marginTop: 10
                               }}>
                                   <Text style={commonStyles.TxtFont}>Register</Text>
                               </TouchableOpacity>
+                              <View style={{
+                                  alignItems: 'center',
+                                  height: 80,
+                                  margin:10,
+                                //   marginTop: 10
+                              }}>
+                              <Image source={require('../../assets/images/logo.png')} style={styles.image_style}/>
+                              </View>
       
                           </View>
       
@@ -287,7 +295,15 @@ const styles = StyleSheet.create({
        width: 300,
    },
 
+   image_style:{
+    width:60,
+    height:50
+  },
 
+  SupportTxtFont : {
+    color: 'white',
+    fontSize: 12,
+  }
 
 });
 const mapStateToProps = (state, ownProps) => {

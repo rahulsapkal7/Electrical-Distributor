@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
   },
   horizontal_view: { 
     flexDirection: 'row', 
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   txtStyle_fourteen: {  
     fontSize: 14,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontWeight:'500'
   },
   txtStyle_Thirty: {  
-    fontSize: 30,
+    fontSize: 20,
     color:'white',
     fontWeight:'500'
   },

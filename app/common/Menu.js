@@ -49,10 +49,10 @@ horizontalLine:{
 profileImg: {
     width: 100,
     height: 100,
-    borderRadius: 50,
+    // borderRadius: 50,
     borderColor: "azure",
-    borderWidth: 5,
-    flex: 2
+    // borderWidth: 5,
+    // flex: 2
 },
 name: {
     color: 'honeydew',
@@ -175,7 +175,7 @@ this.props.NavigationToScreen(screen)
 //  console.log("hello"+JSON.stringify(this.props.userData));
  var a = null;
 
-    a =require('../assets/images/default-profile.png');
+    a =require('../assets/images/logo.png');
 
     return (
         <ScrollView  style={styles.menu}>
